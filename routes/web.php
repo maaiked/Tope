@@ -41,7 +41,7 @@ Route::middleware('auth')->group(function () {
 
     //inschrijvingsdetails routes
     Route::get('/inschrijvingsdetails', [InschrijvingsdetailController::class, 'index'])->name('inschrijvingsdetails.index');
-    Route::post('/inschrijvingsdetails', [InschrijvingsdetailsController::class, 'store'])->name('inschrijvingsdetails.store');
+    Route::post('/inschrijvingsdetails', [InschrijvingsdetailController::class, 'store'])->name('inschrijvingsdetails.store');
 
 });
 
