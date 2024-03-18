@@ -21,6 +21,9 @@
                     <x-nav-link :href="route('kinderen.index')" :active="request()->routeIs('kinderen.index')">
                         {{ __('Kinderen') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('inschrijvingsdetails.index')" :active="request()->routeIs('inschrijvingsdetails.index')">
+                        {{ __('Inschrijvingen') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -81,6 +84,9 @@
              </x-responsive-nav-link>
              <x-responsive-nav-link :href="route('kinderen.index')" :active="request()->routeIs('kinderen.index')">
                         {{ __('Kinderen') }}
+             </x-responsive-nav-link>
+             <x-responsive-nav-link :href="route('inschrijvingsdetails.index')" :active="request()->routeIs('inschrijvingsdetails.index')">
+                        {{ __('Inschrijvingen') }}
              </x-responsive-nav-link>
         </div>
 
