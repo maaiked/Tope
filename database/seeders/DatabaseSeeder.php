@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         // create predefined useraccounts made for testing purposes
          \App\Models\User::factory()
-         ->has(\App\Models\Kind::factory()->count(3), 'kinderen')
+         ->has(\App\Models\Kind::factory()->count(3), 'kinds')
          ->create([
              'name' => 'Maaike',
              'email' => 'maaike@tope.be',
@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
              'isAdmin' => false
          ]);
          \App\Models\User::factory()
-         ->has(\App\Models\Kind::factory()->count(1), 'kinderen')
+         ->has(\App\Models\Kind::factory()->count(1), 'kinds')
          ->create([
              'name' => 'Robbe',
              'email' => 'robbe@tope.be',
@@ -40,9 +40,9 @@ class DatabaseSeeder extends Seeder
          //create 10 random users with 2 children each
         \App\Models\User::factory()
         ->count(10)
-        ->has(\App\Models\Kind::factory()->count(2), 'kinderen')
+        ->has(\App\Models\Kind::factory()->count(2), 'kinds')
         ->create();
-        
+
         //create 15 activiteiten
         \App\Models\Activiteit::factory()
             ->count(10)
@@ -66,17 +66,17 @@ class DatabaseSeeder extends Seeder
             ->sequence(
                 ['kind_id' => '1', 'activiteit_id' => '2'],
                 ['kind_id' => '2', 'activiteit_id' => '2'],
-                ['kind_id' => '3', 'activiteit_id' => '2'],
-                ['kind_id' => '3', 'activiteit_id' => '3'],
-                ['kind_id' => '3', 'activiteit_id' => '5'],
+                ['kind_id' => '4', 'activiteit_id' => '2'],
+                ['kind_id' => '4', 'activiteit_id' => '3'],
+                ['kind_id' => '4', 'activiteit_id' => '5'],
                 ['kind_id' => '4', 'activiteit_id' => '7'],
                 ['kind_id' => '5', 'activiteit_id' => '7'],
                 ['kind_id' => '5', 'activiteit_id' => '8'],
-                ['kind_id' => '5', 'activiteit_id' => '9'],
-                ['kind_id' => '5', 'activiteit_id' => '10'],
-                
+                ['kind_id' => '1', 'activiteit_id' => '9'],
+                ['kind_id' => '1', 'activiteit_id' => '10'],
+
             )
             ->create();
-       
+
     }
 }
