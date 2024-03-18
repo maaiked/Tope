@@ -1,9 +1,10 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ActiviteitController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KindController;
+use App\Http\Controllers\InschrijvingsdetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,10 @@ Route::middleware('auth')->group(function () {
     //kind routes
     Route::get('/kinderen', [KindController::class, 'index'])->name('kinderen.index');
     Route::post('/kinderen', [KindController::class, 'store'])->name('kinderen.store');
+
+    //inschrijvingsdetails routes
+    Route::get('/inschrijvingsdetails', [InschrijvingsdetailController::class, 'index'])->name('inschrijvingsdetails.index');
+    Route::post('/inschrijvingsdetails', [InschrijvingsdetailController::class, 'store'])->name('inschrijvingsdetails.store');
 
 });
 

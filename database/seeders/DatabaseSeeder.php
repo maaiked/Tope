@@ -59,5 +59,24 @@ class DatabaseSeeder extends Seeder
                 ['message' => 'Paasvakantie week 2 - vrijdag'],
             )
             ->create();
+
+        // create 10 inschrijvingen
+        \App\Models\Inschrijvingsdetail::factory()
+           ->count(10)
+            ->sequence(
+                ['kind_id' => '1', 'activiteit_id' => '2'],
+                ['kind_id' => '2', 'activiteit_id' => '2'],
+                ['kind_id' => '3', 'activiteit_id' => '2'],
+                ['kind_id' => '3', 'activiteit_id' => '3'],
+                ['kind_id' => '3', 'activiteit_id' => '5'],
+                ['kind_id' => '4', 'activiteit_id' => '7'],
+                ['kind_id' => '5', 'activiteit_id' => '7'],
+                ['kind_id' => '5', 'activiteit_id' => '8'],
+                ['kind_id' => '5', 'activiteit_id' => '9'],
+                ['kind_id' => '5', 'activiteit_id' => '10'],
+                
+            )
+            ->create();
+       
     }
 }
