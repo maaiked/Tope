@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('inschrijvingsdetails', function (Blueprint $table) {
             $table->id();
             $table->foreignId('kind_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('activiteit_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
