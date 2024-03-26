@@ -20,17 +20,12 @@ class KindFactory extends Factory
             'voornaam' => fake()->firstName(),
             'familienaam' =>fake()->lastName(),
             'contactpersoon' =>fake()->name(),
-            'allergie' => "geen allergie",
-            'beperking' => "niets",
-            'medicatie' => "geen medicatie",
             'alleenNaarHuis' =>fake()->boolean(),
             'afhalenKind' => "alleen door ouders",
             'fotoToestemming' => fake()->boolean(),
             'rijksregisternummer' => "010101.00101",
             'uitpasnummer' => "010101.00101",
             'uitpasDatumCheck' => fake()->date(),
-            'infoAdminAnimator' => "hier komt de interne info voor admin en animator",
-            'infoAdmin' => "hier komt de interne info enkel zichtbaar voor admin",
         ];
     }
 }

@@ -82,9 +82,9 @@
             <x-responsive-nav-link :href="route('activiteiten.index')" :active="request()->routeIs('activiteiten.index')">
                         {{ __('Activiteiten') }}
              </x-responsive-nav-link>
-             <x-responsive-nav-link :href="route('kinderen.index')" :active="request()->routeIs('kinderen.index')">
-                        {{ __('Kinderen') }}
-             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('kinderen.index')" :active="request()->routeIs('kinderen.index')">
+                {{ __('Kinderen') }}
+            </x-responsive-nav-link>
              <x-responsive-nav-link :href="route('inschrijvingsdetails.index')" :active="request()->routeIs('inschrijvingsdetails.index')">
                         {{ __('Inschrijvingen') }}
              </x-responsive-nav-link>

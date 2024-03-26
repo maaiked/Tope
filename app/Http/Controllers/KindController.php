@@ -17,14 +17,16 @@ class KindController extends Controller
     public function index()
     {
         if (auth()->user()->isAdmin){
-            $kinderen['kinderen'] = Kind::paginate(10);
+            $kinderen['kinderen'] = Kind::with("user")->get();
+            return view ('kinderen.indexAdmin')->with($kinderen);
         }
         else {
             $kinderen['kinderen'] = Kind::where('user_id', auth()->id())->get();
+            return view ('kinderen.indexOuder')->with($kinderen);
         }
-    
-        return view ('kinderen.index')->with($kinderen);
-   
+
+
+
     }
 
     /**
@@ -43,7 +45,7 @@ class KindController extends Controller
         $validated = $request->validate([
             'name'=> 'required|string|max:255'
         ]);
-        
+
         $request->user()->kinderen()->create($validated);
         return redirect(route('kinderen.index'));
     }
