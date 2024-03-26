@@ -5,7 +5,7 @@
             @foreach ($inschrijvingsdetails as $inschrijvingsdetail)
                 <div class="p-3 flex space-x-0">
                     <div class="flex-1">
-                        <p class="mt-4 text-lg text-gray-900">{{ $inschrijvingsdetail->activiteit->message . " kind:" . $inschrijvingsdetail->kind->name . " ouder:" . $inschrijvingsdetail->kind->user->name }}</p>
+                        <p class="mt-4 text-lg text-gray-900">{{ $inschrijvingsdetail->activiteit->message . " kind:" . $inschrijvingsdetail->kind->voornaam . " ouder:" . $inschrijvingsdetail->kind->user->name }}</p>
                     </div>
                 </div>
             @endforeach

@@ -15,7 +15,7 @@
             @foreach ($kinderen as $kind)
                 <div class="p-3 flex space-x-2">
                     <div class="flex-1">
-                        <p class="mt-4 text-lg text-gray-900">{{ $kind->name }} - Ouder: {{ $kind->user->name }}</p>
+                        <p class="mt-4 text-lg text-gray-900">{{ $kind->voornaam }} - Ouder: {{ $kind->user->name }}</p>
                     </div>
                 </div>
             @endforeach
