@@ -37,8 +37,10 @@ Route::middleware('auth')->group(function () {
 
     //kind routes
     Route::get('/kinderen', [KindController::class, 'index'])->name('kinderen.index');
-    Route::post('/kinderennieuw', [KindController::class, 'store'])->name('kinderen.store');
     Route::get('/kinderennieuw', [KindController::class, 'create'])->name('kinderen.create');
+    Route::post('/kinderennieuw', [KindController::class, 'store'])->name('kinderen.store');
+    Route::get('/kind/{id}/edit', [KindController::class, 'edit'])->name('kinderen.edit');
+    Route::put('/kind/{id}', [KindController::class, 'update'])->name('kinderen.update');
 
     //inschrijvingsdetails routes
     Route::get('/inschrijvingsdetails', [InschrijvingsdetailController::class, 'index'])->name('inschrijvingsdetails.index');

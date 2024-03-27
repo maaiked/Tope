@@ -5,7 +5,8 @@
             <div class="mt-6 bg-grey shadow-sm rounded-lg divide-y">
                 <div class="p-3 flex space-x-2">
                     <div class="flex-1">
-                        <p class="mt-4 text-lg text-gray-900">{{ $kind->voornaam }} - bewerk</p>
+                        <p class="mt-4 text-lg text-gray-900">{{ $kind->voornaam }}</p>
+{{--                        TODO: bewerk knop weergeven naar edit/{id}--}}
                     </div>
                 </div>
             </div>
