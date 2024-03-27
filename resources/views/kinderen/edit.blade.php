@@ -3,7 +3,6 @@
         @csrf
         @method('PUT')
 
-{{--        //TODO:" checkbox en radiobox aanpassen volgens waarden"--}}
         <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
@@ -26,7 +25,6 @@
                             <p class="font-medium text-lg">Algemene informatie</p>
                             <p>Gelieve alle velden in te vullen</p>
                         </div>
-
 
                         <div class="md:col-span-5">
                             <label for="voornaam">Voornaam</label>
@@ -54,7 +52,6 @@
                                    placeholder="10.10.10-100.10"/>
                             <x-input-error :messages="$errors->get('rijksregisternummer')" class="mt-2"/>
                         </div>
-
 
                         <div class="text-gray-600">
                             <p class="font-medium text-lg">Medische informatie</p>
@@ -119,7 +116,7 @@
                                 <div class="md:col-span-2">
                                     <div class="inline-flex items-center">
                                         <input type="checkbox" name="alleenNaarHuis" id="alleenNaarHuis"
-                                               class="form-checkbox" value="1"/>
+                                               class="form-checkbox" value="1" @if($kind->alleenNaarHuis) checked @endif/>
                                         <label for="alleenNaarHuis"
                                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50">Mijn kind mag
                                             alleen naar huis vertrekken.</label>
@@ -145,7 +142,7 @@
                                         <label for="fotoToestemming-0">
                                             <input type="radio" name="fotoToestemming"
                                                    id="fotoToestemming-0"
-                                                   value="1" checked="checked">
+                                                   value="1" @if($kind->fotoToestemming) checked="checked" @endif>
                                             Ja, ik geef toestemming dat mijn kind op foto's mag staan.
                                         </label>
                                     </div>
@@ -153,7 +150,7 @@
                                         <label for="fotoToestemming-1">
                                             <input type="radio" name="fotoToestemming"
                                                    id="fotoToestemming-1"
-                                                   value="0">
+                                                   value="0" @if(!$kind->fotoToestemming) checked="checked" @endif>
                                             Nee, ik geef geen toestemming om foto's te maken van mijn kind.
                                         </label>
                                     </div>
