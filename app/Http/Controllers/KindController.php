@@ -34,7 +34,7 @@ class KindController extends Controller
      */
     public function create()
     {
-        //
+        return view('kinderen.nieuw');
     }
 
     /**
@@ -43,10 +43,22 @@ class KindController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name'=> 'required|string|max:255'
+            'voornaam'=> 'required|string|max:255',
+            'familienaam'=> 'required|string|max:255',
+            'rijksregisternummer'=> 'required|string|max:40',
+            'contactpersoon'=> 'required|string|max:255',
+            'uitpasnummer'=> 'nullable|string|max:30',
+            'beperking'=> 'nullable|string|max:255',
+            'allergie'=> 'nullable|string|max:255',
+            'medicatie'=> 'nullable|string|max:255',
+            'afhalenKind'=> 'nullable|string|max:255',
+            'infoAdmin'=> 'string|max:510',
+            'infoAdminAnimator'=> 'string|max:510',
+            'alleenNaarHuis' => 'boolean',
+            'fotoToestemming' => 'boolean'
         ]);
 
-        $request->user()->kinderen()->create($validated);
+        $request->user()->kinds()->create($validated);
         return redirect(route('kinderen.index'));
     }
 

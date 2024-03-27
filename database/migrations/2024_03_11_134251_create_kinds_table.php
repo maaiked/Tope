@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('allergie')->nullable();
             $table->string('beperking')->nullable();
             $table->string('medicatie')->nullable();
-            $table->boolean('alleenNaarHuis');
-            $table->string('afhalenKind');
+            $table->boolean('alleenNaarHuis')->default(false);
+            $table->string('afhalenKind')->nullable();
             $table->boolean('fotoToestemming');
             $table->string('rijksregisternummer');
             $table->string('uitpasnummer')->nullable();

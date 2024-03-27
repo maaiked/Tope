@@ -1,8 +1,10 @@
 <x-app-layout>
+
+{{--    made with https://tailwindflex.com/@rp-ketan/datatable --}}
         <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
             <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <h2 class="text-2xl font-bold mb-4">Kind database</h2>
-                <table id="example" class="table-auto w-full">
+                <table id="example" class="bootstrap-table" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
                     <thead>
                     <tr>
                         <th class="px-4 py-2">Voornaam</th>
@@ -34,9 +36,11 @@
             </div>
 
 {{--            scripts voor tabel met search, sorting en paginatie--}}
-            <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
-            <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-            <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+
+            <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css">
+            <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+            <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+
 
             <script>
                 $(document).ready(function() {
