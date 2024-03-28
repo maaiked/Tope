@@ -1,9 +1,16 @@
 <x-app-layout>
 
 {{--    made with https://tailwindflex.com/@rp-ketan/datatable --}}
-        <div class="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <h2 class="text-2xl font-bold mb-4">Kind database</h2>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('Alle kinderen') }}
+        </h2>
+    </x-slot>
+
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+
                 <table id="example" class="bootstrap-table" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
                     <thead>
                     <tr>
@@ -33,7 +40,7 @@
 
                     </tbody>
                 </table>
-            </div>
+
 
 {{--            scripts voor tabel met search, sorting en paginatie--}}
 
@@ -50,5 +57,7 @@
                 });
             </script>
 
+            </div>
+        </div>
     </div>
 </x-app-layout>
