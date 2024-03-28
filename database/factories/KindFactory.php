@@ -17,7 +17,15 @@ class KindFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'voornaam' => fake()->firstName(),
+            'familienaam' =>fake()->lastName(),
+            'contactpersoon' =>fake()->name(),
+            'alleenNaarHuis' =>fake()->boolean(),
+            'afhalenKind' => "alleen door ouders",
+            'fotoToestemming' => fake()->boolean(),
+            'rijksregisternummer' => "010101.00101",
+            'uitpasnummer' => "010101.00101",
+            'uitpasDatumCheck' => fake()->date(),
         ];
     }
 }

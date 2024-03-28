@@ -11,7 +11,9 @@ class Kind extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name',
+        'voornaam', 'familienaam', 'contactpersoon', 'allergie', 'beperking', 'medicatie',
+        'alleenNaarHuis', 'afhalenKind', 'fotoToestemming', 'rijksregisternummer',
+        'uitpasnummer', 'infoAdminAnimator', 'infoAdmin'
     ];
     public function user(): BelongsTo
     {
