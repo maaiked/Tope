@@ -12,7 +12,7 @@
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg px-6 py-6">
 
                     @if (session('status') === 'profiel-updated')
                         <p class="text-lg py-4 px-4 text-green-950"
