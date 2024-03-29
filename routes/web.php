@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProfielController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ActiviteitController;
@@ -26,10 +27,17 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    //profiel routes
+    //profile routes
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    //profiel routes
+    Route::get('/profielnieuw', [ProfielController::class, 'create'])->name('profiel.create');
+    Route::post('/profielnieuw', [ProfielController::class, 'store'])->name('profiel.store');
+    Route::get('/profiel', [ProfielController::class, 'edit'])->name('profiel.edit');
+    Route::put('/profiel', [ProfielController::class, 'update'])->name('profiel.update');
+
 
     //activiteit routes
     Route::get('/activiteiten', [ActiviteitController::class, 'index'])->name('activiteiten.index');
