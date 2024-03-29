@@ -7,7 +7,7 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg px-6 py-6">
                 @foreach ($kinderen as $kind)
                     <div class="bg-gray-200 hover:bg-blue-300 font-bold py-2 px-2 mt-2 mb-2 rounded">
                         <p class="mt-2 text-gray-900">{{ $kind->voornaam." ".$kind->familienaam }}</p>
