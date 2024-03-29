@@ -24,6 +24,9 @@
                     <x-nav-link :href="route('inschrijvingsdetails.index')" :active="request()->routeIs('inschrijvingsdetails.index')">
                         {{ __('Inschrijvingen') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('profiel.create')" :active="request()->routeIs('profiel.create')">
+                        {{ __('Profiel') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -44,7 +47,7 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                            {{ __('Inloggegevens') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -80,14 +83,17 @@
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('activiteiten.index')" :active="request()->routeIs('activiteiten.index')">
-                        {{ __('Activiteiten') }}
+                {{ __('Activiteiten') }}
              </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('kinderen.index')" :active="request()->routeIs('kinderen.index')">
                 {{ __('Kinderen') }}
             </x-responsive-nav-link>
              <x-responsive-nav-link :href="route('inschrijvingsdetails.index')" :active="request()->routeIs('inschrijvingsdetails.index')">
-                        {{ __('Inschrijvingen') }}
+                 {{ __('Inschrijvingen') }}
              </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('profiel.create')" :active="request()->routeIs('profiel.create')">
+                {{ __('Profiel') }}
+            </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
@@ -99,7 +105,7 @@
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
+                    {{ __('inloggegevens') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
