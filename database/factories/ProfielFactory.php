@@ -12,7 +12,15 @@ class ProfielFactory extends Factory
     public function definition(): array
     {
         return [
-
+            'voornaam' => fake()->firstName(),
+            'familienaam' =>fake()->lastName(),
+            'straat' =>fake()->streetName(),
+            'huisnummer' =>fake()->numberBetween(1, 40),
+            'bus' => fake()->numberBetween(0, 37),
+            'postcode' => fake()->numberBetween(1000, 9999),
+            'gemeente' => fake()->city(),
+            'telefoonnummer' => fake()->phoneNumber(),
+            'rijksregisternummer' => fake()->numerify('##.##.##-###.##'),
         ];
     }
 }

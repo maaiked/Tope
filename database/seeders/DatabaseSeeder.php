@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Profiel;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,8 +17,8 @@ class DatabaseSeeder extends Seeder
         // create predefined useraccounts made for testing purposes
          \App\Models\User::factory()
          ->has(\App\Models\Kind::factory()->count(2), 'kinds')
+         ->has(Profiel::factory()->count(1), 'profiel')
          ->create([
-             'name' => 'Maaike',
              'email' => 'maaike@tope.be',
              'password' => Hash::make('Laravel123'),
              'isAdmin' => false
@@ -28,14 +29,13 @@ class DatabaseSeeder extends Seeder
              ['medicatie' => 'in nood een puffer'],
              ['infoAdmin' => 'laatste kans na vechtpartijen zomer 2023, besproken met ouder op 22 augustus'],
          ), 'kinds')
-         ->create([
-             'name' => 'Robbe',
+             ->has(Profiel::factory()->count(1)->sequence(['voornaam' => 'Robbe']), 'profiel')
+             ->create([
              'email' => 'robbe@tope.be',
              'password' => Hash::make('Laravel123'),
              'isAdmin' => false
          ]);
          \App\Models\User::factory()->create([
-             'name' => 'Sarah',
              'email' => 'sarah@tope.be',
              'password' => Hash::make('Laravel123'),
              'isAdmin' => true
