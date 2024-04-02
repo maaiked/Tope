@@ -22,10 +22,10 @@ class KindFactory extends Factory
             'familienaam' =>fake()->lastName(),
             'contactpersoon' =>fake()->name(),
             'alleenNaarHuis' =>fake()->boolean(),
-            'afhalenKind' => "alleen door ouders",
+            'afhalenKind' => fake()->randomElement(['alleen door ouders', 'oma Katrien', 'oma en opa Kip', 'tante Saskia', 'meetje en peetje']),
             'fotoToestemming' => fake()->boolean(),
-            'rijksregisternummer' => "010101.00101",
-            'uitpasnummer' => "010101.00101",
+            'rijksregisternummer' => fake()->numerify('##.##.##-###.##'),
+            'uitpasnummer' => fake()->numerify('#############'),
             'leerjaar' => fake()->randomElement(LeerjaarEnum::cases())->value,
             'uitpasDatumCheck' => fake()->date(),
         ];
