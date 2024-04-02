@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\LeerjaarEnum;
 use App\Models\Kind;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Enum;
 use Illuminate\View\View;
 use App\Models\User;
 
@@ -54,7 +57,8 @@ class KindController extends Controller
             'infoAdmin'=> 'string|max:510',
             'infoAdminAnimator'=> 'string|max:510',
             'alleenNaarHuis' => 'boolean',
-            'fotoToestemming' => 'boolean'
+            'fotoToestemming' => 'boolean',
+            'leerjaar' => [Rule::enum(LeerjaarEnum::class)],
         ]);
 
         $request->user()->kinds()->create($validated);
@@ -104,7 +108,8 @@ class KindController extends Controller
             'infoAdmin'=> 'string|max:510',
             'infoAdminAnimator'=> 'string|max:510',
             'alleenNaarHuis' => 'boolean',
-            'fotoToestemming' => 'boolean'
+            'fotoToestemming' => 'boolean',
+            'leerjaar' => [new Enum(LeerjaarEnum::class)],
         ]);
 
         $kind->update($validated);

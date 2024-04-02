@@ -17,7 +17,6 @@ class InschrijvingsdetailController extends Controller
     {
         // if admin: toon alle inschrijvingen
         if (auth()->user()->isAdmin){
-            //TODO:" aanpassen zodat laatste inschrijvingen eerst getoond worden";
             $inschrijvingsdetails['inschrijvingsdetails'] = Inschrijvingsdetail::paginate(10);
             return view ('inschrijvingsdetails.index')->with($inschrijvingsdetails);
         }

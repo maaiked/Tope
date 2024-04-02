@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\LeerjaarEnum;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -25,6 +26,7 @@ class KindFactory extends Factory
             'fotoToestemming' => fake()->boolean(),
             'rijksregisternummer' => "010101.00101",
             'uitpasnummer' => "010101.00101",
+            'leerjaar' => fake()->randomElement(LeerjaarEnum::cases())->value,
             'uitpasDatumCheck' => fake()->date(),
         ];
     }
