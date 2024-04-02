@@ -53,6 +53,16 @@
                                        placeholder="10.10.10-100.10"/>
                                 <x-input-error :messages="$errors->get('rijksregisternummer')" class="mt-2"/>
                             </div>
+                            <div class="md:col-span-1">
+                                <label for="leerjaar">Leerjaar</label>
+                                <select name="leerjaar" id="leerjaar" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50">
+                                    @foreach(App\Enums\LeerjaarEnum::cases() as $leerjaren)
+                                        <option value="{{ $leerjaren->value }}" @selected(old('leerjaar') == $leerjaren->value)>
+                                            {{ $leerjaren->value }}</option>
+                                    @endforeach
+                                </select>
+                                <x-input-error :messages="$errors->get('leerjaar')" class="mt-2"/>
+                            </div>
 
                         </div>
 

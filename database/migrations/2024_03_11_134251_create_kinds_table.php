@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\LeerjaarEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -24,6 +25,7 @@ return new class extends Migration
             $table->string('afhalenKind')->nullable();
             $table->boolean('fotoToestemming');
             $table->string('rijksregisternummer');
+            $table->string('leerjaar')->default(LeerjaarEnum::KL1->value);
             $table->string('uitpasnummer')->nullable();
             $table->string('uitpasKansentarief')->nullable();
             $table->date('uitpasDatumCheck')->nullable();
