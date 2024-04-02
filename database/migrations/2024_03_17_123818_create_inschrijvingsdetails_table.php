@@ -15,6 +15,14 @@ return new class extends Migration
             $table->id();
             $table->foreignId('kind_id')->constrained()->cascadeOnDelete();
             $table->foreignId('activiteit_id')->constrained()->cascadeOnDelete();
+            $table->boolean('actief')->default(true);
+            $table->date('inschrijvingsdatum')->default(today());
+            $table->float('prijs')->nullable();
+            //$table->foreignId('betaling_id');
+            $table->boolean('ingechecked')->default(false);
+            $table->boolean('uitgechecked')->default(false);
+            $table->date('deelnemersattestVerzonden')->nullable();
+            $table->date('ziekenfondsattestVerzonden')->nullable();
             $table->timestamps();
         });
     }

@@ -17,4 +17,8 @@ class Inschrijvingsdetail extends Model
     {
         return $this->belongsTo(Activiteit::class);
     }
+
+    protected $guarded = [
+        'ziekenfondsattestVerzonden', 'deelnemersattestVerzonden'
+    ];
 }
