@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('gemeente');
             $table->string('telefoonnummer');
             $table->string('rijksregisternummer');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('activiteits', function (Blueprint $table) {
             $table->id();
             $table->string('message');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

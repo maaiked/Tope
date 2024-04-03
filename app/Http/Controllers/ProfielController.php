@@ -65,7 +65,7 @@ class ProfielController extends Controller
      */
     public function edit(Request $request)
     {
-        $userprofiel = Profiel::where('user_id', auth()->id())->first();
+        $userprofiel= $request->user()->profiel()->first();
         return view('profiel.edit', compact('userprofiel'));
     }
 
