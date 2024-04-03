@@ -9,31 +9,66 @@
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg px-6 py-6">
+
+                    {{--    enkel zichtbaar voor admin    --}}
                     <div>
                         @if (auth()->user()->isAdmin)
-                            <form method="POST" action="{{ route('activiteiten.store') }}">
-                                @csrf
-                                <textarea
-                                    name="message"
-                                    placeholder="{{ __('Geef de naam van de nieuwe activiteit') }}"
-                                    class="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                                >{{ old('message') }}</textarea>
-                                <x-input-error :messages="$errors->get('message')" class="mt-2"/>
-                                <x-primary-button class="mt-4">{{ __('Voeg toe') }}</x-primary-button>
-                            </form>
+                            {{--    TODO:: knop om nieuwe activiteit aan te maken    --}}
                         @endif
                     </div>
 
+                    {{--    zichtbaar voor iedereen    --}}
                     <div class="bg-white shadow-sm rounded-lg divide-y">
                         @foreach ($activiteiten as $activiteit)
-                            <div class="p-2 flex space-x-0">
+                            <div class="p-2 flex space-x-0 grid-cols-6">
+
+                                {{--    naam activiteit    --}}
                                 <div class="flex-1">
-                                    <p class="mt-4 text-lg text-gray-900">{{ $activiteit->naam }}</p>
+                                    <p class="mt-4 text-lg text-gray-900">{{ $activiteit->naam}}</p>
+                                </div>
+
+                                {{--    start en eindtijd activiteit    --}}
+                                <div class="flex-1">
+                                    <p class="mt-4 text-md text-gray-900">{!!"van ".Carbon\Carbon::parse($activiteit->starttijd)->format('d-m-Y G\ui').
+                                    "<br/>  tot ".Carbon\Carbon::parse($activiteit->eindtijd)->format('d-m-Y G\ui')!!}</p>
+                                </div>
+
+                                {{--    van leerjaar x tot leerjaar y    --}}
+                                <div class="flex-1">
+                                    <p class="mt-4 text-md text-gray-900">{{ $activiteit->leerjaarVanaf->value." tot ".$activiteit->leerjaarTot->value }}</p>
+                                </div>
+
+                                {{--    prijs activiteit    --}}
+                                <div class="flex-1">
+                                    <p class="mt-4 text-md text-gray-900">{{"€ ". $activiteit->prijs}}</p>
+                                </div>
+
+                                {{--    opties met prijs    --}}
+                                <div class="flex-1">
+                                    @foreach($activiteit->opties as $optie)
+                                        <p class="mt-4 text-md text-gray-900">{{ $optie->omschrijving.": € ".$optie->prijs}}</p>
+                                    @endforeach
+                                </div>
+
+                                {{--    locatie    --}}
+                                <div class="flex-1">
+                                    <p class="mt-4 text-md text-gray-900">{{ $activiteit->locatie->naam}}</p>
+                                    <p class="mt-4 text-sm text-gray-900">{!!  $activiteit->locatie->straat.",</br> ".$activiteit->locatie->gemeente !!}</p>
+
                                 </div>
                             </div>
+
+                            @if (auth()->user()->isAdmin)
+                                {{--    TODO:: knop om activiteit te bewerken    --}}
+                            @endif
+
                         @endforeach
                     </div>
+
+
+                    {{--    paginatie    --}}
                     {{ $activiteiten->links() }}
+
                 </div>
             </div>
         </div>

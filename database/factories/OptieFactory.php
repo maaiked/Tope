@@ -14,7 +14,6 @@ class OptieFactory extends Factory
         return [
             'prijs' => fake()->randomFloat('2', '1', '30'),
             'omschrijving' => fake()->randomElement(['middagmaal', 'zwemmen', 'opvang', 'toneel', 'uitstap']),
-            'datum' => fake()->date()
         ];
     }
 }

@@ -15,7 +15,19 @@ class ActiviteitController extends Controller
      */
     public function index(): View
     {
-        return view ('activiteiten.index', ['activiteiten'=> Activiteit::paginate(5)]);
+        if(auth()->user()->isAdmin)
+        {
+            return view ('activiteiten.index', ['activiteiten'=> Activiteit::paginate(5)]);
+
+        }
+        else
+        {
+            $activiteiten['activiteiten']= Activiteit::whereDate('eindtijd', '>', now())
+            ->orderBy('starttijd', 'asc')
+            ->paginate(10);
+            return view ('activiteiten.index')->with($activiteiten);
+
+        }
     }
 
     /**
@@ -32,10 +44,10 @@ class ActiviteitController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'message'=> 'required|string|max:255'
+            'naam'=> 'required|string|max:255'
         ]);
         Activiteit::create([
-            'message'=>$request->message,
+            'naam'=>$request->message,
         ]);
         return redirect(route('activiteiten.index'));
     }

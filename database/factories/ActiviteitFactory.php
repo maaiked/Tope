@@ -21,16 +21,16 @@ class ActiviteitFactory extends Factory
         return [
             'naam' => fake()->randomElement(['maandagvoormiddag', 'maandagnamiddag', 'dinsdagvoormiddag', 'dinsdagnamiddag', 'paasvakantie week 1', 'paasvakantie week2' ]),
             'omschrijving' => fake()->sentence(),
-            'starttijd' =>fake()->dateTimeThisMonth(),
-            'eindtijd' =>fake()->dateTimeThisMonth(),
+            'starttijd' =>fake()->dateTimeBetween('-2 week', '+3 week'),
+            'eindtijd' =>fake()->dateTimeBetween('-2 week', '+4 week'),
             'prijs' =>fake()->randomFloat('2', '2', '20'),
             'capaciteit' =>fake()->numberBetween('11', '50'),
             'aantalInschrijvingen'  =>fake()->numberBetween('0', '10'),
             'leerjaarVanaf' => fake()->randomElement(LeerjaarEnum::cases())->value,
             'leerjaarTot'=> fake()->randomElement(LeerjaarEnum::cases())->value,
-            'inschrijvenVanaf' => fake()->date(),
-            'inschrijvenTot' => fake()->date(),
-            'annulerenTot' =>fake()->date(),
+            'inschrijvenVanaf' => fake()->dateTimeBetween('-2 week', '+2 week'),
+            'inschrijvenTot' => fake()->dateTimeBetween('-1 week', '+3 week'),
+            'annulerenTot' =>fake()->dateTimeBetween('-1 week', '+3 week'),
             'vakantie' => fake()->randomElement(VakantieEnum::cases())->value,
         ];
     }

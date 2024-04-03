@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('activiteit_id')->constrained()->cascadeOnDelete();
             $table->float('prijs');
             $table->string('omschrijving');
-            $table->date('datum');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

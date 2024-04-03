@@ -56,9 +56,9 @@ class DatabaseSeeder extends Seeder
 
         //create 15 activiteiten
         \App\Models\Activiteit::factory()
-            ->count(10)
+            ->count(15)
             ->has(Locatie::factory()->count(1), 'locatie')
-            ->has(Optie::factory()->count(1), 'opties')
+            ->has(Optie::factory()->count(2), 'opties')
             ->create();
 
         // create 10 inschrijvingen
