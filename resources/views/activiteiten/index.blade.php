@@ -28,7 +28,7 @@
                         @foreach ($activiteiten as $activiteit)
                             <div class="p-2 flex space-x-0">
                                 <div class="flex-1">
-                                    <p class="mt-4 text-lg text-gray-900">{{ $activiteit->message }}</p>
+                                    <p class="mt-4 text-lg text-gray-900">{{ $activiteit->naam }}</p>
                                 </div>
                             </div>
                         @endforeach

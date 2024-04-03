@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Locatie;
+use App\Models\Optie;
 use App\Models\Profiel;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -17,7 +19,7 @@ class DatabaseSeeder extends Seeder
         // create predefined useraccounts made for testing purposes
          \App\Models\User::factory()
          ->has(\App\Models\Kind::factory()->count(2), 'kinds')
-         ->has(Profiel::factory()->count(1), 'profiel')
+         ->has(Profiel::factory()->count(1)->sequence(['voornaam' => 'Maaike']), 'profiel')
          ->create([
              'email' => 'maaike@tope.be',
              'password' => Hash::make('Laravel123'),
@@ -44,31 +46,19 @@ class DatabaseSeeder extends Seeder
          //create 10 random users with 2 children each
         \App\Models\User::factory()
         ->count(10)
-        ->has(\App\Models\Kind::factory()->count(2)->sequence(
-            ['allergie' => 'zonnecreme', 'beperking' => 'ASS'],
-            ['medicatie' => 'relatine'],
-            ['allergie' => 'pollen'],
-            ['infoAdminAnimator' => 'moeite met drukte'],
-            ['infoAdmin' => 'op voorhand betalen'],
-            ['allergie' => 'melk'],
-        ), 'kinds')
+        ->has(\App\Models\Kind::factory()->count(2), 'kinds')
         ->create();
+
+        //create 2 locaties
+        Locatie::factory()
+            ->count(2)
+            ->create();
 
         //create 15 activiteiten
         \App\Models\Activiteit::factory()
             ->count(10)
-            ->sequence(
-                ['message' => 'Paasvakantie week 1 - maandag'],
-                ['message' => 'Paasvakantie week 1 - dinsdag'],
-                ['message' => 'Paasvakantie week 1 - woensdag'],
-                ['message' => 'Paasvakantie week 1 - donderdag'],
-                ['message' => 'Paasvakantie week 1 - vrijdag'],
-                ['message' => 'Paasvakantie week 2 - maandag'],
-                ['message' => 'Paasvakantie week 2 - dinsdag'],
-                ['message' => 'Paasvakantie week 2 - woensdag'],
-                ['message' => 'Paasvakantie week 2 - donderdag'],
-                ['message' => 'Paasvakantie week 2 - vrijdag'],
-            )
+            ->has(Locatie::factory()->count(1), 'locatie')
+            ->has(Optie::factory()->count(1), 'opties')
             ->create();
 
         // create 10 inschrijvingen

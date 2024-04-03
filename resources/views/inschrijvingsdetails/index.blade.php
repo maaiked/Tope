@@ -25,7 +25,7 @@
 {{--                TODO: inschrijvingen sorteren op datum inschrijving of activiteit? groeperen per jaar > vakantieperiode? filters toevoegen?--}}
                 @foreach ($inschrijvingsdetails as $inschrijvingsdetail)
                     <div class=" flex space-x-0">
-                            <p class="mt-2 text-md text-gray-900">{{ $inschrijvingsdetail->activiteit->message}}</p>
+                            <p class="mt-2 text-md text-gray-900">{{ $inschrijvingsdetail->activiteit->naam}}</p>
                     </div>
                     <div class="flex space-x-0">
                         <p class="mt-2 text-md text-gray-900">{{ $inschrijvingsdetail->kind->voornaam}}</p>
