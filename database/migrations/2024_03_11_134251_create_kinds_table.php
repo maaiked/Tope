@@ -31,6 +31,7 @@ return new class extends Migration
             $table->date('uitpasDatumCheck')->nullable();
             $table->string('infoAdminAnimator')->nullable();
             $table->string('infoAdmin')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
