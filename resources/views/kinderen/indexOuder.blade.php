@@ -10,20 +10,26 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg px-6 py-6">
                 @foreach ($kinderen as $kind)
                     <div class="bg-gray-200 hover:bg-blue-300 font-bold py-2 px-2 mt-2 mb-2 rounded
-                    grid gap-4 gap-y-2 text-sm grid-cols-2 md:grid-cols-4 ">
-                        <p class="mt-2 text-gray-900 md:col-span-1">{{ $kind->voornaam." ".$kind->familienaam}}</p>
-                        <div>
-                            <p class="mt-2 text-gray-900 md:col-span-1">{{ $kind->leerjaar}}</p>
-                        </div>
-                        <div >
-                            <p class="mt-2 text-gray-900 md:col-span-1">
-                                @if($kind->allergie) &#9989; @else &#10060; @endif allergie
-                                @if($kind->beperking) &#9989; @else &#10060; @endif beperking
-                                @if($kind->medicatie) &#9989;  @else &#10060; @endif medicatie
+                    grid gap-4 gap-y-2 text-sm  sm:grid-cols-2 md:grid-cols-4 ">
+                        <p class="mt-2 text-gray-900 col-span-1">{{ $kind->voornaam." ".$kind->familienaam}}</p>
+                        <p class="mt-2 text-gray-900 col-span-1">{{ $kind->leerjaar}}</p>
+                        <p class="mt-2 text-gray-900 col-span-1">
+                                @if($kind->allergie) &#9989;
+                                @else &#10060;
+                                @endif allergie<br>
+                                @if($kind->beperking)
+                                    &#9989;
+                                @else
+                                    &#10060;
+                                @endif beperking<br>
+                                @if($kind->medicatie)
+                                    &#9989;
+                                @else
+                                    &#10060;
+                                @endif medicatie
                             </p>
-                        </div>
                         <button onclick="window.location='{{ route("kind.edit", $kind->id) }}'"
-                                class="col-span-1 md:col-span-1  inline-flex border-2 items-center gap-2 rounded-lg px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:relative">
+                                class="col-span-1  inline-flex border-2 items-center gap-2 rounded-lg px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:relative">
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
@@ -42,11 +48,10 @@
                         </button>
                     </div>
                 @endforeach
-                {{--                        TODO: kindgegevens weergeven in card--}}
-                    <button onclick="window.location='{{ route("kind.create") }}'"
-                            class="bg-blue-500 hover:bg-blue-700 mt-2 text-white font-bold py-2 px-4 rounded">
-                        Kind toevoegen
-                    </button>
+                <button onclick="window.location='{{ route("kind.create") }}'"
+                        class="bg-blue-500 hover:bg-blue-700 mt-2 text-white font-bold py-2 px-4 rounded">
+                    Kind toevoegen
+                </button>
             </div>
         </div>
     </div>
