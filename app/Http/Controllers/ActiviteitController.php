@@ -17,7 +17,7 @@ class ActiviteitController extends Controller
     {
         if(auth()->user()->isAdmin)
         {
-            return view ('activiteiten.index', ['activiteiten'=> Activiteit::paginate(5)]);
+            return view ('activiteiten.index', ['activiteiten'=> Activiteit::paginate(10)]);
 
         }
         else
@@ -55,9 +55,10 @@ class ActiviteitController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Activiteit $activiteit)
+    public function show($activiteitid)
     {
-        //
+        $activiteit = Activiteit::find($activiteitid);
+        return view ('activiteiten.detail', compact('activiteit'));
     }
 
     /**
