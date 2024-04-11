@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\MethodeEnum;
 use Illuminate\Database\Eloquent\Model;
 
 class Betalingsdetail extends Model
@@ -10,6 +11,6 @@ class Betalingsdetail extends Model
 
     protected $casts = [
         'datum' => 'date',
-        'methode' => Methode::class
+        'methode' => MethodeEnum::class
     ];
 }

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Enums;
 
-enum Methode
+enum MethodeEnum
 {
     case BANCONTACT;
     case CASH;
