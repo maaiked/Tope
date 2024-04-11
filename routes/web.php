@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function () {
 
 
     //activiteit routes
-    Route::get('/activiteiten', [ActiviteitController::class, 'index'])->name('activiteiten.index');
+    Route::get('/activiteiten{id?}', [ActiviteitController::class, 'index'])->name('activiteiten.index');
     Route::post('/activiteiten', [ActiviteitController::class, 'store'])->name('activiteiten.store');
     Route::get('/activiteiten/{id}', [ActiviteitController::class, 'show'])->name('activiteiten.show');
 
