@@ -7,6 +7,7 @@
             </h2>
         </x-slot>
 
+
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
@@ -17,8 +18,11 @@
                     @endif
                 </div>
 
+
+                {{--    zichtbaar voor iedereen    --}}
                 <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg mx-6 my-6 mt-4 px-4 py-4">
 
+                    {{--    selecteer kind    --}}
                     <style>
                         input:checked + label {
                             border-color: black;
@@ -26,12 +30,14 @@
                             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
                         }
                     </style>
-                    <form>
-                        <div class="grid grid-cols-3 gap-2 w-full max-w-screen-sm vertical-align:middle">
+
+                        <div class="grid md:grid-cols-4 gap-2 w-full max-w-screen-sm vertical-align:middle">
                              <span class="text-md font-semibold uppercase">Selecteer kind: </span>
                             @foreach(auth()->user()->kinds()->get() as $kind)
-                                <div>
-                                    <input class="hidden" id="{{ $kind->id }}" type="radio" name="radio">
+                                <div class="md:col-span-1">
+                                    <input class="hidden" id="{{ $kind->id }}" type="radio" name="kinderen" value="{{ $kind->id }}"
+                                           @if (optional($geselecteerdkind)->id == $kind->id) checked="checked" @endif
+                                           onclick="window.location='{{ route("activiteiten.index", $kind->id) }}'">
                                     <label class="flex flex-col p-4 border-2 border-gray-400 cursor-pointer"
                                            for="{{ $kind->id }}">
                                         <span class="text-xs font-semibold uppercase">{{ $kind->voornaam}}</span>
@@ -40,11 +46,19 @@
                                     </label>
                                 </div>
                             @endforeach
+                            <div class="md:col-span-1">
+                                <input class="hidden" id="geenfilter" type="radio" name="kinderen" value=""
+                                       onclick="window.location='{{ route("activiteiten.index") }}'">
+                                <label class="flex flex-col p-4 border-2 border-gray-400 cursor-pointer"
+                                       for="geenfilter">
+                                    <span class="text-xs font-semibold uppercase">selectie wissen</span>
+                                </label>
+                            </div>
                         </div>
-                    </form>
+
                 </div>
 
-                {{--    zichtbaar voor iedereen    --}}
+                {{--    toon activiteiten    --}}
                 @foreach ($activiteiten as $activiteit)
 
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mx-6 my-6 mt-4 px-4 py-4">
@@ -84,7 +98,7 @@
 
                             {{--    knop 'info' + knop 'inschrijven'    --}}
                             <div class="flex-1 items-center vertical-align: middle;">
-                                @if($kind == !null)
+                                @if($geselecteerdkind == null)
                                     <p>Selecteer een kind om in te schrijven</p>
                                 @elseif($activiteit->inschrijvenVanaf >= today())
                                     <p class="text-sm font-bold">{!!"Inschrijven kan vanaf ".Carbon\Carbon::parse($activiteit->inschrijvenVanaf)->format('d-m-Y')!!}</p>
@@ -113,11 +127,10 @@
                     </div>
                 @endforeach
 
-
                 {{--    paginatie    --}}
                 {{ $activiteiten->links() }}
 
             </div>
         </div>
-    </form>
+
 </x-app-layout>
