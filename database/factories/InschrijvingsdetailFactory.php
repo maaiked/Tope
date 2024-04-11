@@ -17,7 +17,7 @@ class InschrijvingsdetailFactory extends Factory
     public function definition(): array
     {
         return [
-            'inschrijvingsdatum' => fake()->date(),
+            'inschrijvingsdatum' => fake()->dateTimeBetween('-3years' ),
             'prijs' =>fake()->randomFloat(2, 1, 120),
         ];
     }

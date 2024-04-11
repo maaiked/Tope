@@ -1,0 +1,20 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Locatie;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+class LocatieFactory extends Factory
+{
+    protected $model = Locatie::class;
+
+    public function definition(): array
+    {
+        return [
+            'naam' => fake()->city(),
+            'straat' => fake()->streetAddress(),
+            'gemeente' => fake()->city()
+        ];
+    }
+}

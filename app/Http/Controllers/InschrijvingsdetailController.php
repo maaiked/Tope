@@ -24,6 +24,7 @@ class InschrijvingsdetailController extends Controller
         else {
              $inschrijvingsdetails['inschrijvingsdetails']= Inschrijvingsdetail::join('kinds', 'inschrijvingsdetails.kind_id','=', 'kinds.id' )
                 ->where('kinds.user_id', '=', auth()->user()->id)
+                 ->orderBy('inschrijvingsdatum', 'desc')
                 ->paginate(10);
             return view ('inschrijvingsdetails.index')->with($inschrijvingsdetails);
            }
