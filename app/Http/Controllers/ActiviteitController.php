@@ -17,7 +17,7 @@ class ActiviteitController extends Controller
      */
     public function index($id = null): View
     {
-        // if admin
+        // if admin, toon alle activiteiten
         if(auth()->user()->isAdmin)
         {
             return view ('activiteiten.index', ['activiteiten'=> Activiteit::paginate(10)]);
@@ -35,10 +35,6 @@ class ActiviteitController extends Controller
         // if kind werd geselecteerd, toon enkel activiteiten waar kind kan aan meedoen
         else
         {   $geselecteerdkind = Kind::find($id);
-            $kl1 = 1;  $kl2 = 2;  $kl3 = 3;
-            $lj1 = 4;  $lj2 = 5;  $lj3 = 6;
-            $lj4 = 7;  $lj5 = 8;  $lj6 = 9;
-            $md1 = 10;
             switch ($geselecteerdkind->leerjaar) {
                 case LeerjaarEnum::KL1:
                     $activiteiten['activiteiten']= Activiteit::whereDate('eindtijd', '>', now())
