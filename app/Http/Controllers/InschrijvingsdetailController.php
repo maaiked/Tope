@@ -44,14 +44,19 @@ class InschrijvingsdetailController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        // basen on https://laracasts.com/discuss/channels/laravel/how-do-i-handle-multiple-submit-buttons-in-a-single-form-with-laravel
+        // based on https://laracasts.com/discuss/channels/laravel/how-do-i-handle-multiple-submit-buttons-in-a-single-form-with-laravel
+
+        // als knop 'meer info' werd aangeklikt, ga naar detailpagina activiteit
         switch ($request->input('action')){
             case 'info':
                     return \Redirect::route('activiteiten.show', $request->activiteit);
                 break;
+
+        // als knop 'inschrijven' werd aangeklikt, maak inschrijving aan
             case 'inschrijven':
-                $totaalprijs = $request->prijs;
                 $activiteit = Activiteit::find($request->activiteit);
+                // bereken totaalprijs (prijs activiteit + prijs opties)
+                $totaalprijs = $request->prijs;
                 foreach ($activiteit->opties as $optie)
                 {
                     if ($request->has($optie->omschrijving))
@@ -59,22 +64,28 @@ class InschrijvingsdetailController extends Controller
                         $totaalprijs += $optie->prijs;
                     }
                 }
-                $inschrijvingsdetail = Inschrijvingsdetail::create(
-                    ['kind_id' => $request->kindid,
-                        'activiteit_id' => $request->activiteit,
-                        'prijs' => $totaalprijs,
-                        'inschrijvingsdatum' => today()]
-                );
-                foreach ($activiteit->opties as $optie)
-                {
-                    if ($request->has($optie->omschrijving))
+                // als capaciteit activiteit niet vol is, maak inschrijving aan
+                if ($activiteit->aantalInschrijvingen < $activiteit->capaciteit){
+                    $inschrijvingsdetail = Inschrijvingsdetail::create(
+                        ['kind_id' => $request->kindid,
+                            'activiteit_id' => $request->activiteit,
+                            'prijs' => $totaalprijs,
+                            'inschrijvingsdatum' => today()]
+                    )->save();
+                    //update aanInschrijvingen
+                    $inschrijvingen = $activiteit->aantalInschrijvingen +1;
+                    $activiteit->update(['aantalInschrijvingen' => $inschrijvingen]);
+                    // als opties werden toegevoegd aan de inschrijving, sla deze op
+                    foreach ($activiteit->opties as $optie)
                     {
-                       $inschrijvingsdetail_opties = new Inschrijvingsdetail_optie(['inschrijvingsdetail_id' => $inschrijvingsdetail->id, 'optie_id' => $optie->id]);
-                       $inschrijvingsdetail_opties->save();
+                        if ($request->has($optie->omschrijving))
+                        {
+                            $inschrijvingsdetail_opties = new Inschrijvingsdetail_optie(['inschrijvingsdetail_id' => $inschrijvingsdetail->id, 'optie_id' => $optie->id]);
+                            $inschrijvingsdetail_opties->save();
+                        }
                     }
                 }
-
-                return \Redirect::Route('activiteiten.index');
+                return \Redirect::Route('activiteiten.index', $request->kindid);
                 break;
         }
         return redirect(route('dashboard'));

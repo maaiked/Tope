@@ -102,6 +102,8 @@
 
                                 @if(empty($geselecteerdkind))
                                     <p>Selecteer een kind om in te schrijven</p>
+                                @elseif($activiteit->inschrijvingsdetails->has(['kind_id'=> $geselecteerdkind->id]))
+                                    <p>ingeschreven</p>
                                 @elseif($activiteit->inschrijvenVanaf >= today())
                                     <p class="text-sm font-bold">{!!"Inschrijven kan vanaf ".Carbon\Carbon::parse($activiteit->inschrijvenVanaf)->format('d-m-Y')!!}</p>
                                 @elseif($activiteit->inschrijvenTot < today())
