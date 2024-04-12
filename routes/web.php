@@ -41,8 +41,9 @@ Route::middleware('auth')->group(function () {
 
     //activiteit routes
     Route::get('/activiteiten{id?}', [ActiviteitController::class, 'index'])->name('activiteiten.index');
-    Route::post('/activiteiten', [ActiviteitController::class, 'store'])->name('activiteiten.store');
+    Route::post('/activiteiten/nieuw', [ActiviteitController::class, 'store'])->name('activiteiten.store');
     Route::get('/activiteiten/{id}', [ActiviteitController::class, 'show'])->name('activiteiten.show');
+    Route::post('/activiteiten', [InschrijvingsdetailController::class, 'store'])->name('inschrijvingsdetail.store');
 
     //kind routes
     Route::get('/kinderen', [KindController::class, 'index'])->name('kinderen.index');
@@ -53,7 +54,6 @@ Route::middleware('auth')->group(function () {
 
     //inschrijvingsdetails routes
     Route::get('/inschrijvingsdetails', [InschrijvingsdetailController::class, 'index'])->name('inschrijvingsdetails.index');
-    Route::post('/inschrijvingsdetails', [InschrijvingsdetailController::class, 'store'])->name('inschrijvingsdetails.store');
 
 });
 

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activiteit;
 use App\Models\Inschrijvingsdetail;
-use App\Models\Kind;
-use App\Models\User;
+use App\Models\Inschrijvingsdetail_optie;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -41,9 +42,42 @@ class InschrijvingsdetailController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        // basen on https://laracasts.com/discuss/channels/laravel/how-do-i-handle-multiple-submit-buttons-in-a-single-form-with-laravel
+        switch ($request->input('action')){
+            case 'info':
+                    return \Redirect::route('activiteiten.show', $request->activiteit);
+                break;
+            case 'inschrijven':
+                $totaalprijs = $request->prijs;
+                $activiteit = Activiteit::find($request->activiteit);
+                foreach ($activiteit->opties as $optie)
+                {
+                    if ($request->has($optie->omschrijving))
+                    {
+                        $totaalprijs += $optie->prijs;
+                    }
+                }
+                $inschrijvingsdetail = Inschrijvingsdetail::create(
+                    ['kind_id' => $request->kindid,
+                        'activiteit_id' => $request->activiteit,
+                        'prijs' => $totaalprijs,
+                        'inschrijvingsdatum' => today()]
+                );
+                foreach ($activiteit->opties as $optie)
+                {
+                    if ($request->has($optie->omschrijving))
+                    {
+                       $inschrijvingsdetail_opties = new Inschrijvingsdetail_optie(['inschrijvingsdetail_id' => $inschrijvingsdetail->id, 'optie_id' => $optie->id]);
+                       $inschrijvingsdetail_opties->save();
+                    }
+                }
+
+                return \Redirect::Route('activiteiten.index');
+                break;
+        }
+        return redirect(route('dashboard'));
     }
 
     /**
