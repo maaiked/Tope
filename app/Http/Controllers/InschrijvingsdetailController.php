@@ -71,7 +71,7 @@ class InschrijvingsdetailController extends Controller
                             'activiteit_id' => $request->activiteit,
                             'prijs' => $totaalprijs,
                             'inschrijvingsdatum' => today()]
-                    )->save();
+                    );
                     //update aanInschrijvingen
                     $inschrijvingen = $activiteit->aantalInschrijvingen +1;
                     $activiteit->update(['aantalInschrijvingen' => $inschrijvingen]);
