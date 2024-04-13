@@ -45,9 +45,11 @@
                         <p class="mt-2 text-md text-gray-900">{{ Carbon\Carbon::parse($inschrijvingsdetail->inschrijvingsdatum)->format('d-m-Y')}}</p>
                     </div>
 
-                    {{--    voornaam kind    --}}
+                    {{--    voornaam + familienaam kind    --}}
                     <div class="flex space-x-0">
-                        <p class="mt-2 text-md text-gray-900">{{ $inschrijvingsdetail->kind->voornaam}}</p>
+                        <p class="mt-2 text-md text-gray-900">{{ $inschrijvingsdetail->kind->voornaam }}</p>
+
+                        <p class="mt-2 text-md px-2 text-gray-900">{{ $inschrijvingsdetail->kind->familienaam }}</p>
                     </div>
 
                     {{--    naam activiteit    --}}
@@ -70,7 +72,7 @@
                                 {{ "details" }}
                         </button>
                     @if($inschrijvingsdetail->activiteit->annulerenTot > today())
-                            <button class="rounded-md bg-gray-500 text-white focus:ring-gray-600 px-4 py-2 text-sm m-4"
+                            <button class="rounded-md bg-red-900 text-white focus:ring-gray-600 px-4 py-2 text-sm m-4"
                                     onclick="window.location='{{ route("inschrijvingsdetails.destroy", $inschrijvingsdetail->inschrijvingsdetails_id) }}'">
                                 {{ "uitschrijven" }}
                             </button>

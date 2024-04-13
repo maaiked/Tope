@@ -29,7 +29,7 @@
                         <tr>
                             <td class="border px-4 py-2">{{$kind->voornaam}}</td>
                             <td class="border px-4 py-2">{{$kind->familienaam}}</td>
-                            <td class="border px-4 py-2">{{$kind->user->name}}</td>
+                            <td class="border px-4 py-2">{{ optional($kind->user->profiel)->voornaam." ".optional($kind->user->profiel)->familienaam }}</td>
                             <td class="border px-4 py-2">{{$kind->allergie}}</td>
                             <td class="border px-4 py-2">{{$kind->beperking}}</td>
                             <td class="border px-4 py-2">{{$kind->medicatie}}</td>

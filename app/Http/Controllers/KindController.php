@@ -21,7 +21,7 @@ class KindController extends Controller
     {
         // als user = admin -> geef alle kinderen weer
         if (auth()->user()->isAdmin){
-            $kinderen['kinderen'] = Kind::with("user")->get();
+            $kinderen['kinderen'] = Kind::all();
             return view ('kinderen.indexAdmin')->with($kinderen);
         }
         // als user = geen admin -> geef enkel eigen kinderen weer
