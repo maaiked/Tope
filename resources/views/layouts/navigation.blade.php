@@ -24,9 +24,12 @@
                     <x-nav-link :href="route('inschrijvingsdetails.index')" :active="request()->routeIs('inschrijvingsdetails.index')">
                         {{ __('Inschrijvingen') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('profiel.create')" :active="request()->routeIs('profiel.create')">
+                    @if(!Auth::user()->isAdmin)
+                        <x-nav-link :href="route('profiel.create')" :active="request()->routeIs('profiel.create')">
                         {{ __('Profiel') }}
-                    </x-nav-link>
+                        </x-nav-link>
+                    @endif
+
                 </div>
             </div>
 
@@ -92,9 +95,11 @@
              <x-responsive-nav-link :href="route('inschrijvingsdetails.index')" :active="request()->routeIs('inschrijvingsdetails.index')">
                  {{ __('Inschrijvingen') }}
              </x-responsive-nav-link>
+            @if(!Auth::user()->isAdmin)
             <x-responsive-nav-link :href="route('profiel.create')" :active="request()->routeIs('profiel.create')">
                 {{ __('Profiel') }}
             </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->

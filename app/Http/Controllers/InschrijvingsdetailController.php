@@ -18,7 +18,7 @@ class InschrijvingsdetailController extends Controller
     {
         // if admin: toon alle inschrijvingen
         if (auth()->user()->isAdmin){
-            $inschrijvingsdetails['inschrijvingsdetails'] = Inschrijvingsdetail::paginate(20);
+            $inschrijvingsdetails['inschrijvingsdetails'] = Inschrijvingsdetail::select('*', 'inschrijvingsdetails.id AS inschrijvingsdetails_id')->paginate(20);
             return view ('inschrijvingsdetails.index')->with($inschrijvingsdetails);
         }
         // if user: toon inschrijvingen van eigen kinderen
@@ -125,11 +125,17 @@ class InschrijvingsdetailController extends Controller
     {
         $inschrijvingsdetail = Inschrijvingsdetail::find($id);
 
-        //update aantalInschrijvingen
+        //update aantal inschrijvingen in activiteit
         $activiteitsid = $inschrijvingsdetail->activiteit_id;
         $activiteit = Activiteit::find($activiteitsid);
         $inschrijvingen = $activiteit->aantalInschrijvingen -1;
         $activiteit->update(['aantalInschrijvingen' => $inschrijvingen]);
+
+        // verwijder bijhorende opties waarvoor ingeschreven werd
+        foreach ($inschrijvingsdetail->inschrijvingsdetail_opties as $opties) {
+            $optie = Inschrijvingsdetail_optie::find($opties->id);
+            $optie->delete();
+        }
 
         // verwijder inschrijving
         $inschrijvingsdetail->delete();
