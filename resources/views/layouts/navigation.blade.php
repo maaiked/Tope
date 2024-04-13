@@ -32,6 +32,11 @@
                     <!-- Authentication -->
                     <form method="POST" action="{{ route('logout') }}">
                     @csrf
+                    <x-nav-link :href="route('logout')"
+                                     onclick="event.preventDefault();
+                                            this.closest('form').submit();">
+                        {{ __('Afmelden') }}
+                    </x-nav-link>
                     </form>
 
                 </div>
