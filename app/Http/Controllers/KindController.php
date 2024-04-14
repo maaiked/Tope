@@ -47,7 +47,7 @@ class KindController extends Controller
         $validated = $request->validate([
             'voornaam'=> 'required|string|max:255',
             'familienaam'=> 'required|string|max:255',
-            'rijksregisternummer'=> 'required|string|max:40',
+            'rijksregisternummer'=> 'required|string|max:40|regex:/^[0-9]{2}[.][0-9]{2}[.][0-9]{2}[-][0-9]{3}[.][0-9]{2}$/',
             'contactpersoon'=> 'required|string|max:255',
             'uitpasnummer'=> 'nullable|string|max:30',
             'beperking'=> 'nullable|string|max:255',
@@ -98,7 +98,7 @@ class KindController extends Controller
         $validated = $request->validate([
             'voornaam'=> 'required|string|max:255',
             'familienaam'=> 'required|string|max:255',
-            'rijksregisternummer'=> 'required|string|max:40',
+            'rijksregisternummer'=> 'required|string|max:40|regex:/^[0-9]{2}[.][0-9]{2}[.][0-9]{2}[-][0-9]{3}[.][0-9]{2}$/',
             'contactpersoon'=> 'required|string|max:255',
             'uitpasnummer'=> 'nullable|string|max:30',
             'beperking'=> 'nullable|string|max:255',

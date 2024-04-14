@@ -77,7 +77,7 @@
                                 {{ "uitschrijven" }}
                             </button>
                         @else
-                            <p>-</p>
+                            <p class="m-4">uitschrijven niet meer mogelijk</p>
                         @endif
                     </div>
 

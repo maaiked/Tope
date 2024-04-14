@@ -31,8 +31,8 @@
                         <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-2 px-3 py-3">
                             <div class="md:col-span-1">
                                 <label for="voornaam">Voornaam *</label>
-                                <input type="text" name="voornaam" id="voornaam"
-                                       class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                                <input type="text" name="voornaam" id="voornaam" required
+                                       class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 "
                                        value="{{ old('voornaam') }}"
                                        placeholder="vb. Katrien"/>
                                 <x-input-error :messages="$errors->get('voornaam')" class="mt-2"/>
@@ -46,7 +46,7 @@
                                 <x-input-error :messages="$errors->get('familienaam')" class="mt-2"/>
                             </div>
                             <div class="md:col-span-1">
-                                <label for="rijksregisternummer">Rijksregisternummer *</label>
+                                <label for="rijksregisternummer">Rijksregisternummer (formaat 12.12.12-123.12) *</label>
                                 <input type="text" name="rijksregisternummer" id="rijksregisternummer"
                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                                        value="{{ old('rijksregisternummer') }}"
