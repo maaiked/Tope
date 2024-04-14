@@ -98,11 +98,19 @@
                                 <p class="mt-4 text-md text-gray-900 font-bold">{{"€ ". $activiteit->prijs}}</p>
                                 <input type="hidden" name="prijs" value="{{ $activiteit->prijs }}" />
                                 @foreach($activiteit->opties as $optie)
-                                    <div>
-                                        <input type="checkbox" name={{$optie->omschrijving}} id={{$optie->omschrijving}} class="checkbox" value="{{$optie->prijs}}" />
-                                        <label for="{{$optie->omschrijving}}" class=" text-md text-gray-900">
-                                            {{ $optie->omschrijving.": € ".$optie->prijs}}</label>
-                                    </div>
+{{--               als er nog niet ingeschreven kan worden, toon geen checkboxes                     --}}
+                                    @if(empty($geselecteerdkind) or !empty($activiteit->inschrijvingsdetails()->where('kind_id', '=',$geselecteerdkind->id)->first()) or
+                                    $activiteit->inschrijvenVanaf >= today() or $activiteit->inschrijvenTot < today() or
+                                    $activiteit->aantalInschrijvingen >= $activiteit->capaciteit)
+                                        <p>{{ $optie->omschrijving.": € ".$optie->prijs}}</p>
+{{--               als er wel ingeschreven kan worden, toon checkboxes                     --}}
+                                    @else
+                                        <div>
+                                            <input type="checkbox" name={{$optie->omschrijving}} id={{$optie->omschrijving}} class="checkbox" value="{{$optie->prijs}}" />
+                                            <label for="{{$optie->omschrijving}}" class=" text-md text-gray-900">
+                                                {{ $optie->omschrijving.": € ".$optie->prijs}}</label>
+                                        </div>
+                                    @endif
                                 @endforeach
                             </div>
 

@@ -19,18 +19,18 @@ class ActiviteitFactory extends Factory
     public function definition(): array
     {
         return [
-            'naam' => fake()->randomElement(['maandagvoormiddag', 'maandagnamiddag', 'dinsdagvoormiddag', 'dinsdagnamiddag', 'paasvakantie week 1', 'paasvakantie week2' ]),
+            'naam' => fake()->randomElement(['maandagvoormiddag', 'maandagnamiddag', 'dinsdagvoormiddag', 'dinsdagnamiddag', 'woensdagvoormiddag', 'woensdagnamiddag', 'donderdagvoormiddag', 'donderdagnamiddag', 'vrijdagvoormiddag', 'vrijdagnamiddag' ]),
             'omschrijving' => fake()->sentence(),
-            'starttijd' =>fake()->dateTimeBetween('-2 week', '+3 week'),
-            'eindtijd' =>fake()->dateTimeBetween('-2 week', '+4 week'),
+            'starttijd' =>fake()->dateTimeBetween('-2 week', '+1 week'),
+            'eindtijd' =>fake()->dateTimeBetween('+1 week', '+4 week'),
             'prijs' =>fake()->randomFloat('2', '2', '20'),
             'capaciteit' =>fake()->numberBetween('11', '50'),
             'aantalInschrijvingen'  =>fake()->numberBetween('0', '10'),
-            'leerjaarVanaf' => fake()->randomElement(LeerjaarEnum::cases())->value,
-            'leerjaarTot'=> fake()->randomElement(LeerjaarEnum::cases())->value,
-            'inschrijvenVanaf' => fake()->dateTimeBetween('-2 week', '+2 week'),
-            'inschrijvenTot' => fake()->dateTimeBetween('-1 week', '+3 week'),
-            'annulerenTot' =>fake()->dateTimeBetween('-1 week', '+3 week'),
+            'leerjaarVanaf' => fake()->randomElement(['1ste kleuter', '2de kleuter', '3de kleuter', '1ste leerjaar', '2de leerjaar', '3de leerjaar']),
+            'leerjaarTot'=> fake()->randomElement(['4de leerjaar', '5de leerjaar', '6de leerjaar', '1ste middelbaar', '2de middelbaar', '3de middelbaar', '4de middelbaar', '5de middelbaar', '6de middelbaar']),
+            'inschrijvenVanaf' => fake()->dateTimeBetween('-4 week', '+1 week'),
+            'inschrijvenTot' => fake()->dateTimeBetween('-3 day', '+3 week'),
+            'annulerenTot' =>fake()->dateTimeBetween('-1 day', '+3 week'),
             'vakantie' => fake()->randomElement(VakantieEnum::cases())->value,
         ];
     }

@@ -17,20 +17,20 @@
                         <div class="alert alert-danger">
                             <ul>
                                 @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
+                                    <li class="text-red-600">{{ $error }}</li>
                                 @endforeach
                             </ul>
                         </div>
                     @endif
 
 
-                    <div class="text-gray-800">
+                    <div class="text-gray-800 mt-4">
                         <p class="font-medium text-lg">Algemene informatie</p>
-                        <p>Gelieve alle velden in te vullen</p>
+                        <p>De velden met een sterretje (*) zijn verplicht.</p>
 
                         <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-2 px-3 py-3">
                             <div class="md:col-span-1">
-                                <label for="voornaam">Voornaam</label>
+                                <label for="voornaam">Voornaam *</label>
                                 <input type="text" name="voornaam" id="voornaam"
                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                                        value="{{ old('voornaam') }}"
@@ -38,7 +38,7 @@
                                 <x-input-error :messages="$errors->get('voornaam')" class="mt-2"/>
                             </div>
                             <div class="md:col-span-1">
-                                <label for="familienaam">Familienaam</label>
+                                <label for="familienaam">Familienaam *</label>
                                 <input type="text" name="familienaam" id="familienaam"
                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                                        value="{{ old('familienaam') }}"
@@ -46,7 +46,7 @@
                                 <x-input-error :messages="$errors->get('familienaam')" class="mt-2"/>
                             </div>
                             <div class="md:col-span-1">
-                                <label for="rijksregisternummer">Rijksregisternummer</label>
+                                <label for="rijksregisternummer">Rijksregisternummer *</label>
                                 <input type="text" name="rijksregisternummer" id="rijksregisternummer"
                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                                        value="{{ old('rijksregisternummer') }}"
@@ -54,7 +54,7 @@
                                 <x-input-error :messages="$errors->get('rijksregisternummer')" class="mt-2"/>
                             </div>
                             <div class="md:col-span-1">
-                                <label for="leerjaar">Leerjaar</label>
+                                <label for="leerjaar">Leerjaar *</label>
                                 <select name="leerjaar" id="leerjaar" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50">
                                     @foreach(App\Enums\LeerjaarEnum::cases() as $leerjaren)
                                         <option value="{{ $leerjaren->value }}" @selected(old('leerjaar') == $leerjaren->value)>
@@ -94,10 +94,11 @@
                         </div>
 
                         <p class="font-medium text-lg mt-4">Contact en afhalen</p>
+                        <p>De velden met een sterretje (*) zijn verplicht.</p>
                         <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-2 px-3 py-3">
                             <div class="md:col-span-1">
                                 <label for="contactpersoon">Extra contactpersoon in geval van nood: naam +
-                                    nummer</label>
+                                    nummer *</label>
                                 <input type="text" name="contactpersoon" id="contactpersoon"
                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                                        value="{{ old('contactpersoon') }}"
