@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: true }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -24,9 +24,21 @@
                     <x-nav-link :href="route('inschrijvingsdetails.index')" :active="request()->routeIs('inschrijvingsdetails.index')">
                         {{ __('Inschrijvingen') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('profiel.create')" :active="request()->routeIs('profiel.create')">
+                    @if(!Auth::user()->isAdmin)
+                        <x-nav-link :href="route('profiel.create')" :active="request()->routeIs('profiel.create')">
                         {{ __('Profiel') }}
+                        </x-nav-link>
+                    @endif
+                    <!-- Authentication -->
+                    <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <x-nav-link :href="route('logout')"
+                                     onclick="event.preventDefault();
+                                            this.closest('form').submit();">
+                        {{ __('Afmelden') }}
                     </x-nav-link>
+                    </form>
+
                 </div>
             </div>
 
@@ -92,9 +104,11 @@
              <x-responsive-nav-link :href="route('inschrijvingsdetails.index')" :active="request()->routeIs('inschrijvingsdetails.index')">
                  {{ __('Inschrijvingen') }}
              </x-responsive-nav-link>
+            @if(!Auth::user()->isAdmin)
             <x-responsive-nav-link :href="route('profiel.create')" :active="request()->routeIs('profiel.create')">
                 {{ __('Profiel') }}
             </x-responsive-nav-link>
+            @endif
         </div>
 
         <!-- Responsive Settings Options -->
