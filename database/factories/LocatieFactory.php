@@ -12,7 +12,7 @@ class LocatieFactory extends Factory
     public function definition(): array
     {
         return [
-            'naam' => fake()->city(),
+            'naam' => fake()->randomElement(['Speelplein Aap', 'speelplein Konijn']),
             'straat' => fake()->streetAddress(),
             'gemeente' => fake()->city()
         ];

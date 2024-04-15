@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->boolean('isAdmin')->default(false);
+            $table->boolean('isAnimator')->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

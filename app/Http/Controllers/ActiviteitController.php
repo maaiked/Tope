@@ -22,6 +22,14 @@ class ActiviteitController extends Controller
         {
             return view ('activiteiten.index', ['activiteiten'=> Activiteit::paginate(10)]);
         }
+        elseif(auth()->user()->isAnimator)
+        {
+            $activiteiten['activiteiten']= Activiteit::whereDate('eindtijd', '>=', now())
+                ->whereDate('starttijd', '<=', now() )
+                ->orderBy('starttijd', 'asc')
+            ->paginate(10);
+            return view ('activiteiten.indexAnimator')->with($activiteiten);
+        }
 
         // if geen kind werd geselecteerd, toon alle activiteiten
         elseif (empty($id))
