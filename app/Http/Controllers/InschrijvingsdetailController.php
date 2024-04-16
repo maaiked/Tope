@@ -25,11 +25,24 @@ class InschrijvingsdetailController extends Controller
         else {
              $inschrijvingsdetails['inschrijvingsdetails']= Inschrijvingsdetail::join('kinds', 'inschrijvingsdetails.kind_id','=', 'kinds.id' )
                  ->select('*', 'inschrijvingsdetails.id AS inschrijvingsdetails_id')
-                ->where('kinds.user_id', '=', auth()->user()->id)
+                 ->where('kinds.user_id', '=', auth()->user()->id)
                  ->orderBy('inschrijvingsdatum', 'desc')
                  ->paginate(20);
             return view ('inschrijvingsdetails.index')->with($inschrijvingsdetails);
            }
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function indexActiviteit($id): View
+    {
+            $inschrijvingsdetails['inschrijvingsdetails']= Inschrijvingsdetail::select('*', 'inschrijvingsdetails.id AS inschrijvingsdetails_id')
+                ->where('activiteit_id', '=', $id)
+                ->withTrashed()
+                ->orderBy('inschrijvingsdatum', 'desc')
+                ->get();
+            return view ('inschrijvingsdetails.inschrijvingenActiviteit.index')->with($inschrijvingsdetails);
     }
 
     /**
@@ -91,6 +104,7 @@ class InschrijvingsdetailController extends Controller
         }
         return redirect(route('dashboard'));
     }
+
 
     /**
      * Display the specified resource.
