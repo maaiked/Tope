@@ -6,7 +6,7 @@
         </h2>
     </x-slot>
 
-    <form method="POST" action="/kind/{{$kind->id}}">
+    <form method="POST" action="{{ route('kind.update', $kind->id) }}">
         @csrf
         @method('PUT')
 
