@@ -44,17 +44,26 @@
                                 @endforeach
                             </div>
 
-                            {{--    knop 'info' + 'inschrijvingen' --}}
+                            {{--    knop 'info' + 'inschrijvingen' + 'lijsten afdrukken' --}}
                             <div class="flex-1 items-center vertical-align: middle;">
 
                                 <button onclick="window.location='{{ route("activiteiten.show", $activiteit->id) }}'"
                                         class="rounded-md bg-gray-500 text-white focus:ring-gray-600 px-4 py-2 text-sm mt-4">
                                     meer info
                                 </button>
+                                {{--    toon knop enkel als er inschrijvingen zijn om weer te geven --}}
+                                @if(!empty($activiteit->inschrijvingsdetails->first()))
                                 <button onclick="window.location='{{ route("inschrijvingsdetails.indexActiviteit", $activiteit->id) }}'"
                                         class="rounded-md bg-blue-500 text-white focus:ring-gray-600 px-4 py-2 text-sm mt-4">
                                     inschrijvingen
                                 </button>
+                                <button onclick="window.location='{{ route("inschrijvingsdetails.indexLijsten", $activiteit->id) }}'"
+                                        class="rounded-md bg-gray-500 text-white focus:ring-gray-600 px-4 py-2 text-sm mt-4">
+                                    lijsten afdrukken
+                                </button>
+                                @else
+                                    <p>nog geen inschrijvingen</p>
+                                @endif
                             </div>
                         </div>
 

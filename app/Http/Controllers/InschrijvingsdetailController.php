@@ -33,7 +33,7 @@ class InschrijvingsdetailController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource by Activity.
      */
     public function indexActiviteit($id): View
     {
@@ -42,7 +42,18 @@ class InschrijvingsdetailController extends Controller
                 ->withTrashed()
                 ->orderBy('inschrijvingsdatum', 'desc')
                 ->get();
-            return view ('inschrijvingsdetails.inschrijvingenActiviteit.index')->with($inschrijvingsdetails);
+            return view ('inschrijvingsdetails.perActiviteit.index')->with($inschrijvingsdetails);
+    }
+
+    /**
+     * Display a listing of printable lists by Activity.
+     */
+    public function indexLijsten($id): View
+    {
+        $activiteit = Activiteit::select('*')
+        ->where('id', '=', $id)
+        ->first();
+        return view ('inschrijvingsdetails.perActiviteit.lijsten', compact('activiteit'));
     }
 
     /**
@@ -114,6 +125,26 @@ class InschrijvingsdetailController extends Controller
         // toon details van inschrijving
         $inschrijving = Inschrijvingsdetail::find($id);
         return view('inschrijvingsdetails.detail', compact('inschrijving'));
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function showLijst($id, $modus)
+    {
+        switch ($modus){
+            case 'alleKinderen':
+                $lijstnaam = "alle kinderen";
+                 break;
+        }
+        $inschrijvingen= Inschrijvingsdetail::select('*')
+            ->where('activiteit_id', '=', $id)
+            ->orderBy('inschrijvingsdatum', 'desc')
+            ->get();
+        return view ('inschrijvingsdetails.perActiviteit.lijst', ['lijstnaam'=>$lijstnaam, 'inschrijvingen'=>$inschrijvingen]);
+
+
+
     }
 
     /**
