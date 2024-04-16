@@ -23,7 +23,6 @@ class DatabaseSeeder extends Seeder
          ->create([
              'email' => 'maaike@tope.be',
              'password' => Hash::make('Laravel123'),
-             'isAdmin' => false
          ]);
          \App\Models\User::factory()
          ->has(\App\Models\Kind::factory()->count(3)->sequence(
@@ -35,13 +34,17 @@ class DatabaseSeeder extends Seeder
              ->create([
              'email' => 'robbe@tope.be',
              'password' => Hash::make('Laravel123'),
-             'isAdmin' => false
          ]);
          \App\Models\User::factory()->create([
              'email' => 'sarah@tope.be',
              'password' => Hash::make('Laravel123'),
              'isAdmin' => true
          ]);
+        \App\Models\User::factory()->create([
+            'email' => 'yoni@tope.be',
+            'password' => Hash::make('Laravel123'),
+            'isAnimator' => true
+        ]);
 
          //create 10 random users with 2 children each
         \App\Models\User::factory()
