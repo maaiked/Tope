@@ -50,6 +50,7 @@
 
                                 <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
                                     Login: robbe@tope.be <br>
+                                    Login: maaike@tope.be<br>
                                     Wachtwoord: Laravel123
                                 </p>
                             </div>
@@ -59,7 +60,8 @@
                                 <h2 class="mt-6 text-xl font-semibold text-gray-900 dark:text-white">Demo als animator</h2>
 
                                 <p class="mt-4 text-gray-500 dark:text-gray-400 text-sm leading-relaxed">
-                                    Nog in aanmaak <br>
+                                    Login: yoni@tope.be<br>
+                                    Wachtwoord: Laravel123
                                 </p>
                             </div>
                         </div>
