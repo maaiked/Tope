@@ -22,6 +22,7 @@
                         <th class="px-4 py-2">Medicatie</th>
                         <th class="px-4 py-2">Info animatoren</th>
                         <th class="px-4 py-2">Info admin</th>
+                        <th class="px-4 py-2"></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -35,7 +36,7 @@
                             <td class="border px-4 py-2">{{$kind->medicatie}}</td>
                             <td class="border px-4 py-2">{{$kind->infoAdminAnimator}}</td>
                             <td class="border px-4 py-2">{{$kind->infoAdmin}}</td>
-                            <td>
+                            <td class="border px-4 py-2">
                                 <div class=" flex space-x-0">
                                     <button onclick="window.location='{{ route("kind.edit", $kind->id) }}'"
                                     class="col-span-1  inline-flex border-2 items-center gap-2 rounded-lg px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:relative">
