@@ -60,7 +60,7 @@
                     {{--    prijs activiteit    --}}
                     <div class=" flex space-x-0">
                         <p class="mt-2 text-md text-gray-900">{{ "€ ".$inschrijvingsdetail->prijs }}</p>
-                            @foreach($inschrijvingsdetail->inschrijvingsdetail_opties() as $optie)
+                            @foreach($inschrijvingsdetail->inschrijvingsdetail_opties as $optie)
                             <p class="mt-2 text-md text-gray-900">{{ "€ ".$optie->optie->prijs." ".$optie->optie->omschrijving }}</p>
                             @endforeach
                     </div>
