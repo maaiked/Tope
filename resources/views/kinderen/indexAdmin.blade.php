@@ -22,7 +22,7 @@
                         <th class="px-4 py-2">Medicatie</th>
                         <th class="px-4 py-2">Info animatoren</th>
                         <th class="px-4 py-2">Info admin</th>
-                        <th></th>
+                        <th class="px-4 py-2"></th>
                     </tr>
                     </thead>
                     <tbody>

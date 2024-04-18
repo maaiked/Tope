@@ -80,7 +80,7 @@ class KindController extends Controller
     {
         // als kindid behoort tot ingelogde user, geef form weer
         $kind = Kind::find($id);
-        if (auth()->id() == $kind->user->id ){
+        if (auth()->id() == $kind->user->id || auth()->user()->isAdmin){
             return view('kinderen.edit', compact('kind'));
         }
         //als kindid niet behoort tot de ingelogde user, keer terug naar index
