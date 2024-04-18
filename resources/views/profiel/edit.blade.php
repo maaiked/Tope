@@ -108,6 +108,16 @@
                                        placeholder=""/>
                                 <x-input-error :messages="$errors->get('gemeente')" class="mt-2"/>
                             </div>
+                            @if (auth()->user()->isAdmin)
+                            <div class="md:col-span-3">
+                                <label for="isAdmin">Admin</label>
+                                <input type="checkbox" name="isAdmin" id="isAdmin"
+                                       class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                                       value="{{ old('isAdmin', $userprofiel->isAdmin) }}"
+                                       placeholder=""/>
+                                <x-input-error :messages="$errors->get('isAdmin')" class="mt-2"/>
+                            </div>
+                            @endif
                         </div>
                     </div>
 
