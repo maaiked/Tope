@@ -136,6 +136,24 @@ class InschrijvingsdetailController extends Controller
             case 'alleKinderen':
                 $lijstnaam = "alle kinderen";
                  break;
+            case 'aanwezigeKinderen':
+                $lijstnaam = "aanwezige kinderen";
+                break;
+            case 'medisch':
+                $lijstnaam = "medische gegevens";
+                break;
+            case 'medicatie':
+                $lijstnaam = "medicatie";
+                break;
+            case 'allergie':
+                $lijstnaam = "allergieën";
+                break;
+            case 'opties':
+                $lijstnaam = "opties";
+                break;
+            case 'alleContact':
+                $lijstnaam = "alle kinderen met contactgegevens";
+                break;
         }
         $inschrijvingen= Inschrijvingsdetail::select('*')
             ->where('activiteit_id', '=', $id)

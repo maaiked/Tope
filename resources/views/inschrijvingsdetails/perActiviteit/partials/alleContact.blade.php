@@ -7,9 +7,8 @@
                 <th class="px-4 py-2">Familienaam</th>
                 <th class="px-4 py-2">Leerjaar</th>
                 <th class="px-4 py-2">Ouder</th>
-                <th class="px-4 py-2">Afhalen</th>
-                <th class="px-4 py-2">Alleen naar huis</th>
-                <th class="px-4 py-2">Foto</th>
+                <th class="px-4 py-2">Telefoonnummer</th>
+                <th class="px-4 py-2">Extra contactpersoon</th>
             </tr>
             </thead>
             <tbody>
@@ -19,9 +18,8 @@
                         <td class="border px-4 py-2">{{$i->kind->familienaam}}</td>
                         <td class="border px-4 py-2">{{$i->kind->leerjaar}}</td>
                         <td class="border px-4 py-2">{{ optional($i->kind->user->profiel)->voornaam." , ".optional($i->kind->user->profiel)->familienaam }}</td>
-                        <td class="border px-4 py-2">{{$i->kind->afhalenKind}}</td>
-                        <td class="border px-4 py-2">@if($i->kind->alleenNaarHuis) ja @else nee @endif</td>
-                        <td class="border px-4 py-2">@if($i->kind->fotoToestemming) ja @else <p class="text-red-600">nee</p> @endif</td>
+                        <td class="border px-4 py-2">{{optional($i->kind->user->profiel)->telefoonnummer}}</td>
+                        <td class="border px-4 py-2">{{$i->kind->contactpersoon}} </td>
                     </tr>
             @endforeach
 

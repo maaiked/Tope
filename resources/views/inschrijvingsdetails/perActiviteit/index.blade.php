@@ -23,7 +23,7 @@
                     <h3 class="font-semibold text-lg text-gray-800 leading-tight">{{"Ingeschreven kinderen: ".$inschrijvingsdetails[0]->activiteit->aantalInschrijvingen."/".$inschrijvingsdetails[0]->activiteit->capaciteit}}</h3>
                 </div>
 
-                <table id="example" class="bootstrap-table" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
+                <table id="example"  class="bootstrap-table" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
                     <thead>
                     <tr>
                         <th class="px-4 py-2">Inschrijvingsdatum</th>

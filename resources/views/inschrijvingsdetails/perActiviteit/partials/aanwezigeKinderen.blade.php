@@ -14,6 +14,7 @@
             </thead>
             <tbody>
             @foreach($inschrijvingen as $i)
+                @if($i->ingechecked && !$i->uitgechecked )
                     <tr>
                         <td class="border px-4 py-2">{{$i->kind->voornaam}}</td>
                         <td class="border px-4 py-2">{{$i->kind->familienaam}}</td>
@@ -23,6 +24,7 @@
                         <td class="border px-4 py-2">@if($i->kind->alleenNaarHuis) ja @else nee @endif</td>
                         <td class="border px-4 py-2">@if($i->kind->fotoToestemming) ja @else <p class="text-red-600">nee</p> @endif</td>
                     </tr>
+                @endif
             @endforeach
 
             </tbody>
