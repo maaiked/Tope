@@ -71,7 +71,7 @@ class DatabaseSeeder extends Seeder
         //create 2 activiteiten for testing purposes
         \App\Models\Activiteit::factory()
             ->count(1)
-            ->sequence(['prijs' => '5.50', 'naam'=>'testactiviteit: donderdagnamiddag 28/04/2025 ','starttijd' => '2024-03-09 15:55:14', 'eindtijd' => '2036-03-09 15:55:14', 'inschrijvenVanaf' => '2024-03-09 15:55:14', 'inschrijvenTot' => '2036-03-09 15:55:14', 'annulerenTot' => '2036-03-09 15:55:14', 'leerjaarVanaf' => '1ste kleuter', 'leerjaarTot' => '5de middelbaar'] )
+            ->sequence(['prijs' => '5.50','aantalInschrijvingen'=>'5','capaciteit'=>'25', 'naam'=>'testactiviteit: donderdagnamiddag 28/04/2025 ','starttijd' => '2024-03-09 15:55:14', 'eindtijd' => '2036-03-09 15:55:14', 'inschrijvenVanaf' => '2024-03-09 15:55:14', 'inschrijvenTot' => '2036-03-09 15:55:14', 'annulerenTot' => '2036-03-09 15:55:14', 'leerjaarVanaf' => '1ste kleuter', 'leerjaarTot' => '5de middelbaar'] )
             ->has(Locatie::factory()->count(1), 'locatie')
             ->has(Optie::factory()->count(2)->sequence(['prijs' => '2.00', 'omschrijving' => 'maaltijd'], ['prijs' => '2.00', 'omschrijving' => 'opvang']), 'opties')
             ->has(Inschrijvingsdetail::factory()->count(5)->sequence(['prijs'=>'7.50', 'kind_id' => '1'], ['prijs'=>'9.50', 'kind_id' => '2'], ['prijs'=>'7.50', 'kind_id' => '3'], ['prijs'=>'9.50', 'kind_id' => '4'], ['prijs'=>'5.50', 'kind_id' => '5']))
@@ -79,7 +79,7 @@ class DatabaseSeeder extends Seeder
 
         \App\Models\Activiteit::factory()
             ->count(1)
-            ->sequence(['prijs' => '8.00','naam'=>'testactiviteit: maandagnamiddag 23/04/2025','starttijd' => '2024-04-19 15:55:14', 'eindtijd' => '2036-04-19 15:55:14', 'inschrijvenVanaf' => '2024-04-19 15:55:14', 'inschrijvenTot' => '2036-04-19 15:55:14', 'annulerenTot' => '2036-04-19 15:55:14', 'leerjaarVanaf' => '2de kleuter', 'leerjaarTot' => '6de middelbaar' ])
+            ->sequence(['prijs' => '8.00','aantalInschrijvingen'=>'4','capaciteit'=>'10','naam'=>'testactiviteit: maandagnamiddag 23/04/2025','starttijd' => '2024-04-19 15:55:14', 'eindtijd' => '2036-04-19 15:55:14', 'inschrijvenVanaf' => '2024-04-19 15:55:14', 'inschrijvenTot' => '2036-04-19 15:55:14', 'annulerenTot' => '2036-04-19 15:55:14', 'leerjaarVanaf' => '2de kleuter', 'leerjaarTot' => '6de middelbaar' ])
             ->has(Locatie::factory()->count(1), 'locatie')
             ->has(Optie::factory()->count(1)->sequence(['prijs' => '3.00', 'omschrijving' => 'maaltijd']), 'opties')
             ->has(Inschrijvingsdetail::factory()->count(4)->sequence(['prijs'=>'11.00', 'kind_id' => '2'], ['prijs'=>'11.00', 'kind_id' => '3'], ['prijs'=>'8.00', 'kind_id' => '4'], ['prijs'=>'8.00', 'kind_id' => '5']))
