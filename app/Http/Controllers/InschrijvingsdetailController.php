@@ -37,12 +37,13 @@ class InschrijvingsdetailController extends Controller
      */
     public function indexActiviteit($id): View
     {
-            $inschrijvingsdetails['inschrijvingsdetails']= Inschrijvingsdetail::select('*', 'inschrijvingsdetails.id AS inschrijvingsdetails_id')
+            $inschrijvingsdetails= Inschrijvingsdetail::select('*', 'inschrijvingsdetails.id AS inschrijvingsdetails_id')
                 ->where('activiteit_id', '=', $id)
                 ->withTrashed()
                 ->orderBy('inschrijvingsdatum', 'desc')
                 ->get();
-            return view ('inschrijvingsdetails.perActiviteit.index')->with($inschrijvingsdetails);
+            $activiteit = Activiteit::find($id);
+            return view ('inschrijvingsdetails.perActiviteit.index')->with(['inschrijvingsdetails' => $inschrijvingsdetails, 'activiteit'=>$activiteit]);
     }
 
     /**

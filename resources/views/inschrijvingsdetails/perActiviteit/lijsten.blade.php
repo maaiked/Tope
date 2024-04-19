@@ -17,7 +17,7 @@
             {{--                TODO:: fix small screen colums--}}
 
             <button class=" rounded-md bg-blue-500 text-white focus:ring-gray-600 px-2 py-2 text-sm"
-                    onclick="window.history.back()">Terug naar activiteiten
+                    onclick="window.history.back()">Terug naar activiteit
             </button>
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg px-6 py-2 gap-4 gap-y-2 text-sm mt-2">
@@ -84,7 +84,7 @@
                 <div>
                     <h3 class="font-semibold text-lg text-gray-800 leading-tight">Medische info: alles</h3>
                     <p class="text-md text-gray-800 leading-tight">voornaam - familienaam - leerjaar - ouder -
-                        telefoonnummer ouder - contactpersoon - allergie - beperking - medicatie</p>
+                        telefoonnummer ouder - contactpersoon - allergie - beperking - medicatie - interne info</p>
                     <button
                         class="rounded-md bg-gray-500 text-white focus:ring-gray-600 px-2 py-2 text-sm"
                         onclick="window.location='{{ route("inschrijvingsdetails.showLijst", [$activiteit->id, "medisch"]) }}'">

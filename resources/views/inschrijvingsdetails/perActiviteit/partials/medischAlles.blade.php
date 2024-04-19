@@ -10,6 +10,7 @@
                 <th class="px-4 py-2">Allergie</th>
                 <th class="px-4 py-2">Beperking</th>
                 <th class="px-4 py-2">Medicatie</th>
+                <th class="px-4 py-2">Interne info</th>
             </tr>
             </thead>
             <tbody>
@@ -23,7 +24,8 @@
                         <td class="border px-4 py-2">{{$i->kind->allergie}}</td>
                         <td class="border px-4 py-2">{{$i->kind->beperking}}</td>
                         <td class="border px-4 py-2">{{$i->kind->medicatie}}</td>
-                         </tr>
+                        <td class="border px-4 py-2">{{$i->kind->infoAdminAnimator}}</td>
+                    </tr>
                 @endif
             @endforeach
 
