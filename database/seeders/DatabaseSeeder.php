@@ -87,7 +87,7 @@ class DatabaseSeeder extends Seeder
 
         //create inschrijvingsdetail_opties for test inschrijvingen
         Inschrijvingsdetail_optie::factory()
-            ->count(9)
+            ->count(8)
             ->sequence(['inschrijvingsdetail_id'=>'1', 'optie_id'=>'1'], ['inschrijvingsdetail_id'=>'2', 'optie_id'=>'1'], ['inschrijvingsdetail_id'=>'2', 'optie_id'=>'2'], ['inschrijvingsdetail_id'=>'3', 'optie_id'=>'2'], ['inschrijvingsdetail_id'=>'4', 'optie_id'=>'1'], ['inschrijvingsdetail_id'=>'4', 'optie_id'=>'2'], ['inschrijvingsdetail_id'=>'6', 'optie_id'=>'3'], ['inschrijvingsdetail_id'=>'7', 'optie_id'=>'3'])
             ->create();
 
