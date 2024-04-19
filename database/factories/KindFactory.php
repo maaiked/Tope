@@ -20,7 +20,7 @@ class KindFactory extends Factory
         return [
             'voornaam' => fake()->firstName(),
             'familienaam' =>fake()->lastName(),
-            'contactpersoon' =>fake()->name(),
+            'contactpersoon' =>fake()->phoneNumber(),
             'alleenNaarHuis' =>fake()->boolean(),
             'afhalenKind' => fake()->randomElement(['alleen door ouders', 'oma Katrien', 'oma en opa Kip', 'tante Saskia', 'meetje en peetje']),
             'allergie' => fake()->randomElement([null, null, null, null, 'kiwi', 'shmink', 'melk', 'ei', 'aardbei', 'pollen']),

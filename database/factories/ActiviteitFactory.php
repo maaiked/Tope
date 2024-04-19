@@ -41,6 +41,7 @@ class ActiviteitFactory extends Factory
             'inschrijvenTot' => $inscribe_to,
             'annulerenTot' => $unsubscribe,
             'vakantie' => fake()->randomElement(VakantieEnum::cases())->value,
+            'locatie_id' =>fake()->numberBetween(1, 2),
         ];
     }
 }

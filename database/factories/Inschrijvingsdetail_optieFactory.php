@@ -12,7 +12,7 @@ class Inschrijvingsdetail_optieFactory extends Factory
     public function definition(): array
     {
         return [
-
+            'optie_id' =>fake()->numberBetween(1, 4)
         ];
     }
 }
