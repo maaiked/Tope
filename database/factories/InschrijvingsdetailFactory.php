@@ -19,6 +19,7 @@ class InschrijvingsdetailFactory extends Factory
         return [
             'inschrijvingsdatum' => fake()->dateTimeBetween('-3years' ),
             'prijs' =>fake()->randomFloat(2, 1, 120),
+            'kind_id' =>fake()->numberBetween(5, 10)
         ];
     }
 }

@@ -56,6 +56,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/inschrijvingsdetails', [InschrijvingsdetailController::class, 'index'])->name('inschrijvingsdetails.index');
     Route::get('/inschrijvingsdetails/{id}', [InschrijvingsdetailController::class, 'show'])->name('inschrijvingsdetails.show');
     Route::get('/inschrijvingsdetails/destroy/{id}', [InschrijvingsdetailController::class, 'destroy'])->name('inschrijvingsdetails.destroy');
+    //inschrijvingsdetails enkel voor admin - animator
+    //TODO:: beveilig zodat enkel admin - animator deze routes kan volgen
+    Route::get('/inschrijvingsdetails/activiteit/{id}', [InschrijvingsdetailController::class, 'indexActiviteit'])->name('inschrijvingsdetails.indexActiviteit');
+    Route::get('/inschrijvingsdetails/lijsten/{id}', [InschrijvingsdetailController::class, 'indexLijsten'])->name('inschrijvingsdetails.indexLijsten');
+    Route::get('/inschrijvingsdetails/lijsten/{id}/{modus}', [InschrijvingsdetailController::class, 'showLijst'])->name('inschrijvingsdetails.showLijst');
 
 });
 

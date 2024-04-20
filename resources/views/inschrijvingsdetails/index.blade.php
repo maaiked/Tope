@@ -28,10 +28,10 @@
                     <p class="mt-4 text-lg text-gray-900">Activiteit</p>
                 </div>
                 <div class="flex space-x-0">
-                    <p class="mt-4 text-lg text-gray-900">Prijs</p>
+                    <p class="mt-4 text-lg text-gray-900">Totaalprijs</p>
                 </div>
                 <div class="flex space-x-0">
-                    <p class="mt-4 text-lg text-gray-900">Opties</p>
+                    <p class="mt-4 text-lg text-gray-900">Knoppen</p>
                 </div>
 
                 {{--                TODO: inschrijvingen sorteren op datum inschrijving of activiteit? groeperen per jaar > vakantieperiode? filters toevoegen?--}}
@@ -60,8 +60,8 @@
                     {{--    prijs activiteit    --}}
                     <div class=" flex space-x-0">
                         <p class="mt-2 text-md text-gray-900">{{ "€ ".$inschrijvingsdetail->prijs }}</p>
-                            @foreach($inschrijvingsdetail->inschrijvingsdetail_opties() as $optie)
-                            <p class="mt-2 text-md text-gray-900">{{ "€ ".$optie->optie->prijs." ".$optie->optie->omschrijving }}</p>
+                            @foreach($inschrijvingsdetail->inschrijvingsdetail_opties as $optie)
+                            <p class="mt-2 text-md text-gray-900">{{ " (€".$optie->optie->prijs." ".$optie->optie->omschrijving.") " }}</p>
                             @endforeach
                     </div>
 

@@ -34,13 +34,14 @@ class ActiviteitFactory extends Factory
             'eindtijd' => $ends_at,
             'prijs' =>fake()->randomFloat('2', '2', '20'),
             'capaciteit' =>fake()->numberBetween('11', '50'),
-            'aantalInschrijvingen'  =>fake()->numberBetween('0', '10'),
+            'aantalInschrijvingen'  =>'0',
             'leerjaarVanaf' => fake()->randomElement(['1ste kleuter', '2de kleuter', '3de kleuter', '1ste leerjaar', '2de leerjaar', '3de leerjaar']),
             'leerjaarTot'=> fake()->randomElement(['4de leerjaar', '5de leerjaar', '6de leerjaar', '1ste middelbaar', '2de middelbaar', '3de middelbaar', '4de middelbaar', '5de middelbaar', '6de middelbaar']),
             'inschrijvenVanaf' => $inscribe_from,
             'inschrijvenTot' => $inscribe_to,
             'annulerenTot' => $unsubscribe,
             'vakantie' => fake()->randomElement(VakantieEnum::cases())->value,
+            'locatie_id' =>fake()->numberBetween(1, 2),
         ];
     }
 }

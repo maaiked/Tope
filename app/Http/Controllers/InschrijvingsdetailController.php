@@ -25,11 +25,36 @@ class InschrijvingsdetailController extends Controller
         else {
              $inschrijvingsdetails['inschrijvingsdetails']= Inschrijvingsdetail::join('kinds', 'inschrijvingsdetails.kind_id','=', 'kinds.id' )
                  ->select('*', 'inschrijvingsdetails.id AS inschrijvingsdetails_id')
-                ->where('kinds.user_id', '=', auth()->user()->id)
+                 ->where('kinds.user_id', '=', auth()->user()->id)
                  ->orderBy('inschrijvingsdatum', 'desc')
                  ->paginate(20);
             return view ('inschrijvingsdetails.index')->with($inschrijvingsdetails);
            }
+    }
+
+    /**
+     * Display a listing of the resource by Activity.
+     */
+    public function indexActiviteit($id): View
+    {
+            $inschrijvingsdetails= Inschrijvingsdetail::select('*', 'inschrijvingsdetails.id AS inschrijvingsdetails_id')
+                ->where('activiteit_id', '=', $id)
+                ->withTrashed()
+                ->orderBy('inschrijvingsdatum', 'desc')
+                ->get();
+            $activiteit = Activiteit::find($id);
+            return view ('inschrijvingsdetails.perActiviteit.index')->with(['inschrijvingsdetails' => $inschrijvingsdetails, 'activiteit'=>$activiteit]);
+    }
+
+    /**
+     * Display a listing of printable lists by Activity.
+     */
+    public function indexLijsten($id): View
+    {
+        $activiteit = Activiteit::select('*')
+        ->where('id', '=', $id)
+        ->first();
+        return view ('inschrijvingsdetails.perActiviteit.lijsten', compact('activiteit'));
     }
 
     /**
@@ -92,6 +117,7 @@ class InschrijvingsdetailController extends Controller
         return redirect(route('dashboard'));
     }
 
+
     /**
      * Display the specified resource.
      */
@@ -100,6 +126,44 @@ class InschrijvingsdetailController extends Controller
         // toon details van inschrijving
         $inschrijving = Inschrijvingsdetail::find($id);
         return view('inschrijvingsdetails.detail', compact('inschrijving'));
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function showLijst($id, $modus)
+    {
+        switch ($modus){
+            case 'alleKinderen':
+                $lijstnaam = "alle kinderen";
+                 break;
+            case 'aanwezigeKinderen':
+                $lijstnaam = "aanwezige kinderen";
+                break;
+            case 'medisch':
+                $lijstnaam = "medische gegevens";
+                break;
+            case 'medicatie':
+                $lijstnaam = "medicatie";
+                break;
+            case 'allergie':
+                $lijstnaam = "allergieën";
+                break;
+            case 'opties':
+                $lijstnaam = "opties";
+                break;
+            case 'alleContact':
+                $lijstnaam = "alle kinderen met contactgegevens";
+                break;
+        }
+        $inschrijvingen= Inschrijvingsdetail::select('*')
+            ->where('activiteit_id', '=', $id)
+            ->orderBy('inschrijvingsdatum', 'desc')
+            ->get();
+        return view ('inschrijvingsdetails.perActiviteit.lijst', ['lijstnaam'=>$lijstnaam, 'inschrijvingen'=>$inschrijvingen]);
+
+
+
     }
 
     /**

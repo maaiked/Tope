@@ -44,13 +44,20 @@
                                 @endforeach
                             </div>
 
-                            {{--    knop 'info'  --}}
+                            {{--    knop 'info' + 'inschrijvingen' + 'lijsten afdrukken' --}}
                             <div class="flex-1 items-center vertical-align: middle;">
 
                                 <button onclick="window.location='{{ route("activiteiten.show", $activiteit->id) }}'"
                                         class="rounded-md bg-gray-500 text-white focus:ring-gray-600 px-4 py-2 text-sm mt-4">
                                     meer info
                                 </button>
+
+                                <button onclick="window.location='{{ route("inschrijvingsdetails.indexActiviteit", $activiteit->id) }}'"
+                                        class="rounded-md bg-blue-500 text-white focus:ring-gray-600 px-4 py-2 text-sm mt-4">
+                                    inschrijvingen
+                                </button>
+
+
                             </div>
                         </div>
 
