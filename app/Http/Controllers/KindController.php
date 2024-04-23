@@ -74,6 +74,14 @@ class KindController extends Controller
     }
 
     /**
+     * Display the specified resources.
+     */
+    public function showAll(Kind $kind)
+    {
+        //
+    }
+
+    /**
      * Show the form for editing the specified resource.
      */
     public function edit($id)
