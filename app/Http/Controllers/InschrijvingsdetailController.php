@@ -70,12 +70,14 @@ class InschrijvingsdetailController extends Controller
             'activiteit'=>'required|int']);
         $activiteit = Activiteit::find($request->activiteit);
 
-        //todo: enkel kinderen die binnen de leeftijdscategorie vallen weergeven.
-
-        $kinderen = Kind::where('voornaam', 'like', '%'.$request->zoek.'%')
-        ->orWhere('familienaam', 'like', '%'.$request->zoek.'%')
-        ->orWhere('rijksregisternummer', 'like', '%'.$request->zoek.'%')
-        ->orWhere('uitpasnummer', 'like', '%'.$request->zoek.'%')
+        $kinderen = Kind::where(function ($query) use ($request)
+       {
+            $query->where('voornaam', 'like', '%'.$request->zoek.'%')
+                ->orWhere('familienaam', 'like', '%'.$request->zoek.'%')
+                ->orWhere('rijksregisternummer', 'like', '%'.$request->zoek.'%')
+                ->orWhere('uitpasnummer', 'like', '%'.$request->zoek.'%');
+        })->where('leerjaar', '>=', $activiteit->leerjaarVanaf)
+        ->where('leerjaar', '<=', $activiteit->leerjaarTot)
         ->get();
 
         // verwijder kinderen die reeds ingeschreven zijn uit array
@@ -89,7 +91,10 @@ class InschrijvingsdetailController extends Controller
             }
             $arraynr = $arraynr+1;
         }
-        return view('inschrijvingsdetails.perActiviteit.nieuw')->with(['kinderen' =>$kinderen, 'activiteit'=>$activiteit]);
+        if (count($kinderen) == 0)
+            return \Redirect::Route('inschrijvingsdetails.indexActiviteit', $activiteit)->with('status', 'geenKind');
+        else
+            return view('inschrijvingsdetails.perActiviteit.nieuw')->with(['kinderen' =>$kinderen, 'activiteit'=>$activiteit]);
     }
 
     /**
@@ -140,7 +145,7 @@ class InschrijvingsdetailController extends Controller
                 }
                 if (auth()->user()->isAnimator)
                 {
-                    return \Redirect::Route('inschrijvingsdetails.indexActiviteit', $activiteit);
+                    return \Redirect::Route('inschrijvingsdetails.indexActiviteit', $activiteit)->with('status', 'inschrijving-ok');
                 }
                 else
                 {

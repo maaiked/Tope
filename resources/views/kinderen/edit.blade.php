@@ -59,7 +59,7 @@
                                 <select name="leerjaar" id="leerjaar" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50">
                                     @foreach(App\Enums\LeerjaarEnum::cases() as $leerjaren)
                                         <option value="{{ $leerjaren->value }}" @selected(old('leerjaar', $kind->leerjaar->value) == $leerjaren->value)>
-                                            {{ $leerjaren->value }}</option>
+                                            {{ $leerjaren->label() }}</option>
                                     @endforeach
                                 </select>
                                 <x-input-error :messages="$errors->get('leerjaar')" class="mt-2"/>

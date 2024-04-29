@@ -12,7 +12,7 @@
                     <div class="bg-gray-200 hover:bg-blue-300 font-bold py-2 px-2 mt-2 mb-2 rounded
                     grid gap-4 gap-y-2 text-sm  sm:grid-cols-2 md:grid-cols-4 ">
                         <p class="mt-2 text-gray-900 col-span-1">{{ $kind->voornaam." ".$kind->familienaam}}</p>
-                        <p class="mt-2 text-gray-900 col-span-1">{{ $kind->leerjaar}}</p>
+                        <p class="mt-2 text-gray-900 col-span-1">{{ $kind->leerjaar->label()}}</p>
                         <p class="mt-2 text-gray-900 col-span-1">
                                 @if($kind->allergie) &#9989;
                                 @else &#10060;

@@ -33,7 +33,7 @@
 
                             {{--    van leerjaar x tot leerjaar y    --}}
                             <div class="flex-1">
-                                <p class="mt-4 text-md text-gray-900">{{ $activiteit->leerjaarVanaf->value." tot ".$activiteit->leerjaarTot->value }}</p>
+                                <p class="mt-4 text-md text-gray-900">{{ $activiteit->leerjaarVanaf->label()." tot ".$activiteit->leerjaarTot->label() }}</p>
                             </div>
 
                             {{--    prijs activiteit + opties   --}}
@@ -44,7 +44,7 @@
                                 @endforeach
                             </div>
 
-                            {{--    knop 'info' + 'inschrijvingen' + 'lijsten afdrukken' --}}
+                            {{--    knop 'info' + 'inschrijvingen' --}}
                             <div class="flex-1 items-center vertical-align: middle;">
 
                                 <button onclick="window.location='{{ route("activiteiten.show", $activiteit->id) }}'"
