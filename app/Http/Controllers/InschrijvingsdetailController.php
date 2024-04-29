@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Activiteit;
 use App\Models\Inschrijvingsdetail;
 use App\Models\Inschrijvingsdetail_optie;
+use App\Models\Kind;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use function PHPUnit\Framework\isEmpty;
 
 class InschrijvingsdetailController extends Controller
 {
@@ -60,9 +62,34 @@ class InschrijvingsdetailController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        //todo: validate request
+        $validated = $request->validate([
+            'zoek'=> 'required|string|max:255',
+            'activiteit'=>'required|int']);
+        $activiteit = Activiteit::find($request->activiteit);
+
+        //todo: enkel kinderen die binnen de leeftijdscategorie vallen weergeven.
+
+        $kinderen = Kind::where('voornaam', 'like', '%'.$request->zoek.'%')
+        ->orWhere('familienaam', 'like', '%'.$request->zoek.'%')
+        ->orWhere('rijksregisternummer', 'like', '%'.$request->zoek.'%')
+        ->orWhere('uitpasnummer', 'like', '%'.$request->zoek.'%')
+        ->get();
+
+        // verwijder kinderen die reeds ingeschreven zijn uit array
+        $arraynr = 0;
+        foreach ($kinderen as $kind)
+        {
+            $inschrijving = Inschrijvingsdetail::whereKindId($kind->id)->whereActiviteitId($activiteit->id)->first();
+            if ($inschrijving)
+            {
+                unset($kinderen[$arraynr]);
+            }
+            $arraynr = $arraynr+1;
+        }
+        return view('inschrijvingsdetails.perActiviteit.nieuw')->with(['kinderen' =>$kinderen, 'activiteit'=>$activiteit]);
     }
 
     /**
@@ -111,7 +138,14 @@ class InschrijvingsdetailController extends Controller
                         }
                     }
                 }
-                return \Redirect::Route('activiteiten.index', $request->kindid);
+                if (auth()->user()->isAnimator)
+                {
+                    return \Redirect::Route('inschrijvingsdetails.indexActiviteit', $activiteit);
+                }
+                else
+                {
+                    return \Redirect::Route('activiteiten.index', $request->kindid);
+                }
                 break;
         }
         return redirect(route('dashboard'));
