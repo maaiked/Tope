@@ -14,7 +14,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
             <button class=" rounded-md bg-blue-500 text-white focus:ring-gray-600 px-2 py-2 text-sm"
-                    onclick="window.history.back()">Terug naar activiteiten
+                    onclick="window.location='{{ route("activiteiten.index") }}'">Terug naar activiteiten
             </button>
             {{--    toon knop enkel als er inschrijvingen zijn om weer te geven --}}
             @if(!empty($activiteit->inschrijvingsdetails->first()))

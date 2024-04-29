@@ -138,8 +138,14 @@ class InschrijvingsdetailController extends Controller
                         }
                     }
                 }
-                // todo: if animator of admin: redirect naar inschrijvingen activiteit ipv index
-                return \Redirect::Route('activiteiten.index', $request->kindid);
+                if (auth()->user()->isAnimator)
+                {
+                    return \Redirect::Route('inschrijvingsdetails.indexActiviteit', $activiteit);
+                }
+                else
+                {
+                    return \Redirect::Route('activiteiten.index', $request->kindid);
+                }
                 break;
         }
         return redirect(route('dashboard'));
