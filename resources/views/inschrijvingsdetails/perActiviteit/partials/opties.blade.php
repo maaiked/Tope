@@ -20,7 +20,7 @@
                         <tr>
                             <td class="border px-4 py-2">{{$i->kind->voornaam}}</td>
                             <td class="border px-4 py-2">{{$i->kind->familienaam}}</td>
-                            <td class="border px-4 py-2">{{$i->kind->leerjaar}}</td>
+                            <td class="border px-4 py-2">{{$i->kind->leerjaar->label()}}</td>
                             <td class="border px-4 py-2">{{ $o->optie->omschrijving }}</td>
                             <td class="border px-4 py-2">{{$i->kind->afhalenKind}}</td>
                             <td class="border px-4 py-2">@if($i->kind->alleenNaarHuis) ja @else nee @endif</td>

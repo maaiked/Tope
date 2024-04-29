@@ -56,7 +56,7 @@
                                 <div class="col-span-1">
                                     <p class="mt-4 text-md text-gray-900 font-bold">Leeftijd:</p>
                                 </div><div class="col-span-1">
-                                    <p class="mt-4 text-md text-gray-900">{{ $activiteit->leerjaarVanaf->value." tot ".$activiteit->leerjaarTot->value }}</p>
+                                    <p class="mt-4 text-md text-gray-900">{{ $activiteit->leerjaarVanaf->label()." tot ".$activiteit->leerjaarTot->label() }}</p>
                                 </div>
 
                                 {{--    prijs activiteit + opties   --}}

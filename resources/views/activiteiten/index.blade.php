@@ -51,7 +51,7 @@
                                            for="{{ $kind->id }}">
                                         <span class="text-xs font-semibold uppercase">{{ $kind->voornaam}}</span>
                                         <span
-                                            class="text-xs font-semibold">{{ $kind->leerjaar->value}}</span>
+                                            class="text-xs font-semibold">{{ $kind->leerjaar->label()}}</span>
                                     </label>
                                 </div>
                             @endforeach
@@ -90,7 +90,7 @@
 
                             {{--    van leerjaar x tot leerjaar y    --}}
                             <div class="flex-1">
-                                <p class="mt-4 text-md text-gray-900">{{ $activiteit->leerjaarVanaf->value." tot ".$activiteit->leerjaarTot->value }}</p>
+                                <p class="mt-4 text-md text-gray-900">{{ $activiteit->leerjaarVanaf->label()." tot ".$activiteit->leerjaarTot->label() }}</p>
                             </div>
 
                             {{--    prijs activiteit + opties   --}}

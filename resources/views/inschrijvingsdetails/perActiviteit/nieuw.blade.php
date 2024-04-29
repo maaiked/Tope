@@ -5,7 +5,7 @@
             {{ __('Nieuwe inschrijving voor activiteit: id ').$activiteit->id." - ".$activiteit->naam }}
         </h2>
         <p>{{ $activiteit->locatie->naam." : van ".Carbon\Carbon::parse($activiteit->starttijd)->format('d-m-Y')." tot ".Carbon\Carbon::parse($activiteit->eindtijd)->format('d-m-Y')}}</p>
-        <p>{{$activiteit->leerjaarVanaf->value." - ".$activiteit->leerjaarTot->value}}</p>
+        <p>{{$activiteit->leerjaarVanaf->label()." - ".$activiteit->leerjaarTot->label()}}</p>
         <p>{{$activiteit->omschrijving}}</p>
 
     </x-slot>
@@ -17,6 +17,7 @@
                <form method="POST" action="{{ route('inschrijvingsdetail.store') }}" >
                     @csrf
                     <h1 class="font-bold text-xl">Nieuwe inschrijving</h1>
+                   <h2>Let op: enkel kinderen die voldoen aan de leeftijdsvoorwaarde worden getoond.</h2>
 
                    <input type="hidden" name="activiteit" value="{{ $activiteit->id }}" />
                    <div class="mt-4">
@@ -24,7 +25,7 @@
                        <select name="kindid" id="kindid" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50">
                            @foreach($kinderen as $kind)
                                <option value="{{ $kind->id }}" @selected(old('kind', $kind))>
-                                   {{ $kind->voornaam." ".$kind->familienaam." - RR: ".$kind->rijksregisternummer." - UP: ".$kind->uitpasnummer." - adres: ".optional($kind->user->profiel)->straat." ".optional($kind->user->profiel)->huisnummer." - ".optional($kind->user->profiel)->bus." , ".optional($kind->user->profiel)->gemeente.". Ouder: ".optional($kind->user->profiel)->voornaam." ".optional($kind->user->profiel)->familienaam }}</option>
+                                   {{ $kind->voornaam." ".$kind->familienaam." - ".$kind->leerjaar->label()." - RR: ".$kind->rijksregisternummer." - UP: ".$kind->uitpasnummer." - adres: ".optional($kind->user->profiel)->straat." ".optional($kind->user->profiel)->huisnummer." - ".optional($kind->user->profiel)->bus." , ".optional($kind->user->profiel)->gemeente.". Ouder: ".optional($kind->user->profiel)->voornaam." ".optional($kind->user->profiel)->familienaam }}</option>
                            @endforeach
                        </select>
                        <x-input-error :messages="$errors->get('kind')" class="mt-2"/>

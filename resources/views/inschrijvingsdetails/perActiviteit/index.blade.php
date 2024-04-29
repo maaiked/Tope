@@ -5,13 +5,22 @@
             {{ __('Inschrijvingen voor activiteit: id ').$activiteit->id." - ".$activiteit->naam }}
         </h2>
         <p>{{ $activiteit->locatie->naam." : van ".Carbon\Carbon::parse($activiteit->starttijd)->format('d-m-Y')." tot ".Carbon\Carbon::parse($activiteit->eindtijd)->format('d-m-Y')}}</p>
-        <p>{{$activiteit->leerjaarVanaf->value." - ".$activiteit->leerjaarTot->value}}</p>
+        <p>{{$activiteit->leerjaarVanaf->label()." - ".$activiteit->leerjaarTot->label()}}</p>
         <p>{{$activiteit->omschrijving}}</p>
 
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
+            @if (session('status') === 'geenKind')
+                <p class="text-lg py-4 px-4 text-red-600"
+                ><i>{{ __('Er werd geen kind gevonden met de gevraagde details. Controleer of het kind binnen de leeftijdslimiet valt en nog niet ingeschreven werd.') }}</i></p>
+            @elseif(session('status') === 'inschrijving-ok')
+                <p class="text-lg py-4 px-4 text-green-500"
+                ><i>{{ __('De inschrijving werd toegevoegd') }}</i></p>
+
+            @endif
 
             <button class=" rounded-md bg-blue-500 text-white focus:ring-gray-600 px-2 py-2 text-sm"
                     onclick="window.location='{{ route("activiteiten.index") }}'">Terug naar activiteiten
@@ -192,6 +201,7 @@
                     onclick="show('zoekForm')">
                     {{ "Kind toevoegen" }}
                 </button>
+
                 <form method="POST" action="{{ route('inschrijvingsdetails.create', $activiteit->id) }}" id="zoekForm" class="hidden">
                     @csrf
                     <p class="font-bold">Kind opzoeken:</p>

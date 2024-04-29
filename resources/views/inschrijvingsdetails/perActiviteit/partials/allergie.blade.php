@@ -15,7 +15,7 @@
                 @if($i->kind->allergie)
                     <tr>
                         <td class="border px-4 py-2">{{$i->kind->voornaam." , ".$i->kind->familienaam}}</td>
-                        <td class="border px-4 py-2">{{$i->kind->leerjaar}}</td>
+                        <td class="border px-4 py-2">{{$i->kind->leerjaar->label()}}</td>
                         <td class="border px-4 py-2">{{ optional($i->kind->user->profiel)->voornaam." ".optional($i->kind->user->profiel)->familienaam." : ".optional($i->kind->user->profiel)->telefoonnummer }}</td>
                         <td class="border px-4 py-2">{{$i->kind->contactpersoon}}</td>
                         <td class="border px-4 py-2">{{$i->kind->allergie}}</td>

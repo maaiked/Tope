@@ -61,7 +61,7 @@
         {{--    van leerjaar x tot leerjaar y    --}}
         <div class="col-span-1">
             <p class="mt-4 text-md text-gray-900 font-bold">Leeftijd activiteit:</p>
-            <p class=" text-md text-gray-900">{{ $inschrijving->activiteit->leerjaarVanaf->value." tot ".$inschrijving->activiteit->leerjaarTot->value }}</p>
+            <p class=" text-md text-gray-900">{{ $inschrijving->activiteit->leerjaarVanaf->label()." tot ".$inschrijving->activiteit->leerjaarTot->label() }}</p>
         </div>
 
         {{--    locatie activiteit   --}}
