@@ -113,7 +113,7 @@
                                 <td class="border px-2 py-2"> @if($i->kind->medicatie || $i->kind->allergie || $i->kind->beperking)
                                         <!-- Trigger Button -->
                                         <button name="allergie" onclick="show({{$i->id}})"
-                                                class="bg-orange-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                                class="bg-orange-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">
                                             Ja
                                         </button>
                                     @endif
@@ -159,7 +159,7 @@
                                 <td class="border px-2 py-2">@if($i->kind->infoAdminAnimator)
                                         <!-- Trigger Button -->
                                         <button name="infoAdminAnimator" onclick="showInfo({{$i->id}})"
-                                                class="bg-orange-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                                class="bg-orange-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">
                                             Ja
                                         </button>
                                     @endif
@@ -184,6 +184,63 @@
                                                 <div class="mb-4 font-bold">
                                                     {{$i->kind->infoAdminAnimator}}
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                              {{--    Knop bewerk interne info --}}
+                                    <button name="editAdminAnimator" onclick="showEditInfo({{$i->id}})"
+                                            class="inline-flex border-2 items-center rounded-lg  text-sm text-gray-500 hover:text-gray-900 focus:relative">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            fill="none"
+                                            viewBox="0 0 24 24"
+                                            stroke-width="1.5"
+                                            stroke="currentColor"
+                                            class="h-4 w-4"
+                                        >
+                                            <path
+                                                stroke-linecap="round"
+                                                stroke-linejoin="round"
+                                                d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
+                                            />
+                                        </svg>
+                                    </button>
+                                    <!-- Modal -->
+                                    <div id="EditInfo.{{$i->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
+                                        <div class="flex items-center justify-center min-h-screen">
+                                            <div class="bg-blue-500 w-1/2 p-6 rounded shadow-md">
+                                                <div class="flex justify-end">
+                                                    <!-- Close Button -->
+                                                    <button id="close" onclick="hideEditInfo({{$i->id}})"
+                                                            class="text-gray-700 hover:text-red-500">
+                                                        <svg class="w-6 h-6" fill="none" stroke="currentColor"
+                                                             viewBox="0 0 24 24"
+                                                             xmlns="http://www.w3.org/2000/svg">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                  stroke-width="2"
+                                                                  d="M6 18L18 6M6 6l12 12"></path>
+                                                        </svg>
+                                                    </button>
+                                                </div>
+                                                <form method="POST" action="{{ route('kind.editAdminAnimatorInfo', $activiteit->id) }}">
+                                                    @csrf
+                                                    <h2 class="text-2xl font-bold mb-4">{{"Bewerk interne info ".$i->kind->voornaam}}</h2>
+                                                    <div class="mb-4 font-bold">
+                                                        {{$i->kind->infoAdminAnimator}}
+                                                    </div>
+                                                    <input type="hidden" name="kind" value="{{ $i->kind->id }}"/>
+                                                    <div>
+                                                        <label for="infoAdminAnimator">Interne info bewerken</label>
+                                                        <input type="text" name="infoAdminAnimator" id="infoAdminAnimator"
+                                                               class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                                                               value="{{ old('infoAdminAnimator', $i->kind->infoAdminAnimator) }}"
+                                                               placeholder="nieuwe interne info voor admin en animator"/>
+                                                        <x-input-error :messages="$errors->get('infoAdminAnimator')" class="mt-2"/>
+                                                    </div>
+                                                    <button onclick="submit"
+                                                    >{{ "Updaten" }}</button>
+                                                </form>
+
                                             </div>
                                         </div>
                                     </div>
@@ -290,6 +347,11 @@
             modal.classList.remove('hidden');
         }
 
+        function hide(id) {
+            var modal = document.getElementById(id);
+            modal.classList.add('hidden');
+        }
+
         function showInfo(id) {
             var name = "info.".concat(id);
             var modal = document.getElementById(name);
@@ -302,8 +364,15 @@
             modal.classList.add('hidden');
         }
 
-        function hide(id) {
-            var modal = document.getElementById(id);
+        function showEditInfo(id) {
+            var name = "EditInfo.".concat(id);
+            var modal = document.getElementById(name);
+            modal.classList.remove('hidden');
+        }
+
+        function hideEditInfo(id) {
+            var name = "EditInfo.".concat(id);
+            var modal = document.getElementById(name);
             modal.classList.add('hidden');
         }
 

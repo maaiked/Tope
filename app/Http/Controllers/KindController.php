@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\LeerjaarEnum;
+use App\Models\Activiteit;
 use App\Models\Kind;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -122,6 +123,18 @@ class KindController extends Controller
 
         $kind->update($validated);
         return redirect(route('kinderen.index'));
+    }
+
+    public function editAdminAnimatorInfo(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'infoAdminAnimator'=> 'string|max:510',
+            'kind' => 'string|max:20'
+        ]);
+        $kind = Kind::find($validated['kind']);
+        $activiteit = Activiteit::find($id);
+        $kind->update(['infoAdminAnimator' => $validated['infoAdminAnimator']]);
+        return redirect(route('inschrijvingsdetails.indexActiviteit', $activiteit));
     }
 
     /**

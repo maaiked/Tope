@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/inschrijvingsdetails/lijsten/{id}', [InschrijvingsdetailController::class, 'indexLijsten'])->name('inschrijvingsdetails.indexLijsten');
     Route::get('/inschrijvingsdetails/lijsten/{id}/{modus}', [InschrijvingsdetailController::class, 'showLijst'])->name('inschrijvingsdetails.showLijst');
     Route::get('/inschrijvingsdetails/activiteit/{activiteit}/{inschrijving}/{detail}', [InschrijvingsdetailController::class, 'edit'])->name('inschrijvingsdetails.edit');
+    Route::post('/inschrijvingsdetails/activiteit/{id}', [KindController::class, 'editAdminAnimatorInfo'])->name('kind.editAdminAnimatorInfo');
 
 });
 
