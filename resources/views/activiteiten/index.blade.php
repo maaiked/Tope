@@ -129,11 +129,36 @@
                                     <p class="text-sm font-bold">VOLZET</p>
                                 @else
                                     <input type="hidden" name="kindid" value="{{ $geselecteerdkind->id }}">
-                                   <button
-                                        class="rounded-md bg-blue-600 text-white focus:ring-blue-400 px-4 py-2 text-sm"
-                                        type="submit" name="action" value="inschrijven">
-                                        inschrijven
-                                    </button>
+                                   <p class="rounded-md bg-blue-600 text-white focus:ring-blue-400 px-4 py-2 text-sm"
+                                       onclick="show({{$activiteit->id}})">Inschrijven</p>
+                                    <!-- Modal -->
+                                    <div id="confirm.{{$activiteit->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
+                                        <div class="flex items-center justify-center min-h-screen">
+                                            <div class="bg-gray-200 w-1/2 p-6 rounded shadow-md">
+                                                <div class="flex justify-end">
+                                                    <!-- Close Button -->
+                                                    <p id="close" onclick="hide({{$activiteit->id}})"
+                                                            class="text-gray-700 hover:text-red-500">
+                                                        <svg class="w-6 h-6" fill="none" stroke="currentColor"
+                                                             viewBox="0 0 24 24"
+                                                             xmlns="http://www.w3.org/2000/svg">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                  stroke-width="2"
+                                                                  d="M6 18L18 6M6 6l12 12"></path>
+                                                        </svg>
+                                                    </p>
+                                                </div>
+                                                <div class="content-center">
+                                                    <p class="px-2 py-2">Bevestig je inschrijving via de knop hieronder: </p>
+                                                    <button
+                                                        class="rounded-md bg-blue-600 text-white focus:ring-blue-400 px-4 py-2 text-sm"
+                                                        type="submit" name="action" value="inschrijven">
+                                                        bevestigen
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 @endif
 
                                 <button
@@ -156,5 +181,23 @@
 
             </div>
         </div>
+    <script>
+
+        // JavaScript to toggle the modal
+
+        function show(id) {
+            var name = "confirm.".concat(id);
+            var modal = document.getElementById(name);
+            modal.classList.remove('hidden');
+        }
+
+        function hide(id) {
+            var name = "confirm.".concat(id);
+            var modal = document.getElementById(name);
+            modal.classList.add('hidden');
+        }
+
+
+    </script>
 
 </x-app-layout>

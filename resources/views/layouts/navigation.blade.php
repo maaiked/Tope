@@ -18,13 +18,13 @@
                     <x-nav-link :href="route('activiteiten.index')" :active="request()->routeIs('activiteiten.index')">
                         {{ __('Activiteiten') }}
                     </x-nav-link>
-                    @if(!Auth::user()->isAnimator)
-                    <x-nav-link :href="route('kinderen.index')" :active="request()->routeIs('kinderen.index')">
-                        {{ __('Kinderen') }}
-                    </x-nav-link>
                     <x-nav-link :href="route('inschrijvingsdetails.index')" :active="request()->routeIs('inschrijvingsdetails.index')">
                         {{ __('Inschrijvingen') }}
                     </x-nav-link>
+                    @if(!Auth::user()->isAnimator)
+                        <x-nav-link :href="route('kinderen.index')" :active="request()->routeIs('kinderen.index')">
+                            {{ __('Kinderen') }}
+                        </x-nav-link>
                     @endif
                     @if(!Auth::user()->isAdmin && !Auth::user()->isAnimator)
                         <x-nav-link :href="route('profiel.create')" :active="request()->routeIs('profiel.create')">
