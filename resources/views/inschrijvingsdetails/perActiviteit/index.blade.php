@@ -47,7 +47,7 @@
                     <tr>
                         <th class="px-2 py-2">Deelnemer voornaam , familienaam</th>
                         <th class="px-2 py-2">Ouder voornaam , familienaam</th>
-                        <th class="px-2 py-2">IN / UIT</th>
+                        <th class="px-2 py-2">Inchecken / Uitchecken</th>
                         <th class="px-2 py-2">Alleen naar huis?</th>
                         <th class="px-2 py-2">Afhalen</th>
                         <th class="px-2 py-2">Gekozen opties</th>
@@ -71,12 +71,20 @@
                                 <!-- Knoppen in- en uitchecken -->
                                 <td class="border px-2 py-2">
                                     <button
-                                        class="rounded-md bg-gray-200 text-black focus:ring-gray-600 px-2 py-2 text-sm">
-                                        {{ "inchecken" }}
+                                        @if($i->ingechecked) class="rounded-md bg-green-500  text-black focus:ring-gray-600 px-2 py-2 text-sm" text="IN"
+                                        @else class="rounded-md bg-gray-200  text-black focus:ring-gray-600 px-2 py-2 text-sm"
+                                        @endif
+                                            @if($i->uitgechecked) disabled @endif
+                                        onclick="window.location='{{ route("inschrijvingsdetails.edit", [$activiteit->id, $i->id, "inchecken"]) }}'">
+                                        {{ "IN" }}
                                     </button>
                                     <button
-                                        class="rounded-md bg-gray-200  text-black focus:ring-gray-600 px-2 py-2 text-sm">
-                                        {{ "uitchecken" }}
+                                        @if($i->uitgechecked) class="rounded-md bg-green-500  text-black focus:ring-gray-600 px-2 py-2 text-sm"
+                                        @else class="rounded-md bg-gray-200  text-black focus:ring-gray-600 px-2 py-2 text-sm "
+                                        @endif
+                                            @if(!$i->ingechecked) disabled @endif
+                                        onclick="window.location='{{ route("inschrijvingsdetails.edit", [$activiteit->id, $i->id, "uitchecken"]) }}'">
+                                        {{ "UIT" }}
                                     </button>
                                 </td>
 

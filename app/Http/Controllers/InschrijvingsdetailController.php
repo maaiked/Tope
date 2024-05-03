@@ -208,9 +208,28 @@ class InschrijvingsdetailController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Inschrijvingsdetail $inschrijvingsdetail)
+    public function edit($activiteitid, $i, $detail)
     {
-        //
+        $activiteit = Activiteit::find($activiteitid);
+        $is = Inschrijvingsdetail::find($i);
+        switch ($detail)
+        {
+            case 'inchecken':
+                if (!$is->ingechecked)
+                {
+                    $is->update(['ingechecked' => true]);
+                }
+                else $is->update(['ingechecked' => false]);
+                break;
+            case 'uitchecken':
+                if (!$is->uitgechecked)
+                {
+                    $is->update(['uitgechecked' => true]);
+                }
+                else $is->update(['uitgechecked' => false]);
+                break;
+        }
+        return \Redirect::Route('inschrijvingsdetails.indexActiviteit', $activiteit);
     }
 
     /**
