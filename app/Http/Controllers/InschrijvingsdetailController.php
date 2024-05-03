@@ -64,18 +64,17 @@ class InschrijvingsdetailController extends Controller
      */
     public function create(Request $request)
     {
-        //todo: validate request
         $validated = $request->validate([
             'zoek'=> 'required|string|max:255',
             'activiteit'=>'required|int']);
-        $activiteit = Activiteit::find($request->activiteit);
+        $activiteit = Activiteit::find($validated['activiteit']);
 
-        $kinderen = Kind::where(function ($query) use ($request)
+        $kinderen = Kind::where(function ($query) use ($validated)
        {
-            $query->where('voornaam', 'like', '%'.$request->zoek.'%')
-                ->orWhere('familienaam', 'like', '%'.$request->zoek.'%')
-                ->orWhere('rijksregisternummer', 'like', '%'.$request->zoek.'%')
-                ->orWhere('uitpasnummer', 'like', '%'.$request->zoek.'%');
+            $query->where('voornaam', 'like', '%'.$validated['zoek'].'%')
+                ->orWhere('familienaam', 'like', '%'.$validated['zoek'].'%')
+                ->orWhere('rijksregisternummer', 'like', '%'.$validated['zoek'].'%')
+                ->orWhere('uitpasnummer', 'like', '%'.$validated['zoek'].'%');
         })->where('leerjaar', '>=', $activiteit->leerjaarVanaf)
         ->where('leerjaar', '<=', $activiteit->leerjaarTot)
         ->get();
