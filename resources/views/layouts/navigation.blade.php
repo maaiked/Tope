@@ -101,12 +101,12 @@
                 {{ __('Activiteiten') }}
              </x-responsive-nav-link>
             @if(!Auth::user()->isAnimator)
+                <x-responsive-nav-link :href="route('inschrijvingsdetails.index')" :active="request()->routeIs('inschrijvingsdetails.index')">
+                    {{ __('Inschrijvingen') }}
+                </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('kinderen.index')" :active="request()->routeIs('kinderen.index')">
                 {{ __('Kinderen') }}
             </x-responsive-nav-link>
-             <x-responsive-nav-link :href="route('inschrijvingsdetails.index')" :active="request()->routeIs('inschrijvingsdetails.index')">
-                 {{ __('Inschrijvingen') }}
-             </x-responsive-nav-link>
             @endif
             @if(!Auth::user()->isAdmin && !Auth::user()->isAnimator)
             <x-responsive-nav-link :href="route('profiel.create')" :active="request()->routeIs('profiel.create')">
