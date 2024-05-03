@@ -128,7 +128,7 @@ class KindController extends Controller
     public function editAdminAnimatorInfo(Request $request, $id)
     {
         $validated = $request->validate([
-            'infoAdminAnimator'=> 'string|max:510',
+            'infoAdminAnimator'=> 'nullable|string|max:510',
             'kind' => 'string|max:20'
         ]);
         $kind = Kind::find($validated['kind']);
