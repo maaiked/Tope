@@ -26,6 +26,11 @@
                         {{ __('Inschrijvingen') }}
                     </x-nav-link>
                     @endif
+                    @if(!Auth::user()->isAdmin)
+                    <x-nav-link :href="route('user.indexAdmin')" :active="request()->routeIs('user.indexAdmin')">
+                        {{ __('Gebruikers') }}
+                    </x-nav-link>
+                    @endif
                     @if(!Auth::user()->isAdmin && !Auth::user()->isAnimator)
                         <x-nav-link :href="route('profiel.create')" :active="request()->routeIs('profiel.create')">
                         {{ __('Profiel') }}
