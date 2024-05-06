@@ -55,6 +55,7 @@
                         <th class="px-2 py-2">Medisch</th>
                         <th class="px-2 py-2">Interne info</th>
                         <th class="px-2 py-2">Betaling</th>
+                        <th class="px-0 py-2 text-xs">uitpasnr</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -252,6 +253,9 @@
                                         class="rounded-md bg-gray-500 text-white focus:ring-gray-600 px-2 py-2 text-sm">
                                         {{ "betaling" }}
                                     </button>
+                                </td>
+                                <!-- Uitpasnummer -->
+                                <td class="text-xs px-0" >{{$i->kind->uitpasnummer}}</td>
                             </tr>
                         @endif
                     @endforeach
@@ -338,7 +342,19 @@
             </div>
         </div>
     </div>
+    {{--            scripts voor tabel met search, sorting en paginatie--}}
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+
+
     <script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                // Add any customization options here
+            });
+        });
 
         // JavaScript to toggle the modal
 
