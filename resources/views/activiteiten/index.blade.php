@@ -98,19 +98,7 @@
                                 <p class="mt-4 text-md text-gray-900 font-bold">{{"€ ". $activiteit->prijs}}</p>
                                 <input type="hidden" name="prijs" value="{{ $activiteit->prijs }}" />
                                 @foreach($activiteit->opties as $optie)
-{{--               als er nog niet ingeschreven kan worden, toon geen checkboxes                     --}}
-                                    @if(empty($geselecteerdkind) or !empty($activiteit->inschrijvingsdetails()->where('kind_id', '=',$geselecteerdkind->id)->first()) or
-                                    $activiteit->inschrijvenVanaf >= today() or $activiteit->inschrijvenTot < today() or
-                                    $activiteit->aantalInschrijvingen >= $activiteit->capaciteit)
-                                        <p>{{ $optie->omschrijving.": € ".$optie->prijs}}</p>
-{{--               als er wel ingeschreven kan worden, toon checkboxes                     --}}
-                                    @else
-                                        <div>
-                                            <input type="checkbox" name={{$optie->omschrijving}} id={{$optie->omschrijving}} class="checkbox" value="{{$optie->prijs}}" />
-                                            <label for="{{$optie->omschrijving}}" class=" text-md text-gray-900">
-                                                {{ $optie->omschrijving.": € ".$optie->prijs}}</label>
-                                        </div>
-                                    @endif
+                                    <p>{{ $optie->omschrijving.": € ".$optie->prijs}}</p>
                                 @endforeach
                             </div>
 
@@ -149,9 +137,18 @@
                                                     </p>
                                                 </div>
                                                 <div class="content-center">
-                                                    <p class="px-2 py-2">Bevestig je inschrijving via de knop hieronder: </p>
+                                                    <p class="px-2 py-2">Wil je deze inschrijving bevestigen? </p>
+                                                    <p class="px-2 py-2 font-bold">{{ $activiteit->naam." : ".$geselecteerdkind->voornaam." ".$geselecteerdkind->familienaam  }}</p>
+                                                    <p>Selecteer je gewenste opties:</p>
+                                                    @foreach($activiteit->opties as $optie)
+                                                            <div>
+                                                                <input type="checkbox" name={{$optie->omschrijving}} id={{$optie->omschrijving}} class="checkbox" value="{{$optie->prijs}}" />
+                                                                <label for="{{$optie->omschrijving}}" class=" text-md text-gray-900">
+                                                                    {{ $optie->omschrijving.": € ".$optie->prijs}}</label>
+                                                            </div>
+                                                    @endforeach
                                                     <button
-                                                        class="rounded-md bg-blue-600 text-white focus:ring-blue-400 px-4 py-2 text-sm"
+                                                        class="rounded-md bg-blue-600 text-white focus:ring-blue-400 px-2 py-2 mt-4 text-sm"
                                                         type="submit" name="action" value="inschrijven">
                                                         bevestigen
                                                     </button>

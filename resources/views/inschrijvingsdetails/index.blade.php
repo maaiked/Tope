@@ -70,9 +70,38 @@
                         </button>
                     @if($inschrijvingsdetail->activiteit->annulerenTot > today())
                             <button class="rounded-md bg-red-900 text-white focus:ring-gray-600 px-4 py-2 text-sm m-4"
-                                    onclick="window.location='{{ route("inschrijvingsdetails.destroy", $inschrijvingsdetail->inschrijvingsdetails_id) }}'">
-                                {{ "uitschrijven" }}
+                                    onclick="show({{$inschrijvingsdetail->inschrijvingsdetails_id}})">
+                                    {{ "uitschrijven" }}
                             </button>
+                            <!-- Modal -->
+                            <div id="confirm.{{$inschrijvingsdetail->inschrijvingsdetails_id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
+                                <div class="flex items-center justify-center min-h-screen">
+                                    <div class="bg-gray-200 w-1/2 p-6 rounded shadow-md">
+                                        <div class="flex justify-end">
+                                            <!-- Close Button -->
+                                            <p id="close" onclick="hide({{$inschrijvingsdetail->inschrijvingsdetails_id}})"
+                                               class="text-gray-700 hover:text-red-500">
+                                                <svg class="w-6 h-6" fill="none" stroke="currentColor"
+                                                     viewBox="0 0 24 24"
+                                                     xmlns="http://www.w3.org/2000/svg">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                          stroke-width="2"
+                                                          d="M6 18L18 6M6 6l12 12"></path>
+                                                </svg>
+                                            </p>
+                                        </div>
+                                        <div class="content-center">
+                                            <p class="px-2 py-2">Wil je volgende inschrijving annuleren? </p>
+                                            <p class="px-2 py-2 font-bold">{{ $inschrijvingsdetail->activiteit->naam." : ".$inschrijvingsdetail->kind->voornaam." ".$inschrijvingsdetail->kind->familenaam }}</p>
+                                            <button
+                                                class="rounded-md bg-blue-600 text-white focus:ring-blue-400 px-2 py-2 text-sm"
+                                                onclick="window.location='{{ route("inschrijvingsdetails.destroy", $inschrijvingsdetail->inschrijvingsdetails_id) }}'">
+                                                {{ "Inschrijving annuleren" }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @else
                             <p class="m-4">uitschrijven niet meer mogelijk</p>
                         @endif
@@ -85,4 +114,22 @@
              {{ $inschrijvingsdetails->links() }}
         </div>
     </div>
+
+    <script>
+
+        // JavaScript to toggle the modal
+
+        function show(id) {
+            var name = "confirm.".concat(id);
+            var modal = document.getElementById(name);
+            modal.classList.remove('hidden');
+        }
+
+        function hide(id) {
+            var name = "confirm.".concat(id);
+            var modal = document.getElementById(name);
+            modal.classList.add('hidden');
+        }
+
+    </script>
 </x-app-layout>
