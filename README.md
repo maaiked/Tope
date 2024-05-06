@@ -4,8 +4,8 @@ Dit project werd gemaakt voor Erasmus Hogeschool Brussel, als Final work.
 Het werd opgebouwd met Laravel - Breeze.
 
 ## public link
-Dit project wordt gehost op https://maaikedupont.be/demo-tope
-De documentatie is te vinden op https://maaikedupont.be/tope
+Dit project wordt gehost op https://demo-tope.maaikedupont.be/
+De documentatie is te vinden op https://tope.maaikedupont.be/
 
 Voor testfunctionaliteit kan ingelogd worden met
 - voor adminfuncties: sarah@tope.be - PW : Laravel123
