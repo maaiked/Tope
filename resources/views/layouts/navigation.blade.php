@@ -26,7 +26,7 @@
                         {{ __('Kinderen') }}
                     </x-nav-link>
                     @endif
-                    @if(!Auth::user()->isAdmin)
+                    @if(Auth::user()->isAdmin)
                     <x-nav-link :href="route('user.indexAdmin')" :active="request()->routeIs('user.indexAdmin')">
                         {{ __('Gebruikers') }}
                     </x-nav-link>
