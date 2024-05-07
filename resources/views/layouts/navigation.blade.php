@@ -26,6 +26,13 @@
                             {{ __('Kinderen') }}
                         </x-nav-link>
                     @endif
+                    @if(!Auth::user()->isAdmin)
+                    <x-nav-link :href="route('user.indexAdmin')" :active="request()->routeIs('user.indexAdmin')">
+                        {{ __('Gebruikers') }}
+                        <x-nav-link :href="route('user.nieuw')" :active="request()->routeIs('user.nieuw')">
+                            {{ __('Gebruiker aanmaken') }}
+                    </x-nav-link>
+                    @endif
                     @if(!Auth::user()->isAdmin && !Auth::user()->isAnimator)
                         <x-nav-link :href="route('profiel.create')" :active="request()->routeIs('profiel.create')">
                         {{ __('Profiel') }}
