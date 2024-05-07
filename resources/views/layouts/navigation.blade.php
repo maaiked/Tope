@@ -22,15 +22,16 @@
                     <x-nav-link :href="route('inschrijvingsdetails.index')" :active="request()->routeIs('inschrijvingsdetails.index')">
                         {{ __('Inschrijvingen') }}
                     </x-nav-link>
-                        <x-nav-link :href="route('kinderen.index')" :active="request()->routeIs('kinderen.index')">
-                            {{ __('Kinderen') }}
-                        </x-nav-link>
+                    <x-nav-link :href="route('kinderen.index')" :active="request()->routeIs('kinderen.index')">
+                        {{ __('Kinderen') }}
+                    </x-nav-link>
                     @endif
                     @if(!Auth::user()->isAdmin)
                     <x-nav-link :href="route('user.indexAdmin')" :active="request()->routeIs('user.indexAdmin')">
                         {{ __('Gebruikers') }}
-                        <x-nav-link :href="route('user.nieuw')" :active="request()->routeIs('user.nieuw')">
-                            {{ __('Gebruiker aanmaken') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('user.nieuw')" :active="request()->routeIs('user.nieuw')">
+                        {{ __('Gebruiker aanmaken') }}
                     </x-nav-link>
                     @endif
                     @if(!Auth::user()->isAdmin && !Auth::user()->isAnimator)
