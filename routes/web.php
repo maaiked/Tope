@@ -28,11 +28,11 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     //profile routes
-    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
-    Route::get('/profile', [ProfileController::class, 'create'])->name('profile.create');
-    Route::post('/profile', [ProfileController::class, 'store'])->name('profile.store');
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profiles', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/nieuw', [ProfileController::class, 'create'])->name('profile.create');
+    Route::post('/profile/nieuw', [ProfileController::class, 'store'])->name('profile.store');
+    Route::get('/profile/{id}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile/{id}', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     //profiel routes
