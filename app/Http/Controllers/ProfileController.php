@@ -15,7 +15,8 @@ class ProfileController extends Controller
 
     public function index()
     {
-        return view ('profile.indexAdmin');
+        $users['users'] = User::all();
+        return view('profile.indexAdmin')->with($users);
     }
 
     /**
@@ -23,8 +24,7 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        $users['users'] = User::all();
-        return view('profile.nieuw')->with($users);
+        return view('profile.nieuw');
     }
 
     /**
