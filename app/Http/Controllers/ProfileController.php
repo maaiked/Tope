@@ -14,9 +14,13 @@ class ProfileController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+    public function index()
+    {
+        return view ('profile.adminIndex');
+    }
     public function create()
     {
-        return view('user.nieuw');
+        return view('profile.nieuw');
     }
 
     /**
@@ -31,7 +35,7 @@ class ProfileController extends Controller
         ]);
 
         $request->user()->create($validated);
-        return redirect(route('user.indexAdmin'));
+        return redirect(route('profile.indexAdmin'));
     }
 
     /**

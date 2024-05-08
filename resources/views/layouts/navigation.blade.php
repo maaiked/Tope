@@ -27,10 +27,10 @@
                     </x-nav-link>
                     @endif
                     @if(Auth::user()->isAdmin)
-                    <x-nav-link :href="route('user.indexAdmin')" :active="request()->routeIs('user.indexAdmin')">
+                    <x-nav-link :href="route('profile.index')" :active="request()->routeIs('profile.index')">
                         {{ __('Gebruikers') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('user.nieuw')" :active="request()->routeIs('user.nieuw')">
+                    <x-nav-link :href="route('profile.create')" :active="request()->routeIs('profile.create')">
                         {{ __('Gebruiker aanmaken') }}
                     </x-nav-link>
                     @endif
