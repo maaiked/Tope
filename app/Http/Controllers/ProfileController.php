@@ -35,7 +35,7 @@ class ProfileController extends Controller
         $validated = $request->validate([
             'email'=> 'email:rfc,dns',
             'password'=> 'required|string|max:255',
-            'isAdmin'=> 'required|bool',
+            'isAdmin'=> 'bool',
         ]);
 
         $request->user()->create($validated);
