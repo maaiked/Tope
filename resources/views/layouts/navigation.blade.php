@@ -28,10 +28,10 @@
                     @endif
                     @if(Auth::user()->isAdmin)
                     <x-nav-link :href="route('profile.index')" :active="request()->routeIs('profile.index')">
-                        {{ __('Gebruikers') }}
+                        {{ __('Profile') }}
                     </x-nav-link>
                     <x-nav-link :href="route('profile.create')" :active="request()->routeIs('profile.create')">
-                        {{ __('Gebruiker aanmaken') }}
+                        {{ __('Profile') }}
                     </x-nav-link>
                     @endif
                     @if(!Auth::user()->isAdmin && !Auth::user()->isAnimator)
