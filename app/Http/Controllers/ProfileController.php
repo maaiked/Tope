@@ -33,7 +33,7 @@ class ProfileController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'email'=> 'email:rfc,dns',
+            'email'=> 'required|email:rfc,dns|unique:users|max:255',
             'password'=> 'required|string|max:255',
             'isAdmin'=> 'bool',
         ]);
