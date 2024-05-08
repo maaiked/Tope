@@ -39,7 +39,7 @@ class ProfileController extends Controller
         ]);
 
         $request->user()->create($validated);
-        return redirect(route('profile.indexAdmin'));
+        return redirect(route('profile.index'));
     }
 
     /**
