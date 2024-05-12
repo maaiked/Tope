@@ -29,7 +29,7 @@
 
                                 <input type="checkbox"
                                        name="isAdmin"
-                                       id="isAdmin_{{$user->id}}"
+                                       id="isAdmin"
                                        value="1"
                                        onchange="this.form.submit()"
                                        @if($user->isAdmin) checked @endif
