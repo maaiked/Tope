@@ -31,7 +31,8 @@
                                        name="isAdmin"
                                        id="isAdmin_{{$user->id}}"
                                        value="1"
-                                       onchange="submitForm('updateAdminForm_{{$user->id}}')"
+                                       onchange="this.form.submit()"
+                                       @if($user->isAdmin) checked @endif
                                 >
                             </form>
                         </td>
@@ -54,10 +55,6 @@
                             // Add any customization options here
                         });
                     });
-
-                    function submitForm(formId) {
-                        document.getElementById(formId).submit();
-                    }
                 </script>
 
 
