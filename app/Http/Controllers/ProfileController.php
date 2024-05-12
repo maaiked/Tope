@@ -69,6 +69,24 @@ class ProfileController extends Controller
     }
 
     /**
+     * Update if the user is an Admin or Animator.
+     */
+    public function updateAdmin(ProfileUpdateRequest $request): RedirectResponse
+    {
+        if ($request->has('isAdmin') && $request->get('isAdmin') == 1) {
+            $request->user->isAdmin = true;
+            $request->user->isAnimator = false;
+        } else {
+            $request->user->isAdmin = false;
+            $request->user->isAnimator = true;
+        }
+
+        $request->user->save();
+
+        return Redirect::route('profile.index')->with('status', 'profile-updated');
+    }
+
+    /**
      * Delete the user's account.
      */
     public function destroy(Request $request): RedirectResponse
