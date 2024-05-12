@@ -54,7 +54,12 @@
                             // Add any customization options here
                         });
                     });
+
+                    function submitForm(formId) {
+                        document.getElementById(formId).submit();
+                    }
                 </script>
+
 
             </div>
         </div>
