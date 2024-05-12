@@ -23,9 +23,17 @@
                     <tr>
                         <td class="border px-4 py-2">{{$user->email}}</td>
                         <td class="border px-4 py-2">
-                            <input type="checkbox" name="isAdmin" id="isAdmin" value="1"
-                                   {{$user->isAdmin ? 'checked' : ''}}
-                                   onchange="window.location='{{ route("profile.updateAdmin", $user->id) }}'" >
+                            <form method="POST" action="{{ route('profile.updateAdmin', $user->id) }}">
+                                @csrf
+                                @method('PUT')
+
+                                <input type="checkbox"
+                                       name="isAdmin"
+                                       id="isAdmin_{{$user->id}}"
+                                       value="1"
+                                       {{$user->isAdmin ? 'checked' : ''}}
+                                       onchange="submitForm('updateAdminForm_{{$user->id}}')">
+                            </form>
                         </td>
                     </tr>
                     @endforeach
