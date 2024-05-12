@@ -32,7 +32,6 @@
                                        id="isAdmin_{{$user->id}}"
                                        value="1"
                                        onchange="submitForm('updateAdminForm_{{$user->id}}')"
-                                       @if($user->isAdmin) checked @endif
                                 >
                             </form>
                         </td>
