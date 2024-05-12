@@ -31,8 +31,9 @@
                                        name="isAdmin"
                                        id="isAdmin_{{$user->id}}"
                                        value="1"
-                                       {{$user->isAdmin ? 'checked' : ''}}
-                                       onchange="submitForm('updateAdminForm_{{$user->id}}')">
+                                       onchange="submitForm('updateAdminForm_{{$user->id}}')"
+                                       @if($user->isAdmin) checked @endif
+                                >
                             </form>
                         </td>
                     </tr>
