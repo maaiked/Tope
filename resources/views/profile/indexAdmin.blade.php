@@ -23,7 +23,8 @@
                     <tr>
                         <td class="border px-4 py-2">{{$user->email}}</td>
                         <td class="border px-4 py-2">
-                            <input type="checkbox", name="isAdmin", id="isAdmin", value="1",
+                            <input type="checkbox" name="isAdmin" id="isAdmin" value="1"
+                                   {{$user->isAdmin ? 'checked' : ''}}
                                    onchange="window.location='{{ route("profile.updateAdmin", $user->id) }}'" >
                         </td>
                     </tr>
