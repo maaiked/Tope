@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/nieuw', [ProfileController::class, 'store'])->name('profile.store');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::patch('/profile/updateAdmin', [ProfileController::class, 'update'])->name('profile.updateAdmin');
+    Route::put('/profile/updateAdmin', [ProfileController::class, 'update'])->name('profile.updateAdmin');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     //profiel routes
