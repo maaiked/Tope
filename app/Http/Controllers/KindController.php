@@ -118,7 +118,7 @@ class KindController extends Controller
             'infoAdminAnimator'=> 'string|max:510',
             'alleenNaarHuis' => 'boolean',
             'fotoToestemming' => 'boolean',
-            'leerjaar' => [new Enum(LeerjaarEnum::class)],
+            'leerjaar' => [Rule::enum(LeerjaarEnum::class)],
         ]);
 
         $kind->update($validated);

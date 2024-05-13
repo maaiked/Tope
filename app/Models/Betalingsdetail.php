@@ -12,6 +12,9 @@ class Betalingsdetail extends Model
     use SoftDeletes;
     public $timestamps = false;
 
+    protected $fillable =
+        ['methode', 'datum'];
+
     protected $casts = [
         'datum' => 'date',
         'methode' => MethodeEnum::class
