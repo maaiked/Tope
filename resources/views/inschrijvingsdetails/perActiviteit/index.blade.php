@@ -249,14 +249,58 @@
 
                                 <!-- Knop betaling -->
                                 <td class="border px-2 py-2">
+                                    <!-- als er reeds betaald werd, wordt de betalingsmethode getoond -->
                                     @if($i->betalingsdetail()->exists())
-                                    <button class="rounded-md bg-green-500 text-white focus:ring-gray-600 px-2 py-2 text-sm">
-                                        {{"betaald"}}
+                                    <button class="rounded-md bg-green-500 text-white px-2 py-2 text-sm" disabled>
+                                        {{$i->betalingsdetail->methode}}
                                     </button>
+                                    <!-- als er nog niet betaald werd, wordt er een knop getoond waarmee de betaling kan geregistreerd worden -->
                                     @else
-                                        <button class="rounded-md bg-gray-500 text-white focus:ring-gray-600 px-2 py-2 text-sm">
-                                            {{"betaling"}}
+                                        <button onclick="showBetaling({{$i->id}})" class="rounded-md bg-gray-500 text-white focus:ring-gray-600 px-2 py-2 text-sm" >
+                                            {{"betalen"}}
                                         </button>
+                                        <!-- Modal -->
+                                        <div id="Betaling.{{$i->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
+                                            <div class="flex items-center justify-center min-h-screen">
+                                                <div class="bg-blue-500 w-1/2 p-6 rounded shadow-lg">
+                                                    <div class="flex justify-end">
+                                                        <!-- Close Button -->
+                                                        <button id="close" onclick="hideBetaling({{$i->id}})"
+                                                                class="text-gray-700 hover:text-red-500">
+                                                            <svg class="w-6 h-6" fill="none" stroke="currentColor"
+                                                                 viewBox="0 0 24 24"
+                                                                 xmlns="http://www.w3.org/2000/svg">
+                                                                <path stroke-linecap="round" stroke-linejoin="round"
+                                                                      stroke-width="2"
+                                                                      d="M6 18L18 6M6 6l12 12"></path>
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                    <form method="POST" action="{{ route('betaling.store', $activiteit->id) }}">
+                                                        @csrf
+                                                        <h2 class="text-2xl font-bold mb-4">{{"Registreer de betaling voor ".$i->kind->voornaam}}</h2>
+                                                        <input type="hidden" name="inschrijvingsdetail_id" value="{{ $i->id }}"/>
+                                                        <div>
+                                                            <p class="m-4"> {{"Selecteer de betaalwijze: "}}</p>
+                                                            <div>
+                                                                <input type="radio" id="factuur" name="methode" value="factuur" disabled>
+                                                                <label for="factuur">Factuur</label>
+                                                            </div>
+                                                            <div>
+                                                                <input type="radio" id="bancontact" name="methode" value="bancontact">
+                                                                <label for="bancontact">Bancontact</label>
+                                                            </div>
+                                                            <div>
+                                                                <input type="radio" id="cash" name="methode" value="cash">
+                                                                <label for="cash">Cash</label>
+                                                            </div>
+                                                            <button class="rounded-md mt-4 bg-green-500 text-white focus:ring-gray-600 px-2 py-2 text-sm" onclick="submit"
+                                                            >{{ "Registreer" }}</button>
+                                                            </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
                                     @endif
                                 </td>
                                 <!-- Uitpasnummer -->
@@ -393,6 +437,18 @@
 
         function hideEditInfo(id) {
             var name = "EditInfo.".concat(id);
+            var modal = document.getElementById(name);
+            modal.classList.add('hidden');
+        }
+
+        function showBetaling(id) {
+            var name = "Betaling.".concat(id);
+            var modal = document.getElementById(name);
+            modal.classList.remove('hidden');
+        }
+
+        function hideBetaling(id) {
+            var name = "Betaling.".concat(id);
             var modal = document.getElementById(name);
             modal.classList.add('hidden');
         }

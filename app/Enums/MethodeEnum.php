@@ -2,9 +2,9 @@
 
 namespace App\Enums;
 
-enum MethodeEnum
+enum MethodeEnum: string
 {
-    case BANCONTACT;
-    case CASH;
-    case FACTUUR;
+    case BANCONTACT = "bancontact";
+    case CASH = "cash";
+    case FACTUUR = "factuur";
 }
