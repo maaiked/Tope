@@ -72,7 +72,7 @@
                                 <!-- Knoppen in- en uitchecken -->
                                 <td class="border px-2 py-2">
                                     <button
-                                        @if($i->ingechecked) class="rounded-md bg-green-500  text-black focus:ring-gray-600 px-2 py-2 text-sm" text="IN"
+                                        @if($i->ingechecked) class="rounded-md bg-green-500  text-black focus:ring-gray-600 px-2 py-2 text-sm"
                                         @else class="rounded-md bg-gray-200  text-black focus:ring-gray-600 px-2 py-2 text-sm"
                                         @endif
                                             @if($i->uitgechecked) disabled @endif
