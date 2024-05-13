@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Inschrijvingsdetail extends Model
@@ -22,6 +23,11 @@ class Inschrijvingsdetail extends Model
     public function inschrijvingsdetail_opties(): HasMany
     {
         return $this->hasMany(Inschrijvingsdetail_optie::class);
+    }
+
+    public function betalingsdetail(): HasOne
+    {
+        return $this->hasOne(Betalingsdetail::class);
     }
 
     protected $guarded = [

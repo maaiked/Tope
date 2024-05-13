@@ -249,10 +249,15 @@
 
                                 <!-- Knop betaling -->
                                 <td class="border px-2 py-2">
-                                    <button
-                                        class="rounded-md bg-gray-500 text-white focus:ring-gray-600 px-2 py-2 text-sm">
-                                        {{ "betaling" }}
+                                    @if($i->betalingsdetail()->exists())
+                                    <button class="rounded-md bg-green-500 text-white focus:ring-gray-600 px-2 py-2 text-sm">
+                                        {{"betaald"}}
                                     </button>
+                                    @else
+                                        <button class="rounded-md bg-gray-500 text-white focus:ring-gray-600 px-2 py-2 text-sm">
+                                            {{"betaling"}}
+                                        </button>
+                                    @endif
                                 </td>
                                 <!-- Uitpasnummer -->
                                 <td class="text-xs px-0" >{{$i->kind->uitpasnummer}}</td>

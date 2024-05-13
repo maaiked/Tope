@@ -16,7 +16,7 @@ class Optie extends Model
         'prijs', 'omschrijving', 'datum'
     ];
 
-    public function user(): BelongsTo
+    public function activiteit(): BelongsTo
     {
         return $this->belongsTo(Activiteit::class);
     }

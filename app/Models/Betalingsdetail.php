@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\MethodeEnum;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Betalingsdetail extends Model
@@ -15,4 +16,9 @@ class Betalingsdetail extends Model
         'datum' => 'date',
         'methode' => MethodeEnum::class
     ];
+
+    public function inschrijvingsdetail(): BelongsTo
+    {
+        return $this->belongsTo(Inschrijvingsdetail::class);
+    }
 }
