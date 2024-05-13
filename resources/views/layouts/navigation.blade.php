@@ -18,6 +18,11 @@
                     <x-nav-link :href="route('activiteiten.index')" :active="request()->routeIs('activiteiten.index')">
                         {{ __('Activiteiten') }}
                     </x-nav-link>
+                    @if(Auth::user()->isAdmin)
+                    <x-nav-link :href="route('activiteiten.create')" :active="request()->routeIs('activiteiten.create')">
+                        {{ __('Activiteit aanmaken') }}
+                    </x-nav-link>
+                    @endif
                     @if(!Auth::user()->isAnimator)
                     <x-nav-link :href="route('inschrijvingsdetails.index')" :active="request()->routeIs('inschrijvingsdetails.index')">
                         {{ __('Inschrijvingen') }}
@@ -27,6 +32,9 @@
                     </x-nav-link>
                     @endif
                     @if(Auth::user()->isAdmin)
+                    <x-nav-link :href="route('profile.index')" :active="request()->routeIs('profile.index')">
+                        {{ __('Ouders') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('profile.index')" :active="request()->routeIs('profile.index')">
                         {{ __('Gebruikers') }}
                     </x-nav-link>

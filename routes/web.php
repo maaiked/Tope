@@ -33,19 +33,29 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/nieuw', [ProfileController::class, 'store'])->name('profile.store');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/updateAdmin', [ProfileController::class, 'update'])->name('profile.updateAdmin');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     //profiel routes
+    Route::get('/profielen', [ProfielController::class, 'index'])->name('profiel.index');
     Route::get('/profielnieuw', [ProfielController::class, 'create'])->name('profiel.create');
     Route::post('/profielnieuw', [ProfielController::class, 'store'])->name('profiel.store');
     Route::get('/profiel', [ProfielController::class, 'edit'])->name('profiel.edit');
     Route::put('/profiel', [ProfielController::class, 'update'])->name('profiel.update');
+    Route::get('/profiel/{id}', [ProfielController::class, 'edit'])->name('profiel.editById');
+    Route::put('/profiel/{id}', [ProfielController::class, 'update'])->name('profiel.updateById');
 
 
     //activiteit routes
     Route::get('/activiteiten{id?}', [ActiviteitController::class, 'index'])->name('activiteiten.index');
+    Route::post('/activiteiten/nieuw', [ActiviteitController::class, 'create'])->name('activiteiten.create');
     Route::post('/activiteiten/nieuw', [ActiviteitController::class, 'store'])->name('activiteiten.store');
+    Route::get('/activiteiten/{id}', [ActiviteitController::class, 'edit'])->name('activiteiten.edit');
+    Route::patch('/activiteiten/{id}', [ActiviteitController::class, 'update'])->name('activiteiten.update');
     Route::get('/activiteiten/{id}', [ActiviteitController::class, 'show'])->name('activiteiten.show');
+    Route::patch('/activiteiten/{id}/addKind', [ActiviteitController::class, 'update'])->name('activiteiten.updateAddKind');
+    Route::get('/activiteiten/{id}/addKind', [ActiviteitController::class, 'show'])->name('activiteiten.showAddKind');
+    Route::get('/activiteiten/{id}/kinderen', [ActiviteitController::class, 'show'])->name('activiteiten.showKinderen');
     Route::post('/activiteiten', [InschrijvingsdetailController::class, 'store'])->name('inschrijvingsdetail.store');
 
     //kind routes
