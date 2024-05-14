@@ -257,7 +257,7 @@
                                     <!-- als er nog niet betaald werd, wordt er een knop getoond waarmee de betaling kan geregistreerd worden -->
                                     @else
                                         <button onclick="showBetaling({{$i->id}})" class="rounded-md bg-gray-500 text-white focus:ring-gray-600 px-2 py-2 text-sm" >
-                                            {{"betalen"}}
+                                            {{"€ ".$i->prijs}}
                                         </button>
                                         <!-- Modal -->
                                         <div id="Betaling.{{$i->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
@@ -281,10 +281,10 @@
                                                         <h2 class="text-2xl font-bold mb-4">{{"Registreer de betaling voor ".$i->kind->voornaam}}</h2>
                                                         <input type="hidden" name="inschrijvingsdetail_id" value="{{ $i->id }}"/>
                                                         <div>
-                                                            <p class="m-4"> {{"Selecteer de betaalwijze: "}}</p>
+                                                            <p class="m-4 font-bold text-lg"> {{"Te betalen: € ".$i->prijs}}</p>
                                                             <div>
-                                                                <input type="radio" id="factuur" name="methode" value="factuur" disabled>
-                                                                <label for="factuur">Factuur</label>
+                                                                <input type="radio" id="factuur" name="methode" value="factuur">
+                                                                <label for="factuur">Factuur </label>
                                                             </div>
                                                             <div>
                                                                 <input type="radio" id="bancontact" name="methode" value="bancontact">
