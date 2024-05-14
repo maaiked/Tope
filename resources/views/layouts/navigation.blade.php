@@ -19,9 +19,9 @@
                         {{ __('Activiteiten') }}
                     </x-nav-link>
                     @if(Auth::user()->isAdmin)
-                    <x-nav-link :href="route('activiteiten.create')" :active="request()->routeIs('activiteiten.create')">
-                        {{ __('Activiteit aanmaken') }}
-                    </x-nav-link>
+{{--                    <x-nav-link :href="route('activiteiten.create')" :active="request()->routeIs('activiteiten.create')">--}}
+{{--                        {{ __('Activiteit aanmaken') }}--}}
+{{--                    </x-nav-link>--}}
                     @endif
                     @if(!Auth::user()->isAnimator)
                     <x-nav-link :href="route('inschrijvingsdetails.index')" :active="request()->routeIs('inschrijvingsdetails.index')">
