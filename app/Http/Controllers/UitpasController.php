@@ -19,8 +19,13 @@ class UitpasController extends Controller
         $url='https://api-test.uitpas.be/insz-numbers/'.$inszNumber;
         $token = Cache::get('uitpastoken');
         $uitpasKind = Http::withToken($token)->get($url);
-        //todo:: if response 401, request new token.
-        return($uitpasKind->body());
+        // als respons = 401, vraag nieuwe access token op en retry
+        if ($uitpasKind->status() === 401)
+        {
+            $this->create();
+            return $this->uitpasKind($insNumber);
+        }
+        else return($uitpasKind->body());
     }
 
     /**
@@ -48,7 +53,6 @@ class UitpasController extends Controller
         $expire=$response->json('expires_in');
         Cache::put('uitpastoken', $access);
         Cache::put('expires_in', $expire);
-        dump($access);
     }
 
     /**

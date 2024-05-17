@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg px-6 py-6">
                 @foreach ($kinderen as $kind)
                     <div class="bg-gray-200 hover:bg-blue-300 font-bold py-2 px-2 mt-2 mb-2 rounded
-                    grid gap-4 gap-y-2 text-sm  sm:grid-cols-2 md:grid-cols-4 ">
+                    grid gap-4 gap-y-2 text-sm  sm:grid-cols-2 md:grid-cols-5 ">
                         <p class="mt-2 text-gray-900 col-span-1">{{ $kind->voornaam." ".$kind->familienaam}}</p>
                         <p class="mt-2 text-gray-900 col-span-1">{{ $kind->leerjaar->label()}}</p>
                         <p class="mt-2 text-gray-900 col-span-1">
@@ -28,6 +28,7 @@
                                     &#10060;
                                 @endif medicatie
                             </p>
+                        <p class="mt-2 text-gray-900 col-span-1">{{$kind->uitpasTekst}}</p>
                         <button onclick="window.location='{{ route("kind.edit", $kind->id) }}'"
                                 class="col-span-1  inline-flex border-2 items-center gap-2 rounded-lg px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:relative">
                             <svg

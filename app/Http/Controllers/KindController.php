@@ -121,13 +121,31 @@ class KindController extends Controller
             'leerjaar' => [Rule::enum(LeerjaarEnum::class)],
         ]);
 
+        //todo:: als uitpasnummer wordt aangepast, check of het klopt met rijksregisternummer
+        // + update uitpasKansentarief + uitpasTekst + uitpasDatumCheck
+
         $kind->update($validated);
-        //todo:: if uitpasdatumcheck > 1 week: vraag gegevens opnieuw op:
-        $uitpas = (new UitpasController)->uitpasKind($kind->rijksregisternummer);
-        //todo:: check als uitpasnummer in response == kind.uitpasnummer.
-        // nee: geef foutmelding weer
-        // ja: sla uitpasgegevens op in db en geef weer bij kind overzicht
-        return redirect(route('kinderen.index'));
+
+        // als uitpasDatumCheck ouder is dan een week, update dan uitpasgegevens
+        if ($kind->uitpasDatumCheck < today()->addDays(-7) || $kind->uitpasDatumCheck === null)
+        {
+            $uitpas = (new UitpasController)->uitpasKind($kind->rijksregisternummer);
+            $result = json_decode($uitpas, true);
+            dump($result);
+            if(array_key_exists('uitpasNumber', $result))
+            {
+                $kind->update([
+                   'uitpasKansentarief' => $result['socialTariff']['status'] ,
+                    'uitpasTekst' => $result['messages']['text'],
+                    'uitpasDatumCheck' => today()
+                ]);
+            }
+            //todo:: check als uitpasnummer in response == kind.uitpasnummer.
+            // nee: geef foutmelding weer
+            // ja: sla uitpasgegevens op in db en geef weer bij kind overzicht
+        }
+
+        return redirect(rroute('kinderen.index'));
     }
 
     public function editAdminAnimatorInfo(Request $request, $id)
