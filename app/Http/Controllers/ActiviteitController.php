@@ -88,16 +88,18 @@ class ActiviteitController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Activiteit $activiteit)
+    public function edit($id)
     {
+        $activiteit = Activiteit::findOrFail($id);
         return view('activiteiten.edit', compact('activiteit'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Activiteit $activiteit)
+    public function update(Request $request, $id)
     {
+        $activiteit = Activiteit::find($id);
         $validated = $request->validate([
             'prijs'=> 'required',
             'capaciteit'=> 'required',
