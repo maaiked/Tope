@@ -63,7 +63,10 @@ class KindController extends Controller
         ]);
 
         $kind = $request->user()->kinds()->create($validated);
+
+        //todo:: als uitpasnummer wordt ingegeven, check of het klopt met rijksregisternummer
         $this->uitpasInfo($kind->id);
+
         return redirect(route('kinderen.index'));
     }
 
@@ -110,7 +113,7 @@ class KindController extends Controller
             'familienaam'=> 'required|string|max:255',
             'rijksregisternummer'=> 'required|string|max:40|regex:/^[0-9]{2}[.][0-9]{2}[.][0-9]{2}[-][0-9]{3}[.][0-9]{2}$/',
             'contactpersoon'=> 'required|string|max:255',
-            'uitpasnummer'=> 'nullable|string|max:30',
+            'uitpasnummer'=> 'nullable|string|max:13|min:13',
             'beperking'=> 'nullable|string|max:255',
             'allergie'=> 'nullable|string|max:255',
             'medicatie'=> 'nullable|string|max:255',
