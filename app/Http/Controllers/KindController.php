@@ -50,7 +50,6 @@ class KindController extends Controller
             'familienaam'=> 'required|string|max:255',
             'rijksregisternummer'=> 'required|string|max:40|regex:/^[0-9]{2}[.][0-9]{2}[.][0-9]{2}[-][0-9]{3}[.][0-9]{2}$/',
             'contactpersoon'=> 'required|string|max:255',
-            'uitpasnummer'=> 'nullable|string|max:13|min:13',
             'beperking'=> 'nullable|string|max:255',
             'allergie'=> 'nullable|string|max:255',
             'medicatie'=> 'nullable|string|max:255',
@@ -63,8 +62,6 @@ class KindController extends Controller
         ]);
 
         $kind = $request->user()->kinds()->create($validated);
-
-        //todo:: als uitpasnummer wordt ingegeven, check of het klopt met rijksregisternummer
         $this->uitpasInfo($kind->id);
 
         return redirect(route('kinderen.index'));
@@ -113,7 +110,6 @@ class KindController extends Controller
             'familienaam'=> 'required|string|max:255',
             'rijksregisternummer'=> 'required|string|max:40|regex:/^[0-9]{2}[.][0-9]{2}[.][0-9]{2}[-][0-9]{3}[.][0-9]{2}$/',
             'contactpersoon'=> 'required|string|max:255',
-            'uitpasnummer'=> 'nullable|string|max:13|min:13',
             'beperking'=> 'nullable|string|max:255',
             'allergie'=> 'nullable|string|max:255',
             'medicatie'=> 'nullable|string|max:255',
@@ -125,16 +121,11 @@ class KindController extends Controller
             'leerjaar' => [Rule::enum(LeerjaarEnum::class)],
         ]);
 
-        //todo:: als uitpasnummer wordt aangepast, check of het klopt met rijksregisternummer
-        // + update uitpasKansentarief + uitpasTekst + uitpasDatumCheck
 
         $kind->update($validated);
-
-        if(!empty($kind->uitpasnummer))
-        {
-            $this->uitpasInfo($kind->id);
-        }
-
+        //todo:: als rijksregisternummer wordt aangepast,
+        // + update uitpasKansentarief + uitpasTekst + uitpasDatumCheck
+        $this->uitpasInfo($kind->id);
 
         return redirect(route('kinderen.index'));
     }
@@ -143,16 +134,15 @@ class KindController extends Controller
     {
         $kind = Kind::find($kindid);
 
-        // als uitpasDatumCheck ouder is dan een week, update dan uitpasgegevens
-        if ($kind->uitpasDatumCheck < today()->addDays(-7) || $kind->uitpasDatumCheck === null)
-        {
             $uitpas = (new UitpasController)->uitpasKind($kind->rijksregisternummer);
             $result = json_decode($uitpas, true);
+            // als uitpas bestaat, vul kolommen aan
             if(array_key_exists('uitpasNumber', $result))
             {
                 $kind->update([
                     'uitpasKansentarief' => $result['socialTariff']['status'] ,
-                    'uitpasDatumCheck' => today()
+                    'uitpasDatumCheck' => today(),
+                    'uitpasnummer' => $result['uitpasNumber']
                 ]);
                 if(array_key_exists('messages', $result))
                 {
@@ -160,11 +150,15 @@ class KindController extends Controller
                 }
                 else
                 {
-                    $kind->update(['uitpasTekst' => ""]);
+                    $kind->update(['uitpasTekst' => '']);
                 }
             }
+            // als uitpas niet bestaat, wis kolommen
+            else
+            {
+                $kind->update(['uitpasnummer' => '', 'uitpasKansentarief' => '', 'uitpasTekst' => '']);
+            }
 
-        }
     }
 
     public function editAdminAnimatorInfo(Request $request, $id)

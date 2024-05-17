@@ -15,10 +15,12 @@ class UitpasController extends Controller
     public function uitpasKind($insNumber)
     {
         $inszNumber = str_replace(['.', '-'], '', $insNumber);
+
         //Haal de uitpasgegevens van het kind op.
         $url='https://api-test.uitpas.be/insz-numbers/'.$inszNumber;
         $token = Cache::get('uitpastoken');
         $uitpasKind = Http::withToken($token)->get($url);
+
         // als respons = 401, vraag nieuwe access token op en retry
         if ($uitpasKind->status() === 401)
         {
