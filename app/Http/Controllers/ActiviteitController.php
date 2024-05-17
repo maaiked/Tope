@@ -20,7 +20,7 @@ class ActiviteitController extends Controller
         // if admin, toon alle activiteiten
         if(auth()->user()->isAdmin)
         {
-            return view ('activiteiten.index', ['activiteiten'=> Activiteit::paginate(10)]);
+            return view ('activiteiten.indexAdmin', ['activiteiten'=> Activiteit::paginate(10)]);
         }
         elseif(auth()->user()->isAnimator)
         {
@@ -90,7 +90,7 @@ class ActiviteitController extends Controller
      */
     public function edit(Activiteit $activiteit)
     {
-        //
+        return view('activiteiten.edit', compact('activiteit'));
     }
 
     /**
@@ -98,7 +98,25 @@ class ActiviteitController extends Controller
      */
     public function update(Request $request, Activiteit $activiteit)
     {
-        //
+        $validated = $request->validate([
+            'prijs'=> 'required',
+            'aantalInschrijvingen'=> 'required',
+            'capaciteit'=> 'required',
+            'naam'=> 'required|string|max:255',
+            'starttijd' => 'required',
+            'eindtijd' => 'required',
+            'inschrijvenVanaf' => 'required',
+            'inschrijvenTot' => 'required',
+            'annulerenTot' => 'required',
+            'leerjaarVanaf' => 'required',
+            'leerjaarTot' => 'required',
+            'locatie' => 'required',
+            'opties' => 'required',
+            'inschrijvingsdetails' => 'required',
+        ]);
+
+        $activiteit->update($validated);
+        return redirect(route('activiteiten.index'));
     }
 
     /**
