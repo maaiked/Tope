@@ -17,7 +17,10 @@ class ProfileController extends Controller
 
     public function index()
     {
-        $users['users'] = User::all();
+        $users['users'] = User::where('isAdmin', true)
+            ->orWhere('isAnimator', true)
+            ->get();
+
         return view('profile.indexAdmin')->with($users);
     }
 
