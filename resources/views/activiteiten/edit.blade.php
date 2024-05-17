@@ -30,11 +30,7 @@
                     @endif
 
                     <div class="text-gray-800">
-                        <p class="font-medium text-lg">Algemene informatie ouder</p>
-                        <p>Vul hieronder jouw gegevens in. <br>
-                            <b>Deze gegevens komen op je fiscaal attest: gebruik daarom de gegevens van de ouder die het kind fiscaal ten laste heeft binnen jouw gezin. </b></p>
-                        {{--                        TODO:: meer info link toevoegen: info fiscaal attest met beslissingsboom toevoegen--}}
-
+                        <p class="font-medium text-lg">Informatie over de activiteit</p>
                         <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-4 px-3 py-3">
                             <div class="md:col-span-2">
                                 <label for="prijs">Prijs</label>
