@@ -28,7 +28,18 @@
                                     &#10060;
                                 @endif medicatie
                             </p>
-                        <p class="mt-2 text-gray-900 col-span-1">{{$kind->uitpasTekst}}</p>
+                        <div class="col-span-1">
+                            <p class="mt-2 text-gray-600 ">
+                                    @if($kind->uitpasKansentarief === 'ACTIVE')
+                                        &#9989; Kansentarief
+                                    @elseif (!empty($kind->uitpasnummer))
+                                    &#9989;
+                                    @else &#10060;
+                                    @endif UiTPAS
+                            </p>
+                            <p class="mt-2 text-red-600 ">{{$kind->uitpasTekst}}</p>
+
+                        </div>
                         <button onclick="window.location='{{ route("kind.edit", $kind->id) }}'"
                                 class="col-span-1  inline-flex border-2 items-center gap-2 rounded-lg px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:relative">
                             <svg

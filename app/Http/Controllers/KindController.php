@@ -50,7 +50,7 @@ class KindController extends Controller
             'familienaam'=> 'required|string|max:255',
             'rijksregisternummer'=> 'required|string|max:40|regex:/^[0-9]{2}[.][0-9]{2}[.][0-9]{2}[-][0-9]{3}[.][0-9]{2}$/',
             'contactpersoon'=> 'required|string|max:255',
-            'uitpasnummer'=> 'nullable|string|max:30',
+            'uitpasnummer'=> 'nullable|string|max:13|min:13',
             'beperking'=> 'nullable|string|max:255',
             'allergie'=> 'nullable|string|max:255',
             'medicatie'=> 'nullable|string|max:255',
@@ -62,7 +62,8 @@ class KindController extends Controller
             'leerjaar' => [Rule::enum(LeerjaarEnum::class)],
         ]);
 
-        $request->user()->kinds()->create($validated);
+        $kind = $request->user()->kinds()->create($validated);
+        $this->uitpasInfo($kind->id);
         return redirect(route('kinderen.index'));
     }
 
@@ -126,26 +127,41 @@ class KindController extends Controller
 
         $kind->update($validated);
 
+        if(!empty($kind->uitpasnummer))
+        {
+            $this->uitpasInfo($kind->id);
+        }
+
+
+        return redirect(route('kinderen.index'));
+    }
+
+    public function uitpasInfo($kindid)
+    {
+        $kind = Kind::find($kindid);
+
         // als uitpasDatumCheck ouder is dan een week, update dan uitpasgegevens
         if ($kind->uitpasDatumCheck < today()->addDays(-7) || $kind->uitpasDatumCheck === null)
         {
             $uitpas = (new UitpasController)->uitpasKind($kind->rijksregisternummer);
             $result = json_decode($uitpas, true);
-            dump($result);
             if(array_key_exists('uitpasNumber', $result))
             {
                 $kind->update([
-                   'uitpasKansentarief' => $result['socialTariff']['status'] ,
-                    'uitpasTekst' => $result['messages']['text'],
+                    'uitpasKansentarief' => $result['socialTariff']['status'] ,
                     'uitpasDatumCheck' => today()
                 ]);
+                if(array_key_exists('messages', $result))
+                {
+                    $kind->update(['uitpasTekst' => $result['messages'][0]['text'],]);
+                }
+                else
+                {
+                    $kind->update(['uitpasTekst' => ""]);
+                }
             }
-            //todo:: check als uitpasnummer in response == kind.uitpasnummer.
-            // nee: geef foutmelding weer
-            // ja: sla uitpasgegevens op in db en geef weer bij kind overzicht
-        }
 
-        return redirect(rroute('kinderen.index'));
+        }
     }
 
     public function editAdminAnimatorInfo(Request $request, $id)
