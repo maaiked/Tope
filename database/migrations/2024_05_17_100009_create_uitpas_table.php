@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('activiteits', function (Blueprint $table) {
-            $table->string('uitdatabank_id')->nullable();
-            $table->string('uitdatabank_url')->nullable();
-            $table->string('uitdatabank_kansentarief')->nullable();
+        Schema::create('uitpas', function (Blueprint $table) {
+            $table->id();
+            $table->string('clientId');
+            $table->string('clientSecret');
         });
     }
 
@@ -23,8 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('activiteits', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('uitpas');
     }
 };

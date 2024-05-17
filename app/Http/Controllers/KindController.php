@@ -122,6 +122,11 @@ class KindController extends Controller
         ]);
 
         $kind->update($validated);
+        //todo:: if uitpasdatumcheck > 1 week: vraag gegevens opnieuw op:
+        $uitpas = (new UitpasController)->uitpasKind($kind->rijksregisternummer);
+        //todo:: check als uitpasnummer in response == kind.uitpasnummer.
+        // nee: geef foutmelding weer
+        // ja: sla uitpasgegevens op in db en geef weer bij kind overzicht
         return redirect(route('kinderen.index'));
     }
 

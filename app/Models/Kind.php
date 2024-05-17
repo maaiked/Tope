@@ -16,6 +16,7 @@ class Kind extends Model
         'voornaam', 'familienaam', 'contactpersoon', 'allergie', 'beperking', 'medicatie',
         'alleenNaarHuis', 'afhalenKind', 'fotoToestemming', 'rijksregisternummer',
         'uitpasnummer', 'infoAdminAnimator', 'infoAdmin', 'leerjaar',
+        'uitpasKansentarief', 'uitpasDatumCheck', 'uitpasTekst'
     ];
 
     protected $casts = [

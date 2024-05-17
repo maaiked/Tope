@@ -5,7 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UitpasCredentials extends Model
+class Uitpas extends Model
 {
     use HasFactory;
+
+    public $timestamps = false;
 }

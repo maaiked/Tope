@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('uitpas_credentials', function (Blueprint $table) {
-            $table->id();
-            $table->string('clientId');
-            $table->string('clientSecret');
-            $table->string('token');
+        Schema::table('kinds', function (Blueprint $table) {
+            $table->string('uitpasTekst')->nullable();
+
         });
     }
 
@@ -24,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('uitpas_credentials');
+        Schema::table('kinds', function (Blueprint $table) {
+            //
+        });
     }
 };
