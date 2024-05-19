@@ -6,7 +6,7 @@
         </h2>
     </x-slot>
 
-    <form method="POST" action="{{ route('activiteiten.update')}}">
+    <form method="POST" action="{{ route('activiteiten.update' , $activiteit->id)}}">
         @csrf
         @method('PUT')
 
@@ -32,6 +32,22 @@
                     <div class="text-gray-800">
                         <p class="font-medium text-lg">Informatie over de activiteit</p>
                         <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-4 px-3 py-3">
+                            <div class="md:col-span-2">
+                                <label for="naam">Naam</label>
+                                <input type="text" name="naam" id="naam"
+                                       class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                                       value="{{ old('naam', $activiteit->naam) }}"
+                                       placeholder="Naam"/>
+                                <x-input-error :messages="$errors->get('naam')" class="mt-2"/>
+                            </div>
+                            <div class="md:col-span-2">
+                                <label for="omschrijving">Omschrijving</label>
+                                <input type="text" name="omschrijving" id="omschrijving"
+                                       class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                                       value="{{ old('omschrijving', $activiteit->omschrijving) }}"
+                                       placeholder="Omschrijving"/>
+                                <x-input-error :messages="$errors->get('omschrijving')" class="mt-2"/>
+                            </div>
                             <div class="md:col-span-2">
                                 <label for="prijs">Prijs</label>
                                 <input type="text" name="prijs" id="prijs"
