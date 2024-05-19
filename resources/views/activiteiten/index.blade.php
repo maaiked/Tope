@@ -165,12 +165,6 @@
                                 </button>
                             </div>
                         </div>
-
-                        @if (auth()->user()->isAdmin)
-                    <button onclick="window.location='{{ route("activiteiten.edit", $activiteit->id) }}'"
-                    class="col-span-1  inline-flex border-2 items-center gap-2 rounded-lg px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:relative">
-                    Aanpassen</button>
-                        @endif
                     </div>
             </form>
             @endforeach
