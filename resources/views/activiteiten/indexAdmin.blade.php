@@ -14,64 +14,16 @@
             {{--    enkel zichtbaar voor admin    --}}
             <div>
                 @if (auth()->user()->isAdmin)
-                {{--    TODO:: knop om nieuwe activiteit aan te maken    --}}
+                <button onclick="window.location='{{ route("activiteiten.create") }}'"
+                class="col-span-1  inline-flex border-2 items-center gap-2 rounded-lg px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:relative">
+                Activiteit toevoegen</button>
                 @endif
             </div>
-
-
-            {{--    zichtbaar voor niet admin    --}}
-            <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg mx-6 my-6 mt-4 px-4 py-4">
-
-                @if (!auth()->user()->isAdmin)
-                {{--                    als profiel is aangemaakt, maak inschrijven mogelijk--}}
-                @if(!empty(Auth::user()->profiel()->first()))
-                {{--    selecteer kind    --}}
-                <style>
-                    input:checked + label {
-                        border-color: black;
-                        background-color: lightgreen;
-                        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-                    }
-                </style>
-
-                <div class="grid md:grid-cols-4 gap-2 w-full max-w-screen-sm vertical-align:middle">
-                    <div><span class="text-md font-semibold uppercase">Selecteer kind: </span>
-                        <button class="text-sm font-semibold underline"
-                                onclick="window.location='{{ route("activiteiten.index") }}'">Wis selectie
-                        </button>
-                    </div>
-                    {{-- maak radioveld aan voor elk kind --}}
-                    @foreach(auth()->user()->kinds()->get() as $kind)
-                    <div class="md:col-span-1">
-                        <input class="hidden" id="{{ $kind->id }}" type="radio" name="kinderen"
-                               value="{{ $kind->id }}"
-                               @if (optional($geselecteerdkind)->id == $kind->id) checked="checked" @endif
-                        onclick="window.location='{{ route("activiteiten.index", $kind->id) }}'">
-                        <label class="flex flex-col p-4 border-2 border-gray-400 cursor-pointer"
-                               for="{{ $kind->id }}">
-                            <span class="text-xs font-semibold uppercase">{{ $kind->voornaam}}</span>
-                            <span
-                                class="text-xs font-semibold">{{ $kind->leerjaar->label()}}</span>
-                        </label>
-                    </div>
-                    @endforeach
-                </div>
-                {{--                         als profiel nog niet werd aangemaakt, toon melding--}}
-                @else
-                <p class="text-red-600">Je kan pas een kind inschrijven als je profiel werd aangevuld.
-                </p>
-                <a href="{{ route('profiel.create') }}" class="underline">Ga naar profiel</a>
-                @endif
-
-                @endif
-            </div>
-
             {{--    toon activiteiten    --}}
             @foreach ($activiteiten as $activiteit)
-            <form method="POST" action="{{ route('inschrijvingsdetail.store') }}">
-                @csrf
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mx-6 my-6 mt-4 px-4 py-4">
-
+                    <form method="POST" action="{{ route('inschrijvingsdetail.store') }}">
+                        @csrf
                     <div class="p-2 flex space-x-0 grid-cols-3 md:grid-cols-5 ">
                         {{--    TODO:: aanpassen naar kleine schermen    --}}
 
@@ -165,13 +117,13 @@
                             </button>
                         </div>
                     </div>
+                    </form>
                     @if (auth()->user()->isAdmin)
                     <button onclick="window.location='{{ route("activiteiten.edit", $activiteit->id) }}'"
                     class="col-span-1  inline-flex border-2 items-center gap-2 rounded-lg px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:relative">
                     Aanpassen</button>
                     @endif
                 </div>
-            </form>
             @endforeach
 
             {{--    paginatie    --}}
