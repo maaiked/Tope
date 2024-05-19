@@ -152,19 +152,8 @@
 
 
                         <p class="font-medium text-lg mt-4">UiTPAS</p>
-                        <p>Heeft je kind een UiTPAS? Vul dan hieronder zeker het nummer aan.<br></p>
-                        <b>Heeft je kind recht op het kansentarief? Met het ingevulde uitpasnummer zie je
-                            meteen de juiste prijs bij de activiteiten</b>
-
-                        <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-2 px-3 py-3">
-                            <div class="md:col-span-1">
-                                <label for="uitpasnummer">UiTPAS-nummer kind</label>
-                                <input type="text" name="uitpasnummer" id="uitpasnummer"
-                                       class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                       value="{{ old('uitpasnummer') }}"
-                                       placeholder="vb. 110110000111"/>
-                            </div>
-                        </div>
+                        <p>Heeft je kind een UiTPAS? Aan de hand van het rijksregisternummer zoeken we de bijhorende uitpas op.<br></p>
+                        <b>Heeft je kind recht op het kansentarief? Je krijgt bij de activiteit meteen je verminderd tarief te zien.</b>
 
                     </div>
 

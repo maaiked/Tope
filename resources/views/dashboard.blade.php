@@ -21,6 +21,7 @@
                     <p>Bekijk dan de <a href="/activiteiten" class="font-bold underline">activiteiten</a> en schrijf in!</p>
                 </div>
             </div>
+            @else <button onclick="window.location='{{ route("uitpas.create") }}'" >Vraag nieuwe uitpastoken aan</button>
             @endif
         </div>
     </div>

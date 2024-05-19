@@ -50,7 +50,6 @@ class KindController extends Controller
             'familienaam'=> 'required|string|max:255',
             'rijksregisternummer'=> 'required|string|max:40|regex:/^[0-9]{2}[.][0-9]{2}[.][0-9]{2}[-][0-9]{3}[.][0-9]{2}$/',
             'contactpersoon'=> 'required|string|max:255',
-            'uitpasnummer'=> 'nullable|string|max:30',
             'beperking'=> 'nullable|string|max:255',
             'allergie'=> 'nullable|string|max:255',
             'medicatie'=> 'nullable|string|max:255',
@@ -62,7 +61,9 @@ class KindController extends Controller
             'leerjaar' => [Rule::enum(LeerjaarEnum::class)],
         ]);
 
-        $request->user()->kinds()->create($validated);
+        $kind = $request->user()->kinds()->create($validated);
+        $this->uitpasInfo($kind->id);
+
         return redirect(route('kinderen.index'));
     }
 
@@ -109,7 +110,6 @@ class KindController extends Controller
             'familienaam'=> 'required|string|max:255',
             'rijksregisternummer'=> 'required|string|max:40|regex:/^[0-9]{2}[.][0-9]{2}[.][0-9]{2}[-][0-9]{3}[.][0-9]{2}$/',
             'contactpersoon'=> 'required|string|max:255',
-            'uitpasnummer'=> 'nullable|string|max:30',
             'beperking'=> 'nullable|string|max:255',
             'allergie'=> 'nullable|string|max:255',
             'medicatie'=> 'nullable|string|max:255',
@@ -121,8 +121,44 @@ class KindController extends Controller
             'leerjaar' => [Rule::enum(LeerjaarEnum::class)],
         ]);
 
+
         $kind->update($validated);
+        //todo:: als rijksregisternummer wordt aangepast,
+        // + update uitpasKansentarief + uitpasTekst + uitpasDatumCheck
+        $this->uitpasInfo($kind->id);
+
         return redirect(route('kinderen.index'));
+    }
+
+    public function uitpasInfo($kindid)
+    {
+        $kind = Kind::find($kindid);
+
+            $uitpas = (new UitpasController)->uitpasKind($kind->rijksregisternummer);
+            $result = json_decode($uitpas, true);
+            // als uitpas bestaat, vul kolommen aan
+            if(array_key_exists('uitpasNumber', $result))
+            {
+                $kind->update([
+                    'uitpasKansentarief' => $result['socialTariff']['status'] ,
+                    'uitpasDatumCheck' => today(),
+                    'uitpasnummer' => $result['uitpasNumber']
+                ]);
+                if(array_key_exists('messages', $result))
+                {
+                    $kind->update(['uitpasTekst' => $result['messages'][0]['text'],]);
+                }
+                else
+                {
+                    $kind->update(['uitpasTekst' => '']);
+                }
+            }
+            // als uitpas niet bestaat, wis kolommen
+            else
+            {
+                $kind->update(['uitpasnummer' => '', 'uitpasKansentarief' => '', 'uitpasTekst' => '']);
+            }
+
     }
 
     public function editAdminAnimatorInfo(Request $request, $id)

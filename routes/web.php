@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BetalingsdetailController;
 use App\Http\Controllers\ProfielController;
+use App\Http\Controllers\UitpasController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ActiviteitController;
@@ -82,6 +83,10 @@ Route::middleware('auth')->group(function () {
 
     //betalingsdetail routes
     Route::post('/inschrijvingsdetails/activiteit/betaling/{id}', [BetalingsdetailController::class, 'store'])->name('betaling.store');
+
+    //uitpas routes
+    Route::get('/dashboard/uitpastest', [UitpasController::class, 'create'])->name('uitpas.create');
+
 
 });
 
