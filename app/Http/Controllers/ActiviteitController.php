@@ -20,7 +20,7 @@ class ActiviteitController extends Controller
         // if admin, toon alle activiteiten
         if(auth()->user()->isAdmin)
         {
-            return view ('activiteiten.index', ['activiteiten'=> Activiteit::paginate(10)]);
+            return view ('activiteiten.indexAdmin', ['activiteiten'=> Activiteit::paginate(10)]);
         }
         elseif(auth()->user()->isAnimator)
         {
@@ -90,7 +90,7 @@ class ActiviteitController extends Controller
      */
     public function edit($id)
     {
-        $activiteit = Activiteit::findOrFail($id);
+        $activiteit = Activiteit::find($id);
         return view('activiteiten.edit', compact('activiteit'));
     }
 
