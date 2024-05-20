@@ -104,20 +104,26 @@
                                        placeholder="Annuleren Tot"/>
                                 <x-input-error :messages="$errors->get('annulerenTot')" class="mt-2"/>
                             </div>
-                            <div class="md:col-span-2">
-                                <label for="leerjaarVanaf">Leerjaar Vanaf</label>
-                                <input type="number" name="leerjaarVanaf" id="leerjaarVanaf"
-                                       class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                       value="{{ old('leerjaarVanaf', $activiteit->leerjaarVanaf) }}"
-                                       placeholder="Leerjaar Vanaf"/>
+                            <div class="md:col-span-1">
+                                <label for="leerjaarVanaf">LeerjaarVanaf</label>
+                                <select name="leerjaarVanaf" id="leerjaarVanaf" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50">
+                                    @foreach(App\Enums\LeerjaarEnum::cases() as $leerjaar)
+                                    <option value="{{ $leerjaar->value }}" {{ old('leerjaarVanaf', $activiteit->leerjaarVanaf->value) == $leerjaar->value ? 'selected' : '' }}>
+                                    {{ $leerjaar->label() }}
+                                    </option>
+                                    @endforeach
+                                </select>
                                 <x-input-error :messages="$errors->get('leerjaarVanaf')" class="mt-2"/>
                             </div>
-                            <div class="md:col-span-2">
-                                <label for="leerjaarTot">Leerjaar Tot</label>
-                                <input type="number" name="leerjaarTot" id="leerjaarTot"
-                                       class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                       value="{{ old('leerjaarTot', $activiteit->leerjaarTot) }}"
-                                       placeholder="Leerjaar Tot"/>
+                            <div class="md:col-span-1">
+                                <label for="leerjaarTot">LeerjaarTot</label>
+                                <select name="leerjaarTot" id="leerjaarTot" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50">
+                                    @foreach(App\Enums\LeerjaarEnum::cases() as $leerjaar)
+                                    <option value="{{ $leerjaar->value }}" {{ old('leerjaarTot', $activiteit->leerjaarTot->value) == $leerjaar->value ? 'selected' : '' }}>
+                                    {{ $leerjaar->label() }}
+                                    </option>
+                                    @endforeach
+                                </select>
                                 <x-input-error :messages="$errors->get('leerjaarTot')" class="mt-2"/>
                             </div>
                             <div class="md:col-span-2">
@@ -139,9 +145,10 @@
                                     <input type="text" name="existing_opties[{{ $optie->id }}][omschrijving]" value="{{ $optie->omschrijving }}" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 mr-2">
                                     <input type="text" name="existing_opties[{{ $optie->id }}][prijs]" value="{{ $optie->prijs }}" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Prijs">
                                 </div>
+                                <x-input-error :messages="$errors->get('existing_opties.{$optie->id}.omschrijving')" class="mt-2"/>
+                                <x-input-error :messages="$errors->get('existing_opties.{$optie->id}.prijs')" class="mt-2"/>
                                 @endforeach
                             </div>
-
                             <div class="md:col-span-4">
                                 <label for="new_opties">Nieuwe Opties</label>
                                 <div id="new-opties-container">
@@ -149,6 +156,8 @@
                                         <input type="text" name="new_opties[0][omschrijving]" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 mr-2" placeholder="Omschrijving">
                                         <input type="text" name="new_opties[0][prijs]" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Prijs">
                                     </div>
+                                    <x-input-error :messages="$errors->get('new_opties.0.omschrijving')" class="mt-2"/>
+                                    <x-input-error :messages="$errors->get('new_opties.0.prijs')" class="mt-2"/>
                                 </div>
                                 <button type="button" onclick="addNewOptie()" class="mt-2 text-blue-500">Voeg nieuwe optie toe</button>
                             </div>
@@ -170,7 +179,9 @@
                                         <div class="flex items-center mt-2">
                                             <input type="text" name="new_opties[${newOptieIndex}][omschrijving]" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 mr-2" placeholder="Omschrijving">
                                             <input type="text" name="new_opties[${newOptieIndex}][prijs]" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Prijs">
-                                        </div>`;
+                                        </div>
+                                        <x-input-error :messages="$errors->get('new_opties.${newOptieIndex}.omschrijving')" class="mt-2"/>
+                                        <x-input-error :messages="$errors->get('new_opties.${newOptieIndex}.prijs')" class="mt-2"/>`;
         container.insertAdjacentHTML('beforeend', newOptie);
         newOptieIndex++;
     }

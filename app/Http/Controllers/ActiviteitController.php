@@ -115,10 +115,10 @@ class ActiviteitController extends Controller
             'annulerenTot' => 'required|date',
             'leerjaarVanaf' => 'required|integer',
             'leerjaarTot' => 'required|integer',
-            'existing_opties.*.omschrijving' => 'required_with:existing_opties.*.prijs',
-            'existing_opties.*.prijs' => 'required_with:existing_opties.*.omschrijving|numeric',
-            'new_opties.*.omschrijving' => 'nullable|string',
-            'new_opties.*.prijs' => 'nullable|numeric',
+            'existing_opties.*.omschrijving' => 'required_with:existing_opties.*.prijs|nullable|string|max:255',
+            'existing_opties.*.prijs' => 'required_with:existing_opties.*.omschrijving|nullable|numeric',
+            'new_opties.*.omschrijving' => 'required_with:new_opties.*.prijs|nullable|string|max:255',
+            'new_opties.*.prijs' => 'required_with:new_opties.*.omschrijving|nullable|numeric',
         ]);
 
         $activiteit = Activiteit::findOrFail($id);
