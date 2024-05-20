@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Enums\LeerjaarEnum;
 use App\Models\Activiteit;
 use App\Models\Kind;
+use App\Models\Locatie;
+use App\Models\Optie;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -20,7 +22,7 @@ class ActiviteitController extends Controller
         // if admin, toon alle activiteiten
         if(auth()->user()->isAdmin)
         {
-            return view ('activiteiten.index', ['activiteiten'=> Activiteit::paginate(10)]);
+            return view ('activiteiten.indexAdmin', ['activiteiten'=> Activiteit::paginate(10)]);
         }
         elseif(auth()->user()->isAnimator)
         {
@@ -59,7 +61,7 @@ class ActiviteitController extends Controller
      */
     public function create()
     {
-        //
+        return view('activiteiten.nieuw');
     }
 
     /**
@@ -88,17 +90,64 @@ class ActiviteitController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Activiteit $activiteit)
+    public function edit($id)
     {
-        //
+        $activiteit = Activiteit::find($id);
+        $locaties = Locatie::all();
+        return view('activiteiten.edit', compact('activiteit', 'locaties'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Activiteit $activiteit)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'locatie_id' => 'required|exists:locaties,id',
+            'naam' => 'required|string|max:255',
+            'omschrijving' => 'nullable|string|max:255',
+            'prijs' => 'required|numeric',
+            'capaciteit' => 'required|integer',
+            'starttijd' => 'required|date',
+            'eindtijd' => 'required|date',
+            'inschrijvenVanaf' => 'required|date',
+            'inschrijvenTot' => 'required|date',
+            'annulerenTot' => 'required|date',
+            'leerjaarVanaf' => 'required|integer',
+            'leerjaarTot' => 'required|integer',
+            'existing_opties.*.omschrijving' => 'required_with:existing_opties.*.prijs|nullable|string|max:255',
+            'existing_opties.*.prijs' => 'required_with:existing_opties.*.omschrijving|nullable|numeric',
+            'new_opties.*.omschrijving' => 'required_with:new_opties.*.prijs|nullable|string|max:255',
+            'new_opties.*.prijs' => 'required_with:new_opties.*.omschrijving|nullable|numeric',
+        ]);
+
+        $activiteit = Activiteit::findOrFail($id);
+        $activiteit->update($request->only([
+            'locatie_id', 'naam', 'omschrijving', 'prijs', 'capaciteit',
+            'starttijd', 'eindtijd', 'inschrijvenVanaf', 'inschrijvenTot',
+            'annulerenTot', 'leerjaarVanaf', 'leerjaarTot'
+        ]));
+
+        $existingOptionIds = $activiteit->opties->pluck('id')->toArray();
+        $optionsToDelete = $request->delete_opties ? array_diff($existingOptionIds, $request->delete_opties) : $existingOptionIds;
+
+        Optie::destroy($optionsToDelete);
+
+        if ($request->has('existing_opties')) {
+            foreach ($request->existing_opties as $optieId => $optieData) {
+                Optie::where('id', $optieId)->update($optieData);
+            }
+        }
+
+        if ($request->has('new_opties')) {
+            foreach ($request->new_opties as $optieData) {
+                if (!empty($optieData['omschrijving']) && !empty($optieData['prijs'])) {
+                    $activiteit->opties()->create($optieData);
+                }
+            }
+        }
+
+        return redirect()->route('activiteiten.index')->with('status', 'activiteit-updated');
     }
 
     /**

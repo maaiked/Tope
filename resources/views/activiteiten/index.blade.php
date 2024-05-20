@@ -165,10 +165,6 @@
                                 </button>
                             </div>
                         </div>
-
-                        @if (auth()->user()->isAdmin)
-                            {{--    TODO:: knop om activiteit te bewerken    --}}
-                        @endif
                     </div>
             </form>
             @endforeach

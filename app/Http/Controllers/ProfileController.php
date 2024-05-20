@@ -9,13 +9,18 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Symfony\Component\HttpKernel\Profiler\Profile;
+use function Webmozart\Assert\Tests\StaticAnalysis\string;
 
 class ProfileController extends Controller
 {
 
     public function index()
     {
-        $users['users'] = User::all();
+        $users['users'] = User::where('isAdmin', true)
+            ->orWhere('isAnimator', true)
+            ->get();
+
         return view('profile.indexAdmin')->with($users);
     }
 
@@ -69,19 +74,25 @@ class ProfileController extends Controller
     }
 
     /**
-     * Update if the user is an Admin or Animator.
+     * Update whether the user is an Admin or Animator.
      */
-    public function updateAdmin(ProfileUpdateRequest $request): RedirectResponse
+    public function updateAdmin(Request $request): RedirectResponse
     {
-        if ($request->has('isAdmin') && $request->get('isAdmin') == 1) {
-            $request->user->isAdmin = true;
-            $request->user->isAnimator = false;
+
+
+        $isAdmin = $request->input('isAdmin', 0);
+
+        $user = User::findOrFail($request->input("user_id"));
+
+        if ($isAdmin) {
+            $user->isAdmin = true;
+            $user->isAnimator = false;
         } else {
-            $request->user->isAdmin = false;
-            $request->user->isAnimator = true;
+            $user->isAdmin = false;
+            $user->isAnimator = true;
         }
 
-        $request->user->save();
+        $user->save();
 
         return Redirect::route('profile.index')->with('status', 'profile-updated');
     }

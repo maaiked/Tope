@@ -27,11 +27,13 @@
                                 @csrf
                                 @method('PUT')
 
+                                <input type="hidden" name="user_id" value="{{ $user->id }}">
+
                                 <input type="checkbox"
                                        name="isAdmin"
                                        id="isAdmin"
                                        value="1"
-                                       onchange="this.form.submit()"
+                                       onclick="this.form.submit()"
                                        @if($user->isAdmin) checked @endif
                                 >
                             </form>

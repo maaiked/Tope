@@ -14,7 +14,7 @@ class Activiteit extends Model
 {
     use SoftDeletes, HasFactory;
     protected $fillable = [
-        'naam', 'locatie', 'foto', 'omschrijving', 'starttijd', 'eindtijd', 'prijs', 'capaciteit',
+        'naam', 'locatie_id', 'foto', 'omschrijving', 'starttijd', 'eindtijd', 'prijs', 'capaciteit',
         'aantalInschrijvingen', 'leerjaarVanaf', 'leerjaarTot', 'inschrijvenVanaf', 'inschrijvenTot',
         'annulerenTot', 'vakantie',
     ];
