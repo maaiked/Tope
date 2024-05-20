@@ -137,6 +137,17 @@
                                 </select>
                                 <x-input-error :messages="$errors->get('locatie_id')" class="mt-2"/>
                             </div>
+                            <div class="md:col-span-2">
+                                <label for="vakantie">Vakantie</label>
+                                <select name="vakantie" id="vakantie" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50">
+                                    @foreach(App\Enums\VakantieEnum::cases() as $vakantie)
+                                    <option value="{{ $vakantie->value }}" {{ $activiteit->vakantie == $vakantie ? 'selected' : '' }}>
+                                    {{ $vakantie->value }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                             <div class="md:col-span-4">
                                 <label>Huidige Opties</label>
                                 @foreach($activiteit->opties as $optie)

@@ -59,9 +59,10 @@ class ActiviteitController extends Controller
 /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): View
     {
-        return view('activiteiten.nieuw');
+        $locaties = Locatie::all();
+        return view('activiteiten.nieuw', compact('locaties'));
     }
 
     /**
@@ -70,13 +71,45 @@ class ActiviteitController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'naam'=> 'required|string|max:255'
+            'locatie_id' => 'required|exists:locaties,id',
+            'naam' => 'required|string|max:255',
+            'omschrijving' => 'nullable|string|max:255',
+            'prijs' => 'required|numeric',
+            'capaciteit' => 'required|integer',
+            'starttijd' => 'required|date',
+            'eindtijd' => 'required|date',
+            'inschrijvenVanaf' => 'required|date',
+            'inschrijvenTot' => 'required|date',
+            'annulerenTot' => 'required|date',
+            'leerjaarVanaf' => 'required|integer',
+            'leerjaarTot' => 'required|integer',
+            'vakantie' => 'required',
+            'new_opties.*.omschrijving' => 'required_with:new_opties.*.prijs|nullable|string|max:255',
+            'new_opties.*.prijs' => 'required_with:new_opties.*.omschrijving|nullable|numeric',
         ]);
-        Activiteit::create([
-            'naam'=>$request->message,
+
+        $activiteitData = $request->only([
+            'locatie_id', 'naam', 'omschrijving', 'prijs', 'capaciteit',
+            'starttijd', 'eindtijd', 'inschrijvenVanaf', 'inschrijvenTot',
+            'annulerenTot', 'leerjaarVanaf', 'leerjaarTot', 'vakantie'
         ]);
-        return redirect(route('activiteiten.index'));
+
+        $activiteitData['vakantie'] = strtolower($request->vakantie);
+
+        $activiteit = Activiteit::create($activiteitData);
+
+        if ($request->has('new_opties')) {
+            foreach ($request->new_opties as $optieData) {
+                if (!empty($optieData['omschrijving']) && !empty($optieData['prijs'])) {
+                    $activiteit->opties()->create($optieData);
+                }
+            }
+        }
+
+        return redirect()->route('activiteiten.index')->with('status', 'activiteit-created');
     }
+
+
 
     /**
      * Display the specified resource.
@@ -115,6 +148,7 @@ class ActiviteitController extends Controller
             'annulerenTot' => 'required|date',
             'leerjaarVanaf' => 'required|integer',
             'leerjaarTot' => 'required|integer',
+            'vakantie' => 'required',
             'existing_opties.*.omschrijving' => 'required_with:existing_opties.*.prijs|nullable|string|max:255',
             'existing_opties.*.prijs' => 'required_with:existing_opties.*.omschrijving|nullable|numeric',
             'new_opties.*.omschrijving' => 'required_with:new_opties.*.prijs|nullable|string|max:255',
@@ -125,7 +159,7 @@ class ActiviteitController extends Controller
         $activiteit->update($request->only([
             'locatie_id', 'naam', 'omschrijving', 'prijs', 'capaciteit',
             'starttijd', 'eindtijd', 'inschrijvenVanaf', 'inschrijvenTot',
-            'annulerenTot', 'leerjaarVanaf', 'leerjaarTot'
+            'annulerenTot', 'leerjaarVanaf', 'leerjaarTot', 'vakantie'
         ]));
 
         $existingOptionIds = $activiteit->opties->pluck('id')->toArray();
