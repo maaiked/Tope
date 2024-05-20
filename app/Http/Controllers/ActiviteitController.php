@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Enums\LeerjaarEnum;
 use App\Models\Activiteit;
 use App\Models\Kind;
+use App\Models\Locatie;
+use App\Models\Optie;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -91,7 +93,8 @@ class ActiviteitController extends Controller
     public function edit($id)
     {
         $activiteit = Activiteit::find($id);
-        return view('activiteiten.edit', compact('activiteit'));
+        $locaties = Locatie::all();
+        return view('activiteiten.edit', compact('activiteit', 'locaties'));
     }
 
     /**
@@ -99,24 +102,52 @@ class ActiviteitController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $activiteit = Activiteit::find($id);
-        $validated = $request->validate([
-            'prijs'=> 'required',
-            'capaciteit'=> 'required',
-            'naam'=> 'required|string|max:255',
-            'starttijd' => 'required',
-            'eindtijd' => 'required',
-            'inschrijvenVanaf' => 'required',
-            'inschrijvenTot' => 'required',
-            'annulerenTot' => 'required',
-            'leerjaarVanaf' => 'required',
-            'leerjaarTot' => 'required',
-            'locatie' => 'required',
-            'opties' => 'required',
+        $request->validate([
+            'locatie_id' => 'required|exists:locaties,id',
+            'naam' => 'required|string|max:255',
+            'omschrijving' => 'nullable|string|max:255',
+            'prijs' => 'required|numeric',
+            'capaciteit' => 'required|integer',
+            'starttijd' => 'required|date',
+            'eindtijd' => 'required|date',
+            'inschrijvenVanaf' => 'required|date',
+            'inschrijvenTot' => 'required|date',
+            'annulerenTot' => 'required|date',
+            'leerjaarVanaf' => 'required|integer',
+            'leerjaarTot' => 'required|integer',
+            'existing_opties.*.omschrijving' => 'required_with:existing_opties.*.prijs',
+            'existing_opties.*.prijs' => 'required_with:existing_opties.*.omschrijving|numeric',
+            'new_opties.*.omschrijving' => 'nullable|string',
+            'new_opties.*.prijs' => 'nullable|numeric',
         ]);
 
-        $activiteit->update($validated);
-        return redirect(route('activiteiten.index'));
+        $activiteit = Activiteit::findOrFail($id);
+        $activiteit->update($request->only([
+            'locatie_id', 'naam', 'omschrijving', 'prijs', 'capaciteit',
+            'starttijd', 'eindtijd', 'inschrijvenVanaf', 'inschrijvenTot',
+            'annulerenTot', 'leerjaarVanaf', 'leerjaarTot'
+        ]));
+
+        $existingOptionIds = $activiteit->opties->pluck('id')->toArray();
+        $optionsToDelete = $request->delete_opties ? array_diff($existingOptionIds, $request->delete_opties) : $existingOptionIds;
+
+        Optie::destroy($optionsToDelete);
+
+        if ($request->has('existing_opties')) {
+            foreach ($request->existing_opties as $optieId => $optieData) {
+                Optie::where('id', $optieId)->update($optieData);
+            }
+        }
+
+        if ($request->has('new_opties')) {
+            foreach ($request->new_opties as $optieData) {
+                if (!empty($optieData['omschrijving']) && !empty($optieData['prijs'])) {
+                    $activiteit->opties()->create($optieData);
+                }
+            }
+        }
+
+        return redirect()->route('activiteiten.index')->with('status', 'activiteit-updated');
     }
 
     /**

@@ -122,19 +122,35 @@
                             </div>
                             <div class="md:col-span-2">
                                 <label for="locatie">Locatie</label>
-                                <input type="text" name="locatie" id="locatie"
-                                       class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                       value="{{ old('locatie', $activiteit->locatie->naam) }}"
-                                       placeholder="Locatie"/>
-                                <x-input-error :messages="$errors->get('locatie')" class="mt-2"/>
+                                <select name="locatie_id" id="locatie" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50">
+                                    @foreach($locaties as $locatie)
+                                    <option value="{{ $locatie->id }}" {{ $activiteit->locatie_id == $locatie->id ? 'selected' : '' }}>
+                                        {{ $locatie->naam }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                                <x-input-error :messages="$errors->get('locatie_id')" class="mt-2"/>
                             </div>
-                            <div class="md:col-span-2">
-                                <label for="opties">Opties</label>
-                                <input type="text" name="opties" id="opties"
-                                       class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                       value="{{ old('opties', $activiteit->opties->pluck('omschrijving')->implode(', ')) }}"
-                                       placeholder="Opties"/>
-                                <x-input-error :messages="$errors->get('opties')" class="mt-2"/>
+                            <div class="md:col-span-4">
+                                <label>Huidige Opties</label>
+                                @foreach($activiteit->opties as $optie)
+                                <div class="flex items-center mt-2">
+                                    <input type="checkbox" name="delete_opties[]" value="{{ $optie->id }}" checked>
+                                    <input type="text" name="existing_opties[{{ $optie->id }}][omschrijving]" value="{{ $optie->omschrijving }}" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 mr-2">
+                                    <input type="text" name="existing_opties[{{ $optie->id }}][prijs]" value="{{ $optie->prijs }}" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Prijs">
+                                </div>
+                                @endforeach
+                            </div>
+
+                            <div class="md:col-span-4">
+                                <label for="new_opties">Nieuwe Opties</label>
+                                <div id="new-opties-container">
+                                    <div class="flex items-center mt-2">
+                                        <input type="text" name="new_opties[0][omschrijving]" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 mr-2" placeholder="Omschrijving">
+                                        <input type="text" name="new_opties[0][prijs]" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Prijs">
+                                    </div>
+                                </div>
+                                <button type="button" onclick="addNewOptie()" class="mt-2 text-blue-500">Voeg nieuwe optie toe</button>
                             </div>
                         </div>
                     </div>
@@ -145,3 +161,17 @@
         </div>
     </form>
 </x-app-layout>
+
+<script>
+    let newOptieIndex = 1;
+    function addNewOptie() {
+        const container = document.getElementById('new-opties-container');
+        const newOptie = `
+                                        <div class="flex items-center mt-2">
+                                            <input type="text" name="new_opties[${newOptieIndex}][omschrijving]" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 mr-2" placeholder="Omschrijving">
+                                            <input type="text" name="new_opties[${newOptieIndex}][prijs]" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Prijs">
+                                        </div>`;
+        container.insertAdjacentHTML('beforeend', newOptie);
+        newOptieIndex++;
+    }
+</script>
