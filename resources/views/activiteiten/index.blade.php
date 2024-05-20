@@ -95,9 +95,14 @@
 
                             {{--    prijs activiteit + opties   --}}
                             <div class="flex-1">
-                                <p class="mt-4 text-md text-gray-900 font-bold">{{"€ ". $activiteit->prijs}}</p>
-                                <input type="hidden" name="prijs" value="{{ $activiteit->prijs }}" />
-                                @foreach($activiteit->opties as $optie)
+                                @if(optional($geselecteerdkind)->uitpasKansentarief === 'ACTIVE' && $activiteit->uitdatabank_kansentarief > 0)
+                                    <p class="mt-4 text-md text-gray-900 font-bold">{{"€ ". $activiteit->uitdatabank_kansentarief." Kansentarief" }}</p>
+                                    <input type="hidden" name="prijs" value="{{ $activiteit->uitdatabank_kansentarief }}" />
+                                @else
+                                    <p class="mt-4 text-md text-gray-900 font-bold">{{"€ ". $activiteit->prijs}}</p>
+                                    <input type="hidden" name="prijs" value="{{ $activiteit->prijs }}" />
+                                @endif
+                                 @foreach($activiteit->opties as $optie)
                                     <p>{{ $optie->omschrijving.": € ".$optie->prijs}}</p>
                                 @endforeach
                             </div>

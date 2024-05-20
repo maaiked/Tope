@@ -42,7 +42,7 @@
 
         {{--    prijs activiteit + opties   --}}
         <div class="col-span-1">
-            <p class="mt-4 text-md text-gray-900 font-bold">Prijs activiteit:</p>
+            <p class="mt-4 text-md text-gray-900 font-bold">Standaardprijs activiteit:</p>
             <p class=" text-md text-gray-900 font-bold">{{"€ ". $inschrijving->activiteit->prijs}}</p>
             @foreach($inschrijving->inschrijvingsdetail_opties as $detail_optie)
                 <div>
