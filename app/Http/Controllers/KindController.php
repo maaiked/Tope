@@ -121,11 +121,14 @@ class KindController extends Controller
             'leerjaar' => [Rule::enum(LeerjaarEnum::class)],
         ]);
 
+        // als rijksregisternummer wordt aangepast, update uitpas kolommen.
+        //todo:: check waarom dit niet werkt
+        if(!$validated['rijksregisternummer'] == $kind->rijksregisternummer)
+        {
+            $this->uitpasInfo($kind->id);
+        };
 
         $kind->update($validated);
-        //todo:: als rijksregisternummer wordt aangepast,
-        // + update uitpasKansentarief + uitpasTekst + uitpasDatumCheck
-        $this->uitpasInfo($kind->id);
 
         return redirect(route('kinderen.index'));
     }

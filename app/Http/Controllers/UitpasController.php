@@ -39,6 +39,9 @@ class UitpasController extends Controller
         // als api request met token, returns 401:
         // get new access token:
 
+        //todo:: add security to stop loop indien 401 door ander probleem komt.
+        // check expires_in > today()+1day ??
+
 
         // vraag inloggegevens op in db
         $client = Uitpas::find(1);
@@ -50,7 +53,6 @@ class UitpasController extends Controller
             'grant_type' => 'client_credentials'
         ]);
         // sla token op in cache
-        // Todo:: vragen aan beoordelers: is het veiliger om tokens op te slaan in cache of beter in db??
         $access=$response->json('access_token');
         $expire=$response->json('expires_in');
         Cache::put('uitpastoken', $access);
