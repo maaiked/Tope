@@ -21,8 +21,8 @@ class UitpasController extends Controller
         $token = Cache::get('uitpastoken');
         $uitpasKind = Http::withToken($token)->get($url);
 
-        // als respons = 401, vraag nieuwe access token op en retry
-        if ($uitpasKind->status() === 401)
+        // als respons = 401 of 403 - don't ask me why hij 403 teruggeeft??, vraag nieuwe access token op en retry
+        if ($uitpasKind->status() === 401 || $uitpasKind->status() === 403)
         {
             $this->create();
             return $this->uitpasKind($insNumber);

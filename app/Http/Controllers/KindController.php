@@ -120,15 +120,14 @@ class KindController extends Controller
             'fotoToestemming' => 'boolean',
             'leerjaar' => [Rule::enum(LeerjaarEnum::class)],
         ]);
+        $oldrijksregisternummer = $kind->rijksregisternummer;
+        $kind->update($validated);
 
         // als rijksregisternummer wordt aangepast, update uitpas kolommen.
-        //todo:: check waarom dit niet werkt
-        if(!$validated['rijksregisternummer'] == $kind->rijksregisternummer)
+        if(strcmp($oldrijksregisternummer, $kind->rijksregisternummer ) !== 0)
         {
             $this->uitpasInfo($kind->id);
         };
-
-        $kind->update($validated);
 
         return redirect(route('kinderen.index'));
     }
@@ -139,6 +138,7 @@ class KindController extends Controller
 
             $uitpas = (new UitpasController)->uitpasKind($kind->rijksregisternummer);
             $result = json_decode($uitpas, true);
+
             // als uitpas bestaat, vul kolommen aan
             if(array_key_exists('uitpasNumber', $result))
             {
