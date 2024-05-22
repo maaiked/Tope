@@ -31,7 +31,7 @@
         {{--    annuleren mogelijk tot   --}}
         <div class="col-span-1">
             <p class="mt-4 text-md text-gray-900 font-bold">Annuleren mogelijk tot:</p>
-            <p class=" text-md text-gray-900">{{ Carbon\Carbon::parse($inschrijving->annulerenTot)->format('d-m-Y') }}</p>
+            <p class=" text-md text-gray-900">{{ Carbon\Carbon::parse($inschrijving->annulerenTot)->format('d-m-Y G\ui') }}</p>
         </div>
 
         {{--    betaald bedrag   --}}

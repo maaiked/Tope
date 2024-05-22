@@ -10,4 +10,7 @@ class Uitpas extends Model
     use HasFactory;
 
     public $timestamps = false;
+    protected $fillable = [
+        'clientId', 'clientSecret', 'api_url', 'io_url', 'account_url', 'organizerId', 'locationId'
+    ];
 }
