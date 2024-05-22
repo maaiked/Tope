@@ -41,7 +41,7 @@
                                 <label for="clientSecret">Client Secret *</label>
                                 <input type="text" name="clientSecret" id="clientSecret" required
                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 "
-                                       value="{{ old('clientSecret', $uitpas->clientSecret) }}"
+                                       value="{{ old('clientSecret') }}"
                                        placeholder="exacte client secret zoals ontvangen van uitpas inclusief hoofdletters"/>
                                 <x-input-error :messages="$errors->get('clientSecret')" class="mt-2"/>
                             </div>
