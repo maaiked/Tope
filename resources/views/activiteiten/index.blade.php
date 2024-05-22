@@ -11,18 +11,10 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            {{--    enkel zichtbaar voor admin    --}}
-            <div>
-                @if (auth()->user()->isAdmin)
-                    {{--    TODO:: knop om nieuwe activiteit aan te maken    --}}
-                @endif
-            </div>
 
-
-            {{--    zichtbaar voor niet admin    --}}
             <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg mx-6 my-6 mt-4 px-4 py-4">
 
-                @if (!auth()->user()->isAdmin)
+
 {{--                    als profiel is aangemaakt, maak inschrijven mogelijk--}}
                     @if(!empty(Auth::user()->profiel()->first()))
                         {{--    selecteer kind    --}}
@@ -63,7 +55,7 @@
                         <a href="{{ route('profiel.create') }}" class="underline">Ga naar profiel</a>
                     @endif
 
-                @endif
+
             </div>
 
             {{--    toon activiteiten    --}}

@@ -85,7 +85,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/inschrijvingsdetails/activiteit/betaling/{id}', [BetalingsdetailController::class, 'store'])->name('betaling.store');
 
     //uitpas routes
-    Route::get('/dashboard/uitpastest', [UitpasController::class, 'create'])->name('uitpas.create');
+    Route::get('/uitpas', [UitpasController::class, 'index'])->name('uitpas.index');
+    Route::post('/uitpas/set', [UitpasController::class, 'store'])->name('uitpas.store');
+    Route::get('/uitpas/token', [UitpasController::class, 'create'])->name('uitpas.create');
+    Route::get('/uitpas/edit', [UitpasController::class, 'edit'])->name('uitpas.edit');
+    Route::post('/uitpas/edit', [UitpasController::class, 'update'])->name('uitpas.update');
+
 
 
 });
