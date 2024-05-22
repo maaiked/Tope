@@ -16,7 +16,7 @@ class Activiteit extends Model
     protected $fillable = [
         'naam', 'locatie_id', 'foto', 'omschrijving', 'starttijd', 'eindtijd', 'prijs', 'capaciteit',
         'aantalInschrijvingen', 'leerjaarVanaf', 'leerjaarTot', 'inschrijvenVanaf', 'inschrijvenTot',
-        'annulerenTot', 'vakantie',
+        'annulerenTot', 'vakantie', 'uitdatabank_id', 'uitdatabank_url', 'uitdatabank_kansentarief'
     ];
 
     protected $casts = [

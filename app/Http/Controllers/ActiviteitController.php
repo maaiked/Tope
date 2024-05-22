@@ -10,6 +10,7 @@ use App\Models\Optie;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Http;
 use Illuminate\View\View;
 
 class ActiviteitController extends Controller
@@ -105,6 +106,21 @@ class ActiviteitController extends Controller
                 }
             }
         }
+
+        // creëer nieuw uitpas event voor nieuwe activiteit
+        $uitpasEvent = (new UitpasController)->uitpasNieuweActiviteit($activiteit);
+        $result = json_decode($uitpasEvent, true);
+
+        // get uitpas prijsinfo
+        $url = 'https://io-test.uitdatabank.be/event/' .$result['id']."?embedUitpasPrices=true";
+        $uitpasPrijs = Http::get($url)->body();
+        $prijsResult = json_decode($uitpasPrijs, true);
+
+        $activiteit->update([
+            'uitdatabank_id' => $result['id'],
+            'uitdatabank_url' => $result['url'],
+            'uitdatabank_kansentarief' => $prijsResult['priceInfo'][1]['price']
+        ]);
 
         return redirect()->route('activiteiten.index')->with('status', 'activiteit-created');
     }
