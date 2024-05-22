@@ -75,21 +75,21 @@
                                 <div class="col-span-1">
                                     <p class="mt-4 text-md text-gray-900 font-bold">Inschrijven kan vanaf:</p>
                                 </div><div class="col-span-1">
-                                    <p class="mt-4 text-md text-gray-900">{!!Carbon\Carbon::parse($activiteit->inschrijvenVanaf)->format('d-m-Y')!!}</p>
+                                    <p class="mt-4 text-md text-gray-900">{!!Carbon\Carbon::parse($activiteit->inschrijvenVanaf)->format('d-m-Y G\ui')!!}</p>
                                 </div>
 
                                 {{--    inschrijven tot    --}}
                                 <div class="col-span-1">
                                     <p class="mt-4 text-md text-gray-900 font-bold">Inschrijven kan tot en met:</p>
                                 </div><div class="col-span-1">
-                                    <p class="mt-4 text-md text-gray-900">{!!Carbon\Carbon::parse($activiteit->inschrijvenTot)->format('d-m-Y')!!}</p>
+                                    <p class="mt-4 text-md text-gray-900">{!!Carbon\Carbon::parse($activiteit->inschrijvenTot)->format('d-m-Y G\ui')!!}</p>
                                 </div>
 
                                 {{--    annuleren tot    --}}
                                 <div class="col-span-1">
                                     <p class="mt-4 text-md text-gray-900 font-bold">Annuleren kan tot en met:</p>
                                 </div><div class="col-span-1">
-                                    <p class="mt-4 text-md text-gray-900">{!!Carbon\Carbon::parse($activiteit->annulerenTot)->format('d-m-Y')!!}</p>
+                                    <p class="mt-4 text-md text-gray-900">{!!Carbon\Carbon::parse($activiteit->annulerenTot)->format('d-m-Y G\ui')!!}</p>
                                 </div>
 
                                 {{--    capaciteit    --}}
