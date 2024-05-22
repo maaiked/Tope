@@ -15,11 +15,10 @@
                 </button>
 
             <p class="mt-4 text-gray-900">
-                {{"Client id: ".$uitpas['clientId']}}
+                Client id: &#9989;
             </p>
-{{--                Todo:: delete client secret once testing is done--}}
             <p class="mt-2 text-gray-900">
-                {{"Client secret: ".$uitpas['clientSecret']}}
+                Client secret: &#9989;
             </p>
             <p class="mt-2 text-gray-900">
                 {{"Api url: ".$uitpas['api_url']}}
@@ -38,15 +37,14 @@
             </p>
 {{--                Todo:: hide once testing is done--}}
             <p class="mt-2 text-gray-900">
-                {{"Token: ".$uitpas['uitpastoken']}}
+                    Token: &#9989;
             </p>
             <p class="mt-2 text-gray-900">
                 {{"Token expires in: ".$uitpas['expires_in']}}
             </p>
 
             </div>
-            <button class="col-span-1  inline-flex border-2 items-center gap-2 rounded-lg px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:relative" onclick="window.location='{{ route("uitpas.create") }}'">ENKEL IN NOOD: Vraag nieuwe token op</button>
-
+            <button class="col-span-1  inline-flex border-2 items-center gap-2 rounded-lg px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:relative" onclick="window.location='{{ route("uitpas.buttonCreate") }}'">ENKEL IN NOOD: Vraag nieuwe token op</button>
         </div>
     </div>
 </x-app-layout>

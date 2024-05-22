@@ -90,6 +90,16 @@ class UitpasController extends Controller
         } else
             return ($uitpasevent->body());
     }
+    /**
+     * route for create button on uitpasindex
+     */
+    public
+    function buttonCreate()
+    {
+        $this->create();
+        return redirect(route('uitpas.index'));
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -164,10 +174,8 @@ class UitpasController extends Controller
             }
 
             $uitpas=[
-                'uitpastoken' => Cache::get('uitpastoken').'token',
                 'expires_in' => Cache::get('expires_in'),
-                'clientId' => $uitpasdb->clientId.'ID',
-                'clientSecret' => $uitpasdb->clientSecret.'SECRET',
+                'clientId' => $uitpasdb->clientId,
                 'organizerId' => $uitpasdb->organizerId,
                 'locationId' => $uitpasdb->locationId,
                 'api_url' => $uitpasdb->api_url,
