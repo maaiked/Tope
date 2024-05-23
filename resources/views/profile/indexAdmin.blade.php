@@ -16,16 +16,20 @@
                     <tr>
                         <th class="px-4 py-2">Email</th>
                         <th class="px-4 py-2">IsAdmin</th>
+                        <th class="px-4 py-2">IsAnimator</th>
                     </tr>
                     </thead>
                     <tbody>
+                    <x-input-error :messages="$errors->get('error')" class="mt-2"/>
                     @foreach($users as $user)
                     <tr>
+                        <form method="POST" action="{{ route('profile.updateAdmin', $user->id) }}">
+                            @csrf
+                            @method('PUT')
+
                         <td class="border px-4 py-2">{{$user->email}}</td>
                         <td class="border px-4 py-2">
-                            <form method="POST" action="{{ route('profile.updateAdmin', $user->id) }}">
-                                @csrf
-                                @method('PUT')
+
 
                                 <input type="hidden" name="user_id" value="{{ $user->id }}">
 
@@ -36,8 +40,22 @@
                                        onclick="this.form.submit()"
                                        @if($user->isAdmin) checked @endif
                                 >
-                            </form>
+
+
                         </td>
+                        <td class="border px-4 py-2">
+
+                                <input type="hidden" name="user_id" value="{{ $user->id }}">
+
+                                <input type="checkbox"
+                                       name="isAnimator"
+                                       id="isAnimator"
+                                       value="1"
+                                       onclick="this.form.submit()"
+                                       @if($user->isAnimator) checked @endif
+                                >
+                        </td>
+                        </form>
                     </tr>
                     @endforeach
                     </tbody>

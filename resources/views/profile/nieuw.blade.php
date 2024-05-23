@@ -47,6 +47,12 @@
                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="1">
                                 <x-input-error :messages="$errors->get('isAdmin')" class="mt-2"/>
                             </div>
+                            <div class="md:col-span-2">
+                                <label for="isAnimator">isAnimator</label>
+                                <input type="checkbox" name="isAnimator" id="isAnimator"
+                                       class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="1">
+                                <x-input-error :messages="$errors->get('isAnimator')" class="mt-2"/>
+                            </div>
                         </div>
                     </div>
                     <x-primary-button class="mt-4">{{ __('Opslaan') }}</x-primary-button>
@@ -55,3 +61,22 @@
         </div>
     </form>
 </x-app-layout>
+
+<script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const isAdminCheckbox = document.getElementById('isAdmin');
+        const isAnimatorCheckbox = document.getElementById('isAnimator');
+
+        isAdminCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                isAnimatorCheckbox.checked = false;
+            }
+        });
+
+        isAnimatorCheckbox.addEventListener('change', function() {
+            if (this.checked) {
+                isAdminCheckbox.checked = false;
+            }
+        });
+    });
+</script>

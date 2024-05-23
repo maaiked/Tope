@@ -17,9 +17,7 @@ class ProfileController extends Controller
 
     public function index()
     {
-        $users['users'] = User::where('isAdmin', true)
-            ->orWhere('isAnimator', true)
-            ->get();
+        $users['users'] = User::all();
 
         return view('profile.indexAdmin')->with($users);
     }
@@ -41,6 +39,7 @@ class ProfileController extends Controller
             'email'=> 'required|email:rfc,dns|unique:users|max:255',
             'password'=> 'required|string|max:255',
             'isAdmin'=> 'bool',
+            'isAnimator'=> 'bool',
         ]);
 
         $request->user()->create($validated);
@@ -78,19 +77,17 @@ class ProfileController extends Controller
      */
     public function updateAdmin(Request $request): RedirectResponse
     {
-
-
         $isAdmin = $request->input('isAdmin', 0);
+        $isAnimator = $request->input('isAnimator', 0);
 
         $user = User::findOrFail($request->input("user_id"));
 
-        if ($isAdmin) {
-            $user->isAdmin = true;
-            $user->isAnimator = false;
-        } else {
-            $user->isAdmin = false;
-            $user->isAnimator = true;
+        if ($isAdmin && $isAnimator) {
+            return Redirect::back()->withErrors(['error' => 'A user cannot be both Admin and Animator at the same time.']);
         }
+
+        $user->isAdmin = $isAdmin ? true : false;
+        $user->isAnimator = $isAnimator ? true : false;
 
         $user->save();
 
