@@ -7,9 +7,11 @@ use App\Models\Activiteit;
 use App\Models\Kind;
 use App\Models\Locatie;
 use App\Models\Optie;
+use App\Models\Uitpas;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Http;
 use Illuminate\View\View;
 
 class ActiviteitController extends Controller
@@ -20,43 +22,35 @@ class ActiviteitController extends Controller
     public function index($id = null): View
     {
         // if admin, toon alle activiteiten
-        if(auth()->user()->isAdmin)
-        {
-            return view ('activiteiten.indexAdmin', ['activiteiten'=> Activiteit::paginate(10)]);
-        }
-        elseif(auth()->user()->isAnimator)
-        {
-            $activiteiten['activiteiten']= Activiteit::whereDate('eindtijd', '>=', now())
-                ->whereDate('starttijd', '<=', now() )
+        if (auth()->user()->isAdmin) {
+            return view('activiteiten.indexAdmin', ['activiteiten' => Activiteit::paginate(10)]);
+        } elseif (auth()->user()->isAnimator) {
+            $activiteiten['activiteiten'] = Activiteit::whereDate('eindtijd', '>=', now())
+                ->whereDate('starttijd', '<=', now())
                 ->orderBy('starttijd', 'asc')
-            ->paginate(10);
-            return view ('activiteiten.indexAnimator')->with($activiteiten);
-        }
+                ->paginate(10);
+            return view('activiteiten.indexAnimator')->with($activiteiten);
+        } // if geen kind werd geselecteerd, toon alle activiteiten
+        elseif (empty($id)) {
+            $activiteiten['activiteiten'] = Activiteit::whereDate('eindtijd', '>=', now())
+                ->orderBy('starttijd', 'asc')
+                ->paginate(10);
+            return view('activiteiten.index')->with($activiteiten)->with('geselecteerdkind', $id);
+        } // if kind werd geselecteerd, toon enkel activiteiten waar kind kan aan meedoen
+        else {
+            $geselecteerdkind = Kind::find($id);
 
-        // if geen kind werd geselecteerd, toon alle activiteiten
-        elseif (empty($id))
-        {
-            $activiteiten['activiteiten']= Activiteit::whereDate('eindtijd', '>=', now())
-            ->orderBy('starttijd', 'asc')
-            ->paginate(10);
-            return view ('activiteiten.index')->with($activiteiten)->with('geselecteerdkind', $id);
-        }
+            $activiteiten['activiteiten'] = Activiteit::whereDate('eindtijd', '>=', now())
+                ->where('leerjaarVanaf', '<=', $geselecteerdkind->leerjaar)
+                ->where('leerjaarTot', '>=', $geselecteerdkind->leerjaar)
+                ->orderBy('starttijd', 'asc')
+                ->paginate(10);
 
-        // if kind werd geselecteerd, toon enkel activiteiten waar kind kan aan meedoen
-        else
-        {   $geselecteerdkind = Kind::find($id);
-
-                    $activiteiten['activiteiten']= Activiteit::whereDate('eindtijd', '>=', now())
-                        ->where('leerjaarVanaf', '<=', $geselecteerdkind->leerjaar)
-                        ->where('leerjaarTot', '>=', $geselecteerdkind->leerjaar)
-                        ->orderBy('starttijd', 'asc')
-                        ->paginate(10);
-
-            return view ('activiteiten.index')->with($activiteiten)->with(compact('geselecteerdkind'));
+            return view('activiteiten.index')->with($activiteiten)->with(compact('geselecteerdkind'));
         }
     }
 
-/**
+    /**
      * Show the form for creating a new resource.
      */
     public function create(): View
@@ -106,9 +100,24 @@ class ActiviteitController extends Controller
             }
         }
 
+        // creëer nieuw uitpas event voor nieuwe activiteit
+        $uitpasEvent = (new UitpasController)->uitpasNieuweActiviteit($activiteit);
+        $result = json_decode($uitpasEvent, true);
+
+        // get uitpas prijsinfo
+        $uitpasdb = Uitpas::find(1);
+        $url = $uitpasdb->io_url.'/event/' . $result['id'] . "?embedUitpasPrices=true";
+        $uitpasPrijs = Http::get($url)->body();
+        $prijsResult = json_decode($uitpasPrijs, true);
+
+        $activiteit->update([
+            'uitdatabank_id' => $result['id'],
+            'uitdatabank_url' => $result['url'],
+            'uitdatabank_kansentarief' => $prijsResult['priceInfo'][1]['price']
+        ]);
+
         return redirect()->route('activiteiten.index')->with('status', 'activiteit-created');
     }
-
 
 
     /**
@@ -117,7 +126,7 @@ class ActiviteitController extends Controller
     public function show($activiteitid)
     {
         $activiteit = Activiteit::find($activiteitid);
-        return view ('activiteiten.detail', compact('activiteit'));
+        return view('activiteiten.detail', compact('activiteit'));
     }
 
     /**

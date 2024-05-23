@@ -11,18 +11,10 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            {{--    enkel zichtbaar voor admin    --}}
-            <div>
-                @if (auth()->user()->isAdmin)
-                    {{--    TODO:: knop om nieuwe activiteit aan te maken    --}}
-                @endif
-            </div>
 
-
-            {{--    zichtbaar voor niet admin    --}}
             <div class="bg-white overflow-hidden shadow-lg sm:rounded-lg mx-6 my-6 mt-4 px-4 py-4">
 
-                @if (!auth()->user()->isAdmin)
+
 {{--                    als profiel is aangemaakt, maak inschrijven mogelijk--}}
                     @if(!empty(Auth::user()->profiel()->first()))
                         {{--    selecteer kind    --}}
@@ -63,7 +55,7 @@
                         <a href="{{ route('profiel.create') }}" class="underline">Ga naar profiel</a>
                     @endif
 
-                @endif
+
             </div>
 
             {{--    toon activiteiten    --}}
@@ -95,9 +87,14 @@
 
                             {{--    prijs activiteit + opties   --}}
                             <div class="flex-1">
-                                <p class="mt-4 text-md text-gray-900 font-bold">{{"€ ". $activiteit->prijs}}</p>
-                                <input type="hidden" name="prijs" value="{{ $activiteit->prijs }}" />
-                                @foreach($activiteit->opties as $optie)
+                                @if(optional($geselecteerdkind)->uitpasKansentarief === 'ACTIVE' && $activiteit->uitdatabank_kansentarief > 0)
+                                    <p class="mt-4 text-md text-gray-900 font-bold">{{"€ ". $activiteit->uitdatabank_kansentarief." Kansentarief" }}</p>
+                                    <input type="hidden" name="prijs" value="{{ $activiteit->uitdatabank_kansentarief }}" />
+                                @else
+                                    <p class="mt-4 text-md text-gray-900 font-bold">{{"€ ". $activiteit->prijs}}</p>
+                                    <input type="hidden" name="prijs" value="{{ $activiteit->prijs }}" />
+                                @endif
+                                 @foreach($activiteit->opties as $optie)
                                     <p>{{ $optie->omschrijving.": € ".$optie->prijs}}</p>
                                 @endforeach
                             </div>
