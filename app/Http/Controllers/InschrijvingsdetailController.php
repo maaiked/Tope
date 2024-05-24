@@ -129,9 +129,11 @@ class InschrijvingsdetailController extends Controller
                             'prijs' => $totaalprijs,
                             'inschrijvingsdatum' => today()]
                     );
+
                     //update aantalInschrijvingen
                     $inschrijvingen = $activiteit->aantalInschrijvingen +1;
                     $activiteit->update(['aantalInschrijvingen' => $inschrijvingen]);
+
                     // als opties werden toegevoegd aan de inschrijving, sla deze op
                     foreach ($activiteit->opties as $optie)
                     {
@@ -141,6 +143,8 @@ class InschrijvingsdetailController extends Controller
                             $inschrijvingsdetail_opties->save();
                         }
                     }
+
+
                 }
                 if (auth()->user()->isAnimator)
                 {

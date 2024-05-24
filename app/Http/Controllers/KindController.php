@@ -28,6 +28,15 @@ class KindController extends Controller
         // als user = geen admin -> geef enkel eigen kinderen weer
         else {
             $kinderen['kinderen'] = Kind::where('user_id', auth()->id())->get();
+            foreach ($kinderen as $kind)
+            {
+                foreach ($kind as $k) {
+                    if ($k->uitpasDatumCheck < today())
+                    {
+                        $this->uitpasInfo($k->id);
+                    }
+                }
+            }
             return view ('kinderen.indexOuder')->with($kinderen);
         }
     }
@@ -93,6 +102,7 @@ class KindController extends Controller
         if (auth()->id() == $kind->user->id || auth()->user()->isAdmin){
             return view('kinderen.edit', compact('kind'));
         }
+
         //als kindid niet behoort tot de ingelogde user, keer terug naar index
         else {
             return redirect(route('kinderen.index'));
@@ -159,7 +169,12 @@ class KindController extends Controller
             // als uitpas niet bestaat, wis kolommen
             else
             {
-                $kind->update(['uitpasnummer' => '', 'uitpasKansentarief' => '', 'uitpasTekst' => '']);
+                $kind->update([
+                    'uitpasnummer' => '',
+                    'uitpasKansentarief' => '',
+                    'uitpasTekst' => '',
+                    'uitpasDatumCheck' => today()
+                ]);
             }
 
     }

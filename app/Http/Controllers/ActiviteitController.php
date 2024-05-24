@@ -30,15 +30,25 @@ class ActiviteitController extends Controller
                 ->orderBy('starttijd', 'asc')
                 ->paginate(10);
             return view('activiteiten.indexAnimator')->with($activiteiten);
-        } // if geen kind werd geselecteerd, toon alle activiteiten
+        }
+
+        // if geen kind werd geselecteerd, toon alle activiteiten
         elseif (empty($id)) {
             $activiteiten['activiteiten'] = Activiteit::whereDate('eindtijd', '>=', now())
                 ->orderBy('starttijd', 'asc')
                 ->paginate(10);
             return view('activiteiten.index')->with($activiteiten)->with('geselecteerdkind', $id);
-        } // if kind werd geselecteerd, toon enkel activiteiten waar kind kan aan meedoen
+        }
+
+        // if kind werd geselecteerd, toon enkel activiteiten waar kind kan aan meedoen
         else {
             $geselecteerdkind = Kind::find($id);
+
+            // controleer of uitpasinfo vandaag al werd gecontroleerd
+            if($geselecteerdkind->uitpasDatumCheck < today())
+            {
+                (new KindController())->uitpasInfo($geselecteerdkind->id);
+            }
 
             $activiteiten['activiteiten'] = Activiteit::whereDate('eindtijd', '>=', now())
                 ->where('leerjaarVanaf', '<=', $geselecteerdkind->leerjaar)
