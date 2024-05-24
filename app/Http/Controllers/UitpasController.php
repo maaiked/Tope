@@ -50,8 +50,7 @@ class UitpasController extends Controller
                 return ($prijs);
             }
         else  {
-            dump($prijsResult);
-            $this->uitpasPrijs($activiteit);
+            return $this->uitpasPrijs($activiteit);
         }
     }
 
