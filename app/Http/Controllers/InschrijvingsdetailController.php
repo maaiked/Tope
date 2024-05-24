@@ -107,31 +107,60 @@ class InschrijvingsdetailController extends Controller
         switch ($request->input('action')){
             case 'info':
                     return \Redirect::route('activiteiten.show', $request->activiteit);
-                break;
+
 
         // als knop 'inschrijven' werd aangeklikt, maak inschrijving aan
             case 'inschrijven':
                 $activiteit = Activiteit::find($request->activiteit);
-                // bereken totaalprijs (prijs activiteit + prijs opties)
-                $totaalprijs = $request->prijs;
-                foreach ($activiteit->opties as $optie)
-                {
-                    if ($request->has($optie->omschrijving))
-                    {
-                        $totaalprijs += $optie->prijs;
-                    }
-                }
+
                 // als capaciteit activiteit niet vol is, maak inschrijving aan
-                if ($activiteit->aantalInschrijvingen < $activiteit->capaciteit){
+                if ($activiteit->aantalInschrijvingen < $activiteit->capaciteit)
+                {
+                    //update aantalInschrijvingen
+                    $inschrijvingen = $activiteit->aantalInschrijvingen +1;
+                    $activiteit->update(['aantalInschrijvingen' => $inschrijvingen]);
+
+                    // als kind -> kansentarief, registreer verkoop bij uitpas
+                    $kind = Kind::find($request->kindid);
+                    if($kind->uitpasKansentarief === 'ACTIVE')
+                    {
+                        $uitpasverkoop = (new UitpasController)->uitpasTicket($activiteit, $kind);
+                        $verkoopbody = json_decode($uitpasverkoop->body());
+                        if($uitpasverkoop->successful())
+                        {
+                            $totaalprijs = $activiteit->uitdatabank_kansentarief;
+                            $uitid = $verkoopbody[0]->id;
+                            $message = "Inschrijving met kansentarief succesvol";
+                        }
+                        else {
+                            $totaalprijs = $activiteit->prijs;
+                            $message = $verkoopbody->endUserMessage->nl;
+                        }
+                    }
+                    else
+                    {
+                        $totaalprijs = $request->prijs;
+                        $message = "Inschrijving succesvol";
+                    }
+                    // bereken totaalprijs (activiteit + opties)
+                    foreach ($activiteit->opties as $optie)
+                    {
+                        if ($request->has($optie->omschrijving))
+                        {
+                            $totaalprijs += $optie->prijs;
+                        }
+                    }
+
+                    // maak inschrijving aan
                     $inschrijvingsdetail = Inschrijvingsdetail::create(
                         ['kind_id' => $request->kindid,
                             'activiteit_id' => $request->activiteit,
                             'prijs' => $totaalprijs,
-                            'inschrijvingsdatum' => today()]
+                            'inschrijvingsdatum' => today(),
+                            'uitpasid' => $uitid ?? null
+                        ]
                     );
-                    //update aantalInschrijvingen
-                    $inschrijvingen = $activiteit->aantalInschrijvingen +1;
-                    $activiteit->update(['aantalInschrijvingen' => $inschrijvingen]);
+
                     // als opties werden toegevoegd aan de inschrijving, sla deze op
                     foreach ($activiteit->opties as $optie)
                     {
@@ -142,15 +171,19 @@ class InschrijvingsdetailController extends Controller
                         }
                     }
                 }
+
+                // als activiteit volzet is:
+                else $message = "Helaas, de activiteit is reeds volzet";
+                $request->session()->put('inschrijving', $message);
                 if (auth()->user()->isAnimator)
                 {
-                    return \Redirect::Route('inschrijvingsdetails.indexActiviteit', $activiteit)->with('status', 'inschrijving-ok');
+                    return \Redirect::Route('inschrijvingsdetails.indexActiviteit', $activiteit);
                 }
                 else
                 {
                     return \Redirect::Route('activiteiten.index', $request->kindid);
                 }
-                break;
+
         }
         return redirect(route('dashboard'));
     }
@@ -256,6 +289,12 @@ class InschrijvingsdetailController extends Controller
         foreach ($inschrijvingsdetail->inschrijvingsdetail_opties as $opties) {
             $optie = Inschrijvingsdetail_optie::find($opties->id);
             $optie->delete();
+        }
+
+        //indien uitpasverkoop, verwijder ticket in uitpas
+        if (!empty($inschrijvingsdetail->uitpasid))
+        {
+          (new UitpasController)->uitpasDeleteTicket($inschrijvingsdetail->uitpasid);
         }
 
         // verwijder inschrijving

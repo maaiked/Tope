@@ -30,15 +30,25 @@ class ActiviteitController extends Controller
                 ->orderBy('starttijd', 'asc')
                 ->paginate(10);
             return view('activiteiten.indexAnimator')->with($activiteiten);
-        } // if geen kind werd geselecteerd, toon alle activiteiten
+        }
+
+        // if geen kind werd geselecteerd, toon alle activiteiten
         elseif (empty($id)) {
             $activiteiten['activiteiten'] = Activiteit::whereDate('eindtijd', '>=', now())
                 ->orderBy('starttijd', 'asc')
                 ->paginate(10);
             return view('activiteiten.index')->with($activiteiten)->with('geselecteerdkind', $id);
-        } // if kind werd geselecteerd, toon enkel activiteiten waar kind kan aan meedoen
+        }
+
+        // if kind werd geselecteerd, toon enkel activiteiten waar kind kan aan meedoen
         else {
             $geselecteerdkind = Kind::find($id);
+
+            // controleer of uitpasinfo vandaag al werd gecontroleerd
+            if($geselecteerdkind->uitpasDatumCheck < today())
+            {
+                (new KindController())->uitpasInfo($geselecteerdkind->id);
+            }
 
             $activiteiten['activiteiten'] = Activiteit::whereDate('eindtijd', '>=', now())
                 ->where('leerjaarVanaf', '<=', $geselecteerdkind->leerjaar)
@@ -197,7 +207,23 @@ class ActiviteitController extends Controller
         }
 
         // update uitpas event voor gewijzigde activiteit
-        if($activiteit->naam !== $oudeNaam || $activiteit->starttijd !== $oudeStart || $activiteit->eindtijd !== $oudeEind || $activiteit->prijs !== $oudePrijs)
+        if($activiteit->uitdatabank_url === null)
+        {
+            $uitpasEvent = (new UitpasController)->uitpasNieuweActiviteit($activiteit);
+            $result = json_decode($uitpasEvent, true);
+
+            $activiteit->update([
+                'uitdatabank_id' => $result['id'],
+                'uitdatabank_url' => $result['url'],
+            ]);
+
+            // get uitpas prijsinfo - wordt asynchroon berekend in uitpasdatabank, daarom aparte call
+            $uitpasPrijs = (new UitpasController)->uitpasPrijs($activiteit);
+            $activiteit->update([
+                'uitdatabank_kansentarief' => $uitpasPrijs
+            ]);
+        }
+        elseif($activiteit->naam !== $oudeNaam || $activiteit->starttijd !== $oudeStart || $activiteit->eindtijd !== $oudeEind || $activiteit->prijs !== $oudePrijs)
         {
             $uitpasEvent = (new UitpasController)->uitpasUpdateActiviteit($activiteit);
             if($activiteit->prijs !== $oudePrijs)
