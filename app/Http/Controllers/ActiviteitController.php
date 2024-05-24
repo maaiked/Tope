@@ -67,7 +67,7 @@ class ActiviteitController extends Controller
         $request->validate([
             'locatie_id' => 'required|exists:locaties,id',
             'naam' => 'required|string|max:255',
-            'omschrijving' => 'nullable|string|max:255',
+            'omschrijving' => 'required|string|max:255',
             'prijs' => 'required|numeric',
             'capaciteit' => 'required|integer',
             'starttijd' => 'required|date',
@@ -104,17 +104,16 @@ class ActiviteitController extends Controller
         $uitpasEvent = (new UitpasController)->uitpasNieuweActiviteit($activiteit);
         $result = json_decode($uitpasEvent, true);
 
-        // get uitpas prijsinfo
-        $uitpasdb = Uitpas::find(1);
-        $url = $uitpasdb->io_url.'/event/' . $result['id'] . "?embedUitpasPrices=true";
-        $uitpasPrijs = Http::get($url)->body();
-        $prijsResult = json_decode($uitpasPrijs, true);
-
         $activiteit->update([
             'uitdatabank_id' => $result['id'],
             'uitdatabank_url' => $result['url'],
-            'uitdatabank_kansentarief' => $prijsResult['priceInfo'][1]['price']
         ]);
+
+        // get uitpas prijsinfo - wordt asynchroon berekend in uitpasdatabank, daarom aparte call
+        $uitpasPrijs = (new UitpasController)->uitpasPrijs($activiteit);
+        $activiteit->update([
+                'uitdatabank_kansentarief' => $uitpasPrijs
+            ]);
 
         return redirect()->route('activiteiten.index')->with('status', 'activiteit-created');
     }
@@ -165,6 +164,13 @@ class ActiviteitController extends Controller
         ]);
 
         $activiteit = Activiteit::findOrFail($id);
+
+        // sla oude gegevens op voor controle uitpas event
+        $oudeNaam = $activiteit->naam;
+        $oudePrijs = $activiteit->prijs;
+        $oudeStart = $activiteit->starttijd;
+        $oudeEind = $activiteit->eindtijd;
+
         $activiteit->update($request->only([
             'locatie_id', 'naam', 'omschrijving', 'prijs', 'capaciteit',
             'starttijd', 'eindtijd', 'inschrijvenVanaf', 'inschrijvenTot',
@@ -189,6 +195,21 @@ class ActiviteitController extends Controller
                 }
             }
         }
+
+        // update uitpas event voor gewijzigde activiteit
+        if($activiteit->naam !== $oudeNaam || $activiteit->starttijd !== $oudeStart || $activiteit->eindtijd !== $oudeEind || $activiteit->prijs !== $oudePrijs)
+        {
+            $uitpasEvent = (new UitpasController)->uitpasUpdateActiviteit($activiteit);
+            if($activiteit->prijs !== $oudePrijs)
+            {
+                // update uitpas prijsinfo - wordt asynchroon berekend in uitpasdatabank, daarom aparte call
+                $uitpasPrijs = (new UitpasController)->uitpasPrijs($activiteit);
+                $activiteit->update([
+                    'uitdatabank_kansentarief' => $uitpasPrijs
+                ]);
+            }
+        }
+
 
         return redirect()->route('activiteiten.index')->with('status', 'activiteit-updated');
     }
