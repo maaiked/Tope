@@ -16,10 +16,9 @@
             @if (session('status') === 'geenKind')
                 <p class="text-lg py-4 px-4 text-red-600"
                 ><i>{{ __('Er werd geen kind gevonden met de gevraagde details. Controleer of het kind binnen de leeftijdslimiet valt en nog niet ingeschreven werd.') }}</i></p>
-            @elseif(session('status') === 'inschrijving-ok')
-                <p class="text-lg py-4 px-4 text-green-500"
-                ><i>{{ __('De inschrijving werd toegevoegd') }}</i></p>
-
+            @elseif (session('inschrijving') !== null)
+                    <p class="text-lg py-4 px-4 text-md font-bold underline text-green-500"
+                    ><i>{{ session()->pull('inschrijving', null) }}</i></p>
             @endif
 
             <button class=" rounded-md bg-blue-500 text-white focus:ring-gray-600 px-2 py-2 text-sm"
