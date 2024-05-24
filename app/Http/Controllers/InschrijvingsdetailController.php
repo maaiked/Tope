@@ -291,6 +291,12 @@ class InschrijvingsdetailController extends Controller
             $optie->delete();
         }
 
+        //indien uitpasverkoop, verwijder ticket in uitpas
+        if (!empty($inschrijvingsdetail->uitpasid))
+        {
+          (new UitpasController)->uitpasDeleteTicket($inschrijvingsdetail->uitpasid);
+        }
+
         // verwijder inschrijving
         $inschrijvingsdetail->delete();
 

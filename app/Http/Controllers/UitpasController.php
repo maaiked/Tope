@@ -318,4 +318,24 @@ class UitpasController extends Controller
         }
         else return ($ticket);
     }
+
+
+    /**
+     * Cancel a ticket sale registration.
+     */
+    public function uitpasDeleteTicket($uitpasid)
+    {
+        $uitpasdb = Uitpas::find(1);
+
+        //Verwijder het ticket in uitpasdatabase
+        $url = $uitpasdb->api_url.'/ticket-sales/'.$uitpasid;
+        $token = Cache::get('uitpastoken');
+        $ticket = Http::withToken($token)->delete($url);
+
+       // als respons = 401 of 403 - don't ask me why hij 403 teruggeeft??, vraag nieuwe access token op en retry
+        if ($ticket->status() === 401 || $ticket->status() === 403) {
+            $this->create();
+            $this->uitpasDeleteTicket($uitpasid);
+        }
+    }
 }
