@@ -49,7 +49,7 @@
                                 <x-input-error :messages="$errors->get('omschrijving')" class="mt-2"/>
                             </div>
                             <div class="md:col-span-2">
-                                <label for="prijs">Prijs</label>
+                                <label for="prijs">Prijs (Gebruik een . voor kommagetallen)</label>
                                 <input type="text" name="prijs" id="prijs"
                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                                        value="{{ old('prijs') }}"
@@ -147,7 +147,7 @@
                                 <x-input-error :messages="$errors->get('vakantie')" class="mt-2"/>
                             </div>
                             <div class="md:col-span-4">
-                                <label for="new_opties">Nieuwe Opties</label>
+                                <label for="new_opties">Nieuwe Opties (Gebruik een . voor kommagetallen)</label>
                                 <div id="new-opties-container">
                                     <div class="flex items-center mt-2">
                                         <input type="text" name="new_opties[0][omschrijving]" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50 mr-2" placeholder="Omschrijving">

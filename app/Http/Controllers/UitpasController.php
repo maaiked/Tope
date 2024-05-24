@@ -11,6 +11,8 @@ use DateTimeInterface;
 
 class UitpasController extends Controller
 {
+    //todo:: catch 400 & 404 responses
+
     /**
      * Get the uitpasstatus of a child
      */
@@ -29,7 +31,28 @@ class UitpasController extends Controller
         if ($uitpasKind->status() === 401 || $uitpasKind->status() === 403) {
             $this->create();
             return $this->uitpasKind($insNumber);
-        } else return ($uitpasKind->body());
+        }
+        else return ($uitpasKind->body());
+    }
+
+    /**
+     * Get the uitpasprijs of an activity
+     */
+    public function uitpasPrijs($activiteit)
+    {
+        $uitpasdb = Uitpas::find(1);
+        $url = $uitpasdb->io_url.'/event/'.$activiteit->uitdatabank_id."?embedUitpasPrices=true";
+        $uitpasPrijs = Http::get($url)->body();
+        $prijsResult = json_decode($uitpasPrijs);
+        if(isset($prijsResult->priceInfo[1]->price))
+           {
+                $prijs = $prijsResult->priceInfo[1]->price;
+                return ($prijs);
+            }
+        else  {
+            dump($prijsResult);
+            $this->uitpasPrijs($activiteit);
+        }
     }
 
 
@@ -52,7 +75,7 @@ class UitpasController extends Controller
                     'nl' => $activiteit->naam
                 ],
                 'organizer' => [
-                    '@id' => $uitpasdb->io_url.'/organizers/'.$uitpasdb->organizerID
+                    '@id' => $uitpasdb->io_url.'/organizers/'.$uitpasdb->organizerId
                 ],
                 'priceInfo' => [
                     [
@@ -86,10 +109,51 @@ class UitpasController extends Controller
         // als respons = 401 of 403 - don't ask me why hij 403 teruggeeft??, vraag nieuwe access token op en retry
         if ($uitpasevent->status() === 401 || $uitpasevent->status() === 403) {
             $this->create();
-            return $this->uitpasActiviteit($activiteit);
+            return $this->uitpasNieuweActiviteit($activiteit);
         } else
             return ($uitpasevent->body());
     }
+
+
+    /**
+        * Update activity in uitpasdatabank
+         */
+        // Update activiteit in de uitpasdatabank
+       public function uitpasUpdateActiviteit($activiteit)
+        {
+            // haal activiteit info op in uitpas
+            $uitpasdb = Uitpas::find(1);
+            $url = $uitpasdb->io_url.'/events/'.$activiteit->uitdatabank_id;
+            $token = Cache::get('uitpastoken');
+            $uitpasevent = Http::withToken($token)->get($url);
+
+            // als respons = 401 of 403 - don't ask me why hij 403 teruggeeft??, vraag nieuwe access token op en retry
+            if ($uitpasevent->status() === 401 || $uitpasevent->status() === 403)
+            {
+                $this->create();
+                return $this->uitpasUpdateActiviteit($activiteit);
+
+            //pas activiteit gegevens aan
+            } else
+                $event = json_decode($uitpasevent->body());
+                $event->name->nl = $activiteit->naam;
+                $event->startDate = Carbon::parse($activiteit->starttijd)->toIso8601String();
+                $event->endDate = Carbon::parse($activiteit->eindtijd)->toIso8601String();
+                $event->priceInfo[0]->price = (int)$activiteit->prijs;
+                $event->subEvent[0]->startDate = Carbon::parse($activiteit->starttijd)->toIso8601String();
+                $event->subEvent[0]->endDate = Carbon::parse($activiteit->eindtijd)->toIso8601String();
+                $updatedevent = Http::withToken($token)->put($url, $event);
+
+            return $updatedevent;
+
+
+
+
+
+        }
+
+
+
     /**
      * route for create button on uitpasindex
      */
@@ -108,8 +172,7 @@ class UitpasController extends Controller
     function create()
     {
         //todo:: in sale: als accesstoken in cache niet bestaat OF
-        // als api request met token, returns 401:
-        // get new access token:
+        // als api request met token, returns 401: get new access token:
 
         //todo:: add security to stop loop indien 401 door ander probleem komt.
         // check expires_in > today()+1day ?? -> laravel http retry ! https://laravel.com/docs/10.x/http-client#retries

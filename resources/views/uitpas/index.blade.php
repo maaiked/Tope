@@ -35,7 +35,6 @@
             <p class="mt-2 text-gray-900">
                 {{"Location id: ".$uitpas['locationId']}}
             </p>
-{{--                Todo:: hide once testing is done--}}
             <p class="mt-2 text-gray-900">
                     Token: &#9989;
             </p>
