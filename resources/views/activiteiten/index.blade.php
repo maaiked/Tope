@@ -26,6 +26,11 @@
                             }
                         </style>
 
+                    @if (session('inschrijving') !== null)
+                        <p class="text-lg py-4 px-4 text-md font-bold underline text-green-500"
+                        ><i>{{ session()->pull('inschrijving', null) }}</i></p>
+                    @endif
+
                         <div class="grid md:grid-cols-4 gap-2 w-full max-w-screen-sm vertical-align:middle">
                             <div><span class="text-md font-semibold uppercase">Selecteer kind: </span>
                                 <button class="text-sm font-semibold underline"

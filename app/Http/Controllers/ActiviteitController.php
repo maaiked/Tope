@@ -207,7 +207,23 @@ class ActiviteitController extends Controller
         }
 
         // update uitpas event voor gewijzigde activiteit
-        if($activiteit->naam !== $oudeNaam || $activiteit->starttijd !== $oudeStart || $activiteit->eindtijd !== $oudeEind || $activiteit->prijs !== $oudePrijs)
+        if($activiteit->uitdatabank_url === null)
+        {
+            $uitpasEvent = (new UitpasController)->uitpasNieuweActiviteit($activiteit);
+            $result = json_decode($uitpasEvent, true);
+
+            $activiteit->update([
+                'uitdatabank_id' => $result['id'],
+                'uitdatabank_url' => $result['url'],
+            ]);
+
+            // get uitpas prijsinfo - wordt asynchroon berekend in uitpasdatabank, daarom aparte call
+            $uitpasPrijs = (new UitpasController)->uitpasPrijs($activiteit);
+            $activiteit->update([
+                'uitdatabank_kansentarief' => $uitpasPrijs
+            ]);
+        }
+        elseif($activiteit->naam !== $oudeNaam || $activiteit->starttijd !== $oudeStart || $activiteit->eindtijd !== $oudeEind || $activiteit->prijs !== $oudePrijs)
         {
             $uitpasEvent = (new UitpasController)->uitpasUpdateActiviteit($activiteit);
             if($activiteit->prijs !== $oudePrijs)

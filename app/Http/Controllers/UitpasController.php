@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Activiteit;
+use App\Models\Kind;
 use App\Models\Uitpas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -44,9 +46,10 @@ class UitpasController extends Controller
         $url = $uitpasdb->io_url.'/event/'.$activiteit->uitdatabank_id."?embedUitpasPrices=true";
         $uitpasPrijs = Http::get($url)->body();
         $prijsResult = json_decode($uitpasPrijs);
-        if(isset($prijsResult->priceInfo[1]->price))
+        //todo:: in production if organizer has only 1 organisation, change to princeInfo[1]!!
+        if(isset($prijsResult->priceInfo[2]->price))
            {
-                $prijs = $prijsResult->priceInfo[1]->price;
+                $prijs = $prijsResult->priceInfo[2]->price;
                 return ($prijs);
             }
         else  {
@@ -170,9 +173,6 @@ class UitpasController extends Controller
     public
     function create()
     {
-        //todo:: in sale: als accesstoken in cache niet bestaat OF
-        // als api request met token, returns 401: get new access token:
-
         //todo:: add security to stop loop indien 401 door ander probleem komt.
         // check expires_in > today()+1day ?? -> laravel http retry ! https://laravel.com/docs/10.x/http-client#retries
 
@@ -288,5 +288,34 @@ class UitpasController extends Controller
     function destroy(Uitpas $uitpas)
     {
         //
+    }
+
+    public function uitpasTicket(Activiteit $activiteit, Kind $kind)
+    {
+        $uitpasdb = Uitpas::find(1);
+
+        //Registreer het ticket in uitpasdatabase
+        $url = $uitpasdb->api_url.'/ticket-sales';
+        $token = Cache::get('uitpastoken');
+        $ticket = Http::withToken($token)->post($url,
+        [
+            [
+                'tariff' => [
+                    'id' => 'SOCIALTARIFF'
+                ],
+                'uitpasNumber' => $kind->uitpasnummer,
+                'eventId' => $activiteit->uitdatabank_id,
+                'regularPrice' => (int)$activiteit->prijs,
+                ]
+        ]);
+
+        // als respons = 400 > maximum aantal tickets bereikt. "Je kan dit ticket niet meer aankopen aan kansentarief omdat je het al eerder hebt gekocht. Je kan maximaal 1 ticket(s) kopen aan kansentarief voor deze activiteit."
+
+        // als respons = 401 of 403 - don't ask me why hij 403 teruggeeft??, vraag nieuwe access token op en retry
+        if ($ticket->status() === 401 || $ticket->status() === 403) {
+            $this->create();
+            return $this->uitpasTicket($activiteit, $kind);
+        }
+        else return ($ticket);
     }
 }
