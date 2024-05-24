@@ -5,13 +5,8 @@ namespace App\Http\Controllers;
 use App\Enums\LeerjaarEnum;
 use App\Models\Activiteit;
 use App\Models\Kind;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Enum;
-use Illuminate\View\View;
-use App\Models\User;
 
 class KindController extends Controller
 {
@@ -137,7 +132,7 @@ class KindController extends Controller
         if(strcmp($oldrijksregisternummer, $kind->rijksregisternummer ) !== 0)
         {
             $this->uitpasInfo($kind->id);
-        };
+        }
 
         return redirect(route('kinderen.index'));
     }

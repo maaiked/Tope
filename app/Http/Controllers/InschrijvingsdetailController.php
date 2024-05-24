@@ -107,7 +107,7 @@ class InschrijvingsdetailController extends Controller
         switch ($request->input('action')){
             case 'info':
                     return \Redirect::route('activiteiten.show', $request->activiteit);
-                break;
+
 
         // als knop 'inschrijven' werd aangeklikt, maak inschrijving aan
             case 'inschrijven':
@@ -183,7 +183,7 @@ class InschrijvingsdetailController extends Controller
                 {
                     return \Redirect::Route('activiteiten.index', $request->kindid);
                 }
-                break;
+
         }
         return redirect(route('dashboard'));
     }
