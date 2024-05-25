@@ -30,9 +30,6 @@
                     <x-nav-link :href="route('profile.index')" :active="request()->routeIs('profile.index')">
                         {{ __('Gebruikers') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('profile.create')" :active="request()->routeIs('profile.create')">
-                        {{ __('Gebruiker aanmaken') }}
-                    </x-nav-link>
                     <x-nav-link :href="route('uitpas.index')" :active="request()->routeIs('uitpas.index')">
                         {{ __('UiTPAS') }}
                     </x-nav-link>
