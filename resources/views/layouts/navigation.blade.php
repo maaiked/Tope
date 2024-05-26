@@ -27,6 +27,9 @@
                     </x-nav-link>
                     @endif
                     @if(Auth::user()->isAdmin)
+                    <x-nav-link :href="route('profiel.index')" :active="request()->routeIs('profiel.index')">
+                        {{ __('Ouders') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('profile.index')" :active="request()->routeIs('profile.index')">
                         {{ __('Gebruikers') }}
                     </x-nav-link>

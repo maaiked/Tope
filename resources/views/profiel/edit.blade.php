@@ -6,7 +6,7 @@
         </h2>
     </x-slot>
 
-    <form method="POST" action="{{ route('profiel.update')}}">
+    <form method="POST" action="{{ route('profiel.updateById', $id)}}">
         @csrf
         @method('PUT')
 
@@ -40,7 +40,7 @@
                                 <label for="voornaam">Voornaam</label>
                                 <input type="text" name="voornaam" id="voornaam"
                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                       value="{{ old('voornaam', $userprofiel->voornaam) }}"
+                                       value="{{ old('voornaam', optional($userprofiel)->voornaam) }}"
                                        placeholder="vb. Katrien"/>
                                 <x-input-error :messages="$errors->get('voornaam')" class="mt-2"/>
                             </div>
@@ -48,7 +48,7 @@
                                 <label for="familienaam">Familienaam</label>
                                 <input type="text" name="familienaam" id="familienaam"
                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                       value="{{ old('familienaam', $userprofiel->familienaam) }}"
+                                       value="{{ old('familienaam', optional($userprofiel)->familienaam) }}"
                                        placeholder="vb. De Groote"/>
                                 <x-input-error :messages="$errors->get('familienaam')" class="mt-2"/>
                             </div>
@@ -56,7 +56,7 @@
                                 <label for="rijksregisternummer">Rijksregisternummer</label>
                                 <input type="text" name="rijksregisternummer" id="rijksregisternummer"
                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                       value="{{ old('rijksregisternummer', $userprofiel->rijksregisternummer) }}"
+                                       value="{{ old('rijksregisternummer', optional($userprofiel)->rijksregisternummer) }}"
                                        placeholder="vb. 10.10.10-100.10"/>
                                 <x-input-error :messages="$errors->get('rijksregisternummer')" class="mt-2"/>
                             </div>
@@ -64,7 +64,7 @@
                                 <label for="telefoonnummer">Telefoonnummer</label>
                                 <input type="text" name="telefoonnummer" id="telefoonnummer"
                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                       value="{{ old('telefoonnummer', $userprofiel->telefoonnummer) }}"
+                                       value="{{ old('telefoonnummer', optional($userprofiel)->telefoonnummer) }}"
                                        placeholder="vb. 0474 76 76 76"/>
                                 <x-input-error :messages="$errors->get('telefoonnummer')" class="mt-2"/>
                             </div>
@@ -72,7 +72,7 @@
                                 <label for="straat">Straat</label>
                                 <input type="text" name="straat" id="straat"
                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                       value="{{ old('straat', $userprofiel->straat) }}"
+                                       value="{{ old('straat', optional($userprofiel)->straat) }}"
                                        placeholder="vb. Nieuwstraat"/>
                                 <x-input-error :messages="$errors->get('straat')" class="mt-2"/>
                             </div>
@@ -80,7 +80,7 @@
                                 <label for="huisnummer">Huisnummer</label>
                                 <input type="text" name="huisnummer" id="bus"
                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                       value="{{ old('huisnummer', $userprofiel->huisnummer) }}"
+                                       value="{{ old('huisnummer', optional($userprofiel)->huisnummer) }}"
                                        placeholder="vb. nummer 105"/>
                                 <x-input-error :messages="$errors->get('huisnummer')" class="mt-2"/>
                             </div>
@@ -88,7 +88,7 @@
                                 <label for="bus">Bus</label>
                                 <input type="text" name="bus" id="bus"
                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                       value="{{ old('bus', $userprofiel->bus) }}"
+                                       value="{{ old('bus', optional($userprofiel)->bus) }}"
                                        placeholder="vb. bus A4"/>
                                 <x-input-error :messages="$errors->get('bus')" class="mt-2"/>
                             </div>
@@ -96,7 +96,7 @@
                                 <label for="postcode">Postcode</label>
                                 <input type="text" name="postcode" id="postcode"
                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                       value="{{ old('postcode', $userprofiel->postcode) }}"
+                                       value="{{ old('postcode', optional($userprofiel)->postcode) }}"
                                        placeholder="vb. 8530"/>
                                 <x-input-error :messages="$errors->get('postcode')" class="mt-2"/>
                             </div>
@@ -104,20 +104,10 @@
                                 <label for="gemeente">Gemeente</label>
                                 <input type="text" name="gemeente" id="gemeente"
                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                       value="{{ old('gemeente', $userprofiel->gemeente) }}"
+                                       value="{{ old('gemeente', optional($userprofiel)->gemeente) }}"
                                        placeholder=""/>
                                 <x-input-error :messages="$errors->get('gemeente')" class="mt-2"/>
                             </div>
-                            @if (auth()->user()->isAdmin)
-                            <div class="md:col-span-3">
-                                <label for="isAdmin">Admin</label>
-                                <input type="checkbox" name="isAdmin" id="isAdmin"
-                                       class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                       value="{{ old('isAdmin', $userprofiel->isAdmin) }}"
-                                       placeholder=""/>
-                                <x-input-error :messages="$errors->get('isAdmin')" class="mt-2"/>
-                            </div>
-                            @endif
                         </div>
                     </div>
 

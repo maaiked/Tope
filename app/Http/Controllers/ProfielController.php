@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kind;
 use App\Models\Profiel;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -14,7 +15,8 @@ class ProfielController extends Controller
      */
     public function index()
     {
-        //
+        $users['users'] = User::where('isAdmin', false)->where('isAnimator', false)->get();
+        return view ('profiel.indexAdmin')->with($users);
     }
 
     /**
@@ -104,6 +106,32 @@ class ProfielController extends Controller
 
         $request->user()->profiel()->update($validated);
         return redirect(route('profiel.edit'))->with('status', 'profiel-updated');
+    }
+
+    public function editById(Request $request, int $id)
+    {
+        $userprofiel = Profiel::where('user_id', $id)->first();
+        return view('profiel.edit', compact('userprofiel', 'id'));
+    }
+
+    public function updateById(Request $request, Profiel $profiel, int $id)
+    {
+        $validated = $request->validate([
+            'voornaam'=> 'required|string|max:255',
+            'familienaam'=> 'required|string|max:255',
+            'straat'=> 'required|string|max:255',
+            'huisnummer'=> 'required|string|max:255',
+            'bus'=> 'nullable|string|max:30',
+            'postcode'=> 'required|string|max:255',
+            'gemeente'=> 'required|string|max:255',
+            'telefoonnummer'=> 'required|string|max:255',
+            'rijksregisternummer'=> 'required|string|max:255',
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->profiel()->update($validated);
+
+        return redirect(route('profiel.editById', $id))->with('status', 'profiel-updated');
     }
 
     /**
