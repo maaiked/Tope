@@ -34,7 +34,7 @@
                         <td class="border px-4 py-2">
                             <button onclick="window.location='{{ route("profiel.editById", $user->id) }}'"
                             class="col-span-1  inline-flex border-2 items-center gap-2 rounded-lg px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:relative">
-                            Bewerk</button>
+                            Bewerken</button>
                         </td>
                         <td class="border px-4 py-2">{{$user->email}}</td>
                         <td class="border px-4 py-2">{{optional($user->profiel)->voornaam}}</td>

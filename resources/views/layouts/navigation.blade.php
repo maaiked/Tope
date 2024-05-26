@@ -33,6 +33,9 @@
                     <x-nav-link :href="route('profile.index')" :active="request()->routeIs('profile.index')">
                         {{ __('Gebruikers') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('locatie.index')" :active="request()->routeIs('locatie.index')">
+                        {{ __('Locaties') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('uitpas.index')" :active="request()->routeIs('uitpas.index')">
                         {{ __('UiTPAS') }}
                     </x-nav-link>

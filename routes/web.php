@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ActiviteitController;
 use App\Http\Controllers\KindController;
 use App\Http\Controllers\InschrijvingsdetailController;
+use App\Http\Controllers\LocatieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,7 +92,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/uitpas/edit', [UitpasController::class, 'edit'])->name('uitpas.edit');
     Route::post('/uitpas/edit', [UitpasController::class, 'update'])->name('uitpas.update');
 
+    //locatie routes
+    Route::resource('locatie', LocatieController::class);
 
+    /*
+    Route::get('locatie', [LocatieController::class, 'index'])->name('locatie.index');
+    Route::get('locatie/create', [LocatieController::class, 'create'])->name('locatie.create');
+    Route::post('locatie', [LocatieController::class, 'store'])->name('locatie.store');
+    Route::get('locatie/{locatie}', [LocatieController::class, 'show'])->name('locatie.show');
+    Route::get('locatie/{locatie}/edit', [LocatieController::class, 'edit'])->name('locatie.edit');
+    Route::put('locatie/{locatie}', [LocatieController::class, 'update'])->name('locatie.update');
+    Route::delete('locatie/{locatie}', [LocatieController::class, 'destroy'])->name('locatie.destroy');
+    */
 
 });
 
