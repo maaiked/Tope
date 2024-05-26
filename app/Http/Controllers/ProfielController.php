@@ -76,33 +76,17 @@ class ProfielController extends Controller
      */
     public function update(Request $request, Profiel $profiel)
     {
-        if (auth()->user()->isAdmin){
-            $validated = $request->validate([
-                'voornaam'=> 'required|string|max:255',
-                'familienaam'=> 'required|string|max:255',
-                'straat'=> 'required|string|max:255',
-                'huisnummer'=> 'required|string|max:255',
-                'bus'=> 'nullable|string|max:30',
-                'postcode'=> 'required|string|max:255',
-                'gemeente'=> 'required|string|max:255',
-                'telefoonnummer'=> 'required|string|max:255',
-                'rijksregisternummer'=> 'required|string|max:255',
-                'isAdmin' => 'required|boolean,'
-            ]);
-        }
-        else {
-            $validated = $request->validate([
-                'voornaam'=> 'required|string|max:255',
-                'familienaam'=> 'required|string|max:255',
-                'straat'=> 'required|string|max:255',
-                'huisnummer'=> 'required|string|max:255',
-                'bus'=> 'nullable|string|max:30',
-                'postcode'=> 'required|string|max:255',
-                'gemeente'=> 'required|string|max:255',
-                'telefoonnummer'=> 'required|string|max:255',
-                'rijksregisternummer'=> 'required|string|max:255',
-            ]);
-        }
+        $validated = $request->validate([
+            'voornaam'=> 'required|string|max:255',
+            'familienaam'=> 'required|string|max:255',
+            'straat'=> 'required|string|max:255',
+            'huisnummer'=> 'required|string|max:255',
+            'bus'=> 'nullable|string|max:30',
+            'postcode'=> 'required|string|max:255',
+            'gemeente'=> 'required|string|max:255',
+            'telefoonnummer'=> 'required|string|max:255',
+            'rijksregisternummer'=> 'required|string|max:255',
+        ]);
 
         $request->user()->profiel()->update($validated);
         return redirect(route('profiel.edit'))->with('status', 'profiel-updated');
