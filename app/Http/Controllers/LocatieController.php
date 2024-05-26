@@ -12,7 +12,8 @@ class LocatieController extends Controller
      */
     public function index()
     {
-        //
+        $locaties = Locatie::all();
+        return view('locaties.index', compact('locaties'));
     }
 
     /**
@@ -20,7 +21,7 @@ class LocatieController extends Controller
      */
     public function create()
     {
-        //
+        return view('locaties.nieuw');
     }
 
     /**
@@ -28,7 +29,15 @@ class LocatieController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'naam' => 'required|string|max:255',
+            'straat' => 'required|string|max:255',
+            'gemeente' => 'required|string|max:255',
+        ]);
+
+        Locatie::create($validated);
+
+        return redirect()->route('locatie.index')->with('status', 'locatie-created');
     }
 
     /**
@@ -44,7 +53,7 @@ class LocatieController extends Controller
      */
     public function edit(Locatie $locatie)
     {
-        //
+        return view('locaties.edit', compact('locatie'));
     }
 
     /**
@@ -52,7 +61,15 @@ class LocatieController extends Controller
      */
     public function update(Request $request, Locatie $locatie)
     {
-        //
+        $validated = $request->validate([
+            'naam' => 'required|string|max:255',
+            'straat' => 'required|string|max:255',
+            'gemeente' => 'required|string|max:255',
+        ]);
+
+        $locatie->update($validated);
+
+        return redirect()->route('locatie.index')->with('status', 'locatie-updated');
     }
 
     /**
