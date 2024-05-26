@@ -14,6 +14,8 @@
                 <table id="example" class="bootstrap-table" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
                     <thead>
                     <tr>
+                        <th class="px-4 py-2">Bewerken</th>
+                        <th class="px-4 py-2">Email</th>
                         <th class="px-4 py-2">Voornaam</th>
                         <th class="px-4 py-2">Familienaam</th>
                         <th class="px-4 py-2">Straat</th>
@@ -27,20 +29,27 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($profielen as $profiel)
+                    @foreach($users as $user)
                     <tr>
-                        <td class="border px-4 py-2">{{$profiel->voornaam}}</td>
-                        <td class="border px-4 py-2">{{$profiel->familienaam}}</td>
-                        <td class="border px-4 py-2">{{$profiel->straat}}</td>
-                        <td class="border px-4 py-2">{{$profiel->huisnummer}}</td>
-                        <td class="border px-4 py-2">{{$profiel->bus}}</td>
-                        <td class="border px-4 py-2">{{$profiel->postcode}}</td>
-                        <td class="border px-4 py-2">{{$profiel->gemeente}}</td>
-                        <td class="border px-4 py-2">{{$profiel->rijksregisternummer}}</td>
-                        <td class="border px-4 py-2">{{$profiel->telefoonnummer}}</td>
                         <td class="border px-4 py-2">
-                            @foreach($profiel.kinds as $kind)
-                            {{$kind->voornaam." ".$kind->familienaam}}
+                            <button onclick="window.location='{{ route("profiel.editById", $user->id) }}'"
+                            class="col-span-1  inline-flex border-2 items-center gap-2 rounded-lg px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:relative">
+                            Bewerk</button>
+                        </td>
+                        <td class="border px-4 py-2">{{$user->email}}</td>
+                        <td class="border px-4 py-2">{{optional($user->profiel)->voornaam}}</td>
+                        <td class="border px-4 py-2">{{optional($user->profiel)->familienaam}}</td>
+                        <td class="border px-4 py-2">{{optional($user->profiel)->straat}}</td>
+                        <td class="border px-4 py-2">{{optional($user->profiel)->huisnummer}}</td>
+                        <td class="border px-4 py-2">{{optional($user->profiel)->bus}}</td>
+                        <td class="border px-4 py-2">{{optional($user->profiel)->postcode}}</td>
+                        <td class="border px-4 py-2">{{optional($user->profiel)->gemeente}}</td>
+                        <td class="border px-4 py-2">{{optional($user->profiel)->rijksregisternummer}}</td>
+                        <td class="border px-4 py-2">{{optional($user->profiel)->telefoonnummer}}</td>
+                        <td class="border px-4 py-2">
+                            @foreach($user->kinds as $kind)
+                            {{$kind->voornaam." ".$kind->familienaam}}<br>
+                            @endforeach
                         </td>
                     </tr>
                     @endforeach
