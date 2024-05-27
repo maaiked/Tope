@@ -63,28 +63,30 @@
 
 
             {{--    toon activiteiten    --}}
-            <form method="POST" action="{{ route('inschrijvingsdetail.store') }}">
-                @csrf
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mx-6 my-6 mt-4 px-4 py-4">
 
-                    <table id="myTable" class="bootstrap-table"
-                           style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
-                        <thead>
-                        <tr >
-                            <th class="px-4 py-2">Vakantie</th>
-                            <th class="px-4 py-2">Activiteit + locatie</th>
-                            <th class="px-4 py-2 ">Van - Tot</th>
-                           <th class="px-4 py-2">Leerjaren</th>
-                            <th class="px-4 py-2">Prijs + opties</th>
-                            <th class="px-4 py-2">Inschrijven</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        @foreach($activiteiten as $activiteit)
-                            <tr>
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mx-6 my-6 mt-4 px-4 py-4">
 
+                <table id="myTable" class="bootstrap-table"
+                       style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
+                    <thead>
+                    <tr>
+                        <th class="px-4 py-2">Vakantie</th>
+                        <th class="px-4 py-2">Activiteit + locatie</th>
+                        <th class="px-4 py-2 ">Van - Tot</th>
+                        <th class="px-4 py-2">Leerjaren</th>
+                        <th class="px-4 py-2">Prijs + opties</th>
+                        <th class="px-4 py-2">Inschrijven</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($activiteiten as $activiteit)
+
+                        <tr>
+                            <form method="POST" action="{{ route('inschrijvingsdetail.store') }}">
+                                @csrf
                                 <td class="border px-4 py-2 ">
-                                    <div class="flex-1"> <p class="mt-4 text-md text-gray-900">{{ $activiteit->vakantie }}</p>
+                                    <div class="flex-1"><p
+                                            class="mt-4 text-md text-gray-900">{{ $activiteit->vakantie }}</p>
                                     </div>
                                 </td>
                                 <td class="border px-4 py-2">
@@ -188,16 +190,13 @@
                                         </button>
                                     </div>
                                 </td>
-                            </tr>
-                        @endforeach
+                            </form>
+                        </tr>
+                    @endforeach
 
-                        </tbody>
-                    </table>
-                </div>
-            </form>
-
-
-
+                    </tbody>
+                </table>
+            </div>
 
 
             {{--    paginatie    --}}
@@ -231,9 +230,15 @@
 
         // script voor tabel met sorting en search
 
-        $(document).ready( function () {
+        $(document).ready(function () {
             $('#myTable').DataTable({
-                ordering: false
+                ordering: false,
+                language: {
+                    search: 'Zoek in activiteiten:',
+                    lengthMenu: '_MENU_ activiteiten per pagina',
+                    info: ' _START_ tot _END_ van _TOTAL_ activiteiten worden getoond',
+                    infoFiltered: '(gefilterd van _MAX_ activiteiten in totaal)',
+                }
             });
         });
 

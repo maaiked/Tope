@@ -106,7 +106,7 @@ class InschrijvingsdetailController extends Controller
         // als knop 'meer info' werd aangeklikt, ga naar detailpagina activiteit
         switch ($request->input('action')){
             case 'info':
-                    return \Redirect::route('activiteiten.show', $request->activiteit);
+                    return \Redirect::route('activiteiten.show', $request->input('activiteit'));
 
 
         // als knop 'inschrijven' werd aangeklikt, maak inschrijving aan
