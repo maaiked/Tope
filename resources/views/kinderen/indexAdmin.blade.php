@@ -52,7 +52,7 @@
             <script>
                 $(document).ready(function() {
                     $('#example').DataTable({
-                        // Add any customization options here
+                        scrollX: true,
                     });
                 });
             </script>

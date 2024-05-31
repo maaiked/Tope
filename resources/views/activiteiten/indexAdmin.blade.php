@@ -100,6 +100,7 @@
     <script>
         $(document).ready(function () {
             $('#myTable').DataTable({
+                scrollX: true,
                 ordering: false,
                 language: {
                     search: 'Zoek in activiteiten:',
