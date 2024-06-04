@@ -87,8 +87,6 @@
                 </table>
             </div>
 
-            {{-- Pagination --}}
-            {{ $activiteiten->links() }}
         </div>
     </div>
 

@@ -7,6 +7,7 @@ use App\Models\Kind;
 use App\Models\Uitpas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 
@@ -39,7 +40,7 @@ class UitpasController extends Controller
         $access = $response->json('access_token');
         $expire = $response->json('expires_in');
         $expiredatetime = now()->addSeconds($expire);
-        Cache::put('uitpastoken', $access);
+        Cache::put('uitpastoken', Crypt::encryptString($access));
         Cache::put('expires_in', $expiredatetime);
     }
 
@@ -163,7 +164,7 @@ class UitpasController extends Controller
         //Haal de uitpasgegevens van het kind op.
         $url = $uitpasdb->api_url . '/insz-numbers/' . $inszNumber;
         $token = Cache::get('uitpastoken');
-        $uitpasKind = Http::withToken($token)->get($url);
+        $uitpasKind = Http::withToken(Crypt::decryptString($token))->get($url);
 
         // als respons = 401 of 403 - don't ask me why hij 403 teruggeeft??, vraag nieuwe access token op en retry
         if ($uitpasKind->status() === 401 || $uitpasKind->status() === 403) {
@@ -186,7 +187,7 @@ class UitpasController extends Controller
         //Geef het nieuwe event door naar uitpas
         $url = $uitpasdb->io_url . '/events';
         $token = Cache::get('uitpastoken');
-        $uitpasevent = Http::withToken($token)->post($url,
+        $uitpasevent = Http::withToken(Crypt::decryptString($token))->post($url,
             $data = [
                 'workflowStatus' => 'READY_FOR_VALIDATION',
                 'mainLanguage' => 'nl',
@@ -244,7 +245,7 @@ class UitpasController extends Controller
         $uitpasdb = Uitpas::find(1);
         $url = $uitpasdb->io_url . '/events/' . $activiteit->uitdatabank_id;
         $token = Cache::get('uitpastoken');
-        $uitpasevent = Http::withToken($token)->get($url);
+        $uitpasevent = Http::withToken(Crypt::decryptString($token))->get($url);
 
         // als respons = 401 of 403 - don't ask me why hij 403 teruggeeft??, vraag nieuwe access token op en retry
         if ($uitpasevent->status() === 401 || $uitpasevent->status() === 403) {
@@ -260,7 +261,7 @@ class UitpasController extends Controller
         $event->priceInfo[0]->price = (int)$activiteit->prijs;
         $event->subEvent[0]->startDate = Carbon::parse($activiteit->starttijd)->toIso8601String();
         $event->subEvent[0]->endDate = Carbon::parse($activiteit->eindtijd)->toIso8601String();
-        $updatedevent = Http::withToken($token)->put($url, $event);
+        $updatedevent = Http::withToken(Crypt::decryptString($token))->put($url, $event);
 
         return $updatedevent;
 
@@ -295,7 +296,7 @@ class UitpasController extends Controller
         //Registreer het ticket in uitpasdatabase
         $url = $uitpasdb->api_url . '/ticket-sales';
         $token = Cache::get('uitpastoken');
-        $ticket = Http::withToken($token)->post($url,
+        $ticket = Http::withToken(Crypt::decryptString($token))->post($url,
             [
                 [
                     'tariff' => [
@@ -327,7 +328,7 @@ class UitpasController extends Controller
         //Verwijder het ticket in uitpasdatabase
         $url = $uitpasdb->api_url . '/ticket-sales/' . $uitpasid;
         $token = Cache::get('uitpastoken');
-        $ticket = Http::withToken($token)->delete($url);
+        $ticket = Http::withToken(Crypt::decryptString($token))->delete($url);
 
         // als respons = 401 of 403 - don't ask me why hij 403 teruggeeft??, vraag nieuwe access token op en retry
         if ($ticket->status() === 401 || $ticket->status() === 403) {
