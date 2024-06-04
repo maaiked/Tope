@@ -9,6 +9,13 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div>
+                @if (auth()->user()->isAdmin)
+                <button onclick="window.location='{{ route("kind.create") }}'"
+                class="col-span-1  inline-flex border-2 items-center gap-2 rounded-lg px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:relative">
+                Kind toevoegen</button>
+                @endif
+            </div>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg px-6 py-6">
 
                 <table id="example" class="bootstrap-table" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
