@@ -38,6 +38,7 @@ class ProfileController extends Controller
         $validated = $request->validate([
             'email'=> 'required|email:rfc,dns|unique:users|max:255',
             'password'=> 'required|string|max:255',
+            'verifyPassword'=> 'required|string|max:255|same:password',
             'isAdmin'=> 'bool',
             'isAnimator'=> 'bool',
         ]);

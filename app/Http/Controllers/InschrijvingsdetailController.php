@@ -120,8 +120,16 @@ class InschrijvingsdetailController extends Controller
                     $inschrijvingen = $activiteit->aantalInschrijvingen +1;
                     $activiteit->update(['aantalInschrijvingen' => $inschrijvingen]);
 
-                    // als kind -> kansentarief, registreer verkoop bij uitpas
+
                     $kind = Kind::find($request->kindid);
+
+                    //controleer of uitpasinfo up to date is
+                    if($kind->uitpasDatumCheck < today())
+                    {
+                        (new KindController())->uitpasInfo($kind->id);
+                    }
+
+                    // als kind -> kansentarief, registreer verkoop bij uitpas
                     if($kind->uitpasKansentarief === 'ACTIVE')
                     {
                         $uitpasverkoop = (new UitpasController)->uitpasTicket($activiteit, $kind);

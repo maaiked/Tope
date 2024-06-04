@@ -42,6 +42,13 @@
                                 <x-input-error :messages="$errors->get('password')" class="mt-2"/>
                             </div>
                             <div class="md:col-span-2">
+                                <label for="verifyPassword">Verify Password</label>
+                                <input type="password" name="verifyPassword" id="verifyPassword"
+                                       class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                                       placeholder="********"/>
+                                <x-input-error :messages="$errors->get('verifyPassword')" class="mt-2"/>
+                            </div>
+                            <div class="md:col-span-2">
                                 <label for="isAdmin">isAdmin</label>
                                 <input type="checkbox" name="isAdmin" id="isAdmin"
                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="1">
