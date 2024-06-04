@@ -23,22 +23,20 @@ class ActiviteitController extends Controller
     {
         // if admin, toon alle activiteiten
         if (auth()->user()->isAdmin) {
-            return view('activiteiten.indexAdmin', ['activiteiten' => Activiteit::paginate(10)]);
+            return view('activiteiten.indexAdmin', ['activiteiten' => Activiteit::get()]);
         }
         // if animator, toon activiteiten die vandaag doorgaan
         elseif (auth()->user()->isAnimator) {
             $activiteiten['activiteiten'] = Activiteit::whereDate('eindtijd', '>=', now())
                 ->whereDate('starttijd', '<=', now())
-                ->orderBy('starttijd', 'asc')
-                ->paginate(10);
+                ->orderBy('starttijd', 'asc');
             return view('activiteiten.indexAnimator')->with($activiteiten);
         }
 
         // if geen kind werd geselecteerd, toon alle activiteiten
         elseif (empty($id)) {
             $activiteiten['activiteiten'] = Activiteit::whereDate('eindtijd', '>=', now())
-                ->orderBy('starttijd', 'asc')
-                ->paginate(10);
+                ->orderBy('starttijd', 'asc');
             return view('activiteiten.index')->with($activiteiten)->with('geselecteerdkind', $id);
         }
 
@@ -55,8 +53,7 @@ class ActiviteitController extends Controller
             $activiteiten['activiteiten'] = Activiteit::whereDate('eindtijd', '>=', now())
                 ->where('leerjaarVanaf', '<=', $geselecteerdkind->leerjaar)
                 ->where('leerjaarTot', '>=', $geselecteerdkind->leerjaar)
-                ->orderBy('starttijd', 'asc')
-                ->paginate(10);
+                ->orderBy('starttijd', 'asc');
 
             return view('activiteiten.index')->with($activiteiten)->with(compact('geselecteerdkind'));
         }

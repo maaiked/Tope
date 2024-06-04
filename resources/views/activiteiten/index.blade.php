@@ -198,9 +198,6 @@
             </div>
 
 
-            {{--    paginatie    --}}
-            {{ $activiteiten->links() }}
-
         </div>
     </div>
 
