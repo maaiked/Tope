@@ -70,11 +70,6 @@ class KindController extends Controller
         return redirect(route('kinderen.index'));
     }
 
-    public function createAdmin()
-    {
-        return view('kinderen.nieuwAdmin');
-    }
-
     /**
      * Display the specified resource.
      */
