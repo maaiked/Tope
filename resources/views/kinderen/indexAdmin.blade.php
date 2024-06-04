@@ -11,7 +11,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div>
                 @if (auth()->user()->isAdmin)
-                <button onclick="window.location='{{ route("kind.create") }}'"
+                <button onclick="window.location='{{ route("kind.createAdmin") }}'"
                 class="col-span-1  inline-flex border-2 items-center gap-2 rounded-lg px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:relative">
                 Kind toevoegen</button>
                 @endif
