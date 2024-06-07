@@ -69,15 +69,26 @@ class InschrijvingsdetailController extends Controller
             'activiteit'=>'required|int']);
         $activiteit = Activiteit::find($validated['activiteit']);
 
-        $kinderen = Kind::where(function ($query) use ($validated)
-       {
-            $query->where('voornaam', 'like', '%'.$validated['zoek'].'%')
-                ->orWhere('familienaam', 'like', '%'.$validated['zoek'].'%')
-                ->orWhere('rijksregisternummer', 'like', '%'.$validated['zoek'].'%')
-                ->orWhere('uitpasnummer', 'like', '%'.$validated['zoek'].'%');
-        })->where('leerjaar', '>=', $activiteit->leerjaarVanaf)
-        ->where('leerjaar', '<=', $activiteit->leerjaarTot)
-        ->get();
+        if (auth()->user()->isAdmin){
+            $kinderen = Kind::where(function ($query) use ($validated)
+            {
+                $query->where('voornaam', 'like', '%'.$validated['zoek'].'%')
+                    ->orWhere('familienaam', 'like', '%'.$validated['zoek'].'%')
+                    ->orWhere('rijksregisternummer', 'like', '%'.$validated['zoek'].'%')
+                    ->orWhere('uitpasnummer', 'like', '%'.$validated['zoek'].'%');
+            })->get();
+        } else {
+            $kinderen = Kind::where(function ($query) use ($validated)
+            {
+                $query->where('voornaam', 'like', '%'.$validated['zoek'].'%')
+                    ->orWhere('familienaam', 'like', '%'.$validated['zoek'].'%')
+                    ->orWhere('rijksregisternummer', 'like', '%'.$validated['zoek'].'%')
+                    ->orWhere('uitpasnummer', 'like', '%'.$validated['zoek'].'%');
+            })->where('leerjaar', '>=', $activiteit->leerjaarVanaf)
+                ->where('leerjaar', '<=', $activiteit->leerjaarTot)
+                ->get();
+        }
+
 
         // verwijder kinderen die reeds ingeschreven zijn uit array
         $arraynr = 0;
