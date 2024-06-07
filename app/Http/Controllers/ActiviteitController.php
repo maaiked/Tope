@@ -31,14 +31,16 @@ class ActiviteitController extends Controller
         elseif (auth()->user()->isAnimator) {
             $activiteiten['activiteiten'] = Activiteit::whereDate('eindtijd', '>=', now())
                 ->whereDate('starttijd', '<=', now())
-                ->orderBy('starttijd', 'asc');
+                ->orderBy('starttijd', 'asc')
+                ->get();
             return view('activiteiten.indexAnimator')->with($activiteiten);
         }
 
         // if geen kind werd geselecteerd, toon alle activiteiten
         elseif (empty($id)) {
             $activiteiten['activiteiten'] = Activiteit::whereDate('eindtijd', '>=', now())
-                ->orderBy('starttijd', 'asc');
+                ->orderBy('starttijd', 'asc')
+                ->get();
             return view('activiteiten.index')->with($activiteiten)->with('geselecteerdkind', $id);
         }
 
@@ -55,7 +57,8 @@ class ActiviteitController extends Controller
             $activiteiten['activiteiten'] = Activiteit::whereDate('eindtijd', '>=', now())
                 ->where('leerjaarVanaf', '<=', $geselecteerdkind->leerjaar)
                 ->where('leerjaarTot', '>=', $geselecteerdkind->leerjaar)
-                ->orderBy('starttijd', 'asc');
+                ->orderBy('starttijd', 'asc')
+                ->get();
 
             return view('activiteiten.index')->with($activiteiten)->with(compact('geselecteerdkind'));
         }
