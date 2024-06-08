@@ -48,7 +48,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/profiel/{id}', [ProfielController::class, 'editById'])->name('profiel.editById');
     Route::put('/profiel/{id}', [ProfielController::class, 'updateById'])->name('profiel.updateById');
 
-
     //activiteit routes
     Route::get('/activiteiten{id?}', [ActiviteitController::class, 'index'])->name('activiteiten.index');
     Route::get('/activiteiten/nieuw', [ActiviteitController::class, 'create'])->name('activiteiten.create');
@@ -72,6 +71,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/inschrijvingsdetails', [InschrijvingsdetailController::class, 'index'])->name('inschrijvingsdetails.index');
     Route::get('/inschrijvingsdetails/{id}', [InschrijvingsdetailController::class, 'show'])->name('inschrijvingsdetails.show');
     Route::get('/inschrijvingsdetails/destroy/{id}', [InschrijvingsdetailController::class, 'destroy'])->name('inschrijvingsdetails.destroy');
+    Route::get('/inschrijvingsdetails/ziekenfonds/{id}', [InschrijvingsdetailController::class, 'ziekenfondsattest'])->name('inschrijvingsdetails.ziekenfondsattest');
+
 
     //inschrijvingsdetails enkel voor admin - animator
     //TODO:: beveilig zodat enkel admin - animator deze routes kan volgen
@@ -91,6 +92,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/uitpas/token', [UitpasController::class, 'buttonCreate'])->name('uitpas.buttonCreate');
     Route::get('/uitpas/edit', [UitpasController::class, 'edit'])->name('uitpas.edit');
     Route::post('/uitpas/edit', [UitpasController::class, 'update'])->name('uitpas.update');
+
 
     //locatie routes
     Route::resource('locatie', LocatieController::class);

@@ -9,6 +9,7 @@ use App\Models\Kind;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Spatie\LaravelPdf\Facades\Pdf;
 use function PHPUnit\Framework\isEmpty;
 
 class InschrijvingsdetailController extends Controller
@@ -200,6 +201,9 @@ class InschrijvingsdetailController extends Controller
     /**
      * Display the specified resource.
      */
+
+    //todo :: beveilig zodat user enkel ziekenfondsattest van eigen kinderen kan raadplegen.
+    // maar dat admin dit van iedereen kan zien
     public function show($id)
     {
         // toon details van inschrijving
@@ -309,5 +313,17 @@ class InschrijvingsdetailController extends Controller
         $inschrijvingsdetail->delete();
 
         return redirect(route('inschrijvingsdetails.index'))->with('status', 'inschrijving-verwijderd');
+    }
+
+    /**
+     * Show ziekenfondsattest
+     */
+//todo :: beveilig zodat user enkel ziekenfondsattest van eigen kinderen kan raadplegen.
+// maar dat admin dit van iedereen kan zien  + maak PDF
+    public function ziekenfondsattest($id)
+    {
+        // toon ziekenfondsattest voor inschrijving
+        $inschrijving = Inschrijvingsdetail::find($id);
+         return view('attesten.ziekenfonds', compact('inschrijving'));
     }
 }
