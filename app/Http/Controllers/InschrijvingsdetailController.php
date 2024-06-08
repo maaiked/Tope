@@ -9,6 +9,7 @@ use App\Models\Kind;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Spatie\LaravelPdf\Facades\Pdf;
 use function PHPUnit\Framework\isEmpty;
 
 class InschrijvingsdetailController extends Controller
@@ -318,11 +319,11 @@ class InschrijvingsdetailController extends Controller
      * Show ziekenfondsattest
      */
 //todo :: beveilig zodat user enkel ziekenfondsattest van eigen kinderen kan raadplegen.
-// maar dat admin dit van iedereen kan zien
+// maar dat admin dit van iedereen kan zien  + maak PDF
     public function ziekenfondsattest($id)
     {
         // toon ziekenfondsattest voor inschrijving
         $inschrijving = Inschrijvingsdetail::find($id);
-        return view('attesten.ziekenfonds', compact('inschrijving'));
+         return view('attesten.ziekenfonds', compact('inschrijving'));
     }
 }

@@ -103,7 +103,7 @@
                         @endif
                         @if( !empty($inschrijving->ziekenfondsattestVerzonden))
                             <a href="{{ route("inschrijvingsdetails.ziekenfondsattest", $inschrijving->id) }} "
-                               target="_blank">Ziekenfondsattest openen</a>
+                               target="_blank" class="underline">Ziekenfondsattest</a>
                         @else
                             <p>ziekenfondsattest nog niet beschikbaar</p>
                         @endif
