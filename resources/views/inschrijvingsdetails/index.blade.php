@@ -63,7 +63,7 @@
                     </div>
 
                     {{--     knop details + uitschrijven     --}}
-                    <div class=" flex space-x-0">
+                    <div class="flex space-x-0">
                         <button class="rounded-md bg-gray-500 text-white focus:ring-gray-600 px-4 py-2 text-sm m-4"
                                 onclick="window.location='{{ route("inschrijvingsdetails.show", $inschrijvingsdetail->inschrijvingsdetails_id) }}'">
                                 {{ "details" }}
@@ -102,11 +102,10 @@
                                     </div>
                                 </div>
                             </div>
-                        @else
+                             @else
                             <p class="m-4">uitschrijven niet meer mogelijk</p>
                         @endif
                     </div>
-
                 @endforeach
             </div>
 
