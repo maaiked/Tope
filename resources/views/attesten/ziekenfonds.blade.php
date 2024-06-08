@@ -27,8 +27,10 @@
         </div>
     </header>
 
-    <div class="px-4 py-4 sm:p-3 bg-white sm:rounded-lg m-4 ">
 
+    {{--   Gebaseerd op https://spatie.be/docs/laravel-pdf/v1/advanced-usage/using-tailwind--}}
+
+    <div class="px-2 py-8 max-w-xl mx-auto">
         {{-- Knop Afdrukken --}}
         <button class=" rounded-md bg-gray-500 text-white focus:ring-gray-600 px-2 py-2 text-sm"
                 onclick="window.print()">Afdrukken
@@ -36,12 +38,23 @@
 
         {{--    TODO:: aanpassen naar kleine schermen    --}}
 
+        <div class="flex items-center justify-between mb-8">
+            <div class="flex items-center">
+                <div class="text-gray-700 font-semibold text-2xl">Bewijs van deelname</div>
+            </div>
+            <div class="text-gray-700">
+                <div class="font-bold text-xl mb-2 uppercase">Attest opgemaakt</div>
+                <div class="text-sm">{{ "Datum: ".Carbon\Carbon::parse(today())->format('d-m-Y') }}</div>
+                <div class="text-sm">{{ "Te: ".$inschrijving->activiteit->locatie->gemeente }}</div>
+            </div>
+
+        </div>
 
         @if(!$inschrijving->ingechecked)
             <p class=" text-md text-gray-900">Oeps, dit attest kan niet aangemaakt worden.<br>
                 Een attest kan enkel aangemaakt worden als de deelnemer aanwezig was. <br>
-            Was jouw kind aanwezig en denk je dat deze boodschap foutief is? <br>
-            Neem contact op met de organisatie om dit na te kijken.</p>
+                Was jouw kind aanwezig en denk je dat deze boodschap foutief is? <br>
+                Neem contact op met de organisatie om dit na te kijken.</p>
         @else
 
             {{--    kind   --}}
@@ -72,7 +85,7 @@
             </div>
 
             {{--    betaald bedrag + opties  --}}
-            <div>
+            <div class="border-b-2 border-gray-300 pb-8 mb-8">
                 <p class="mt-4 text-md text-gray-900 font-bold">Betaling:</p>
                 <p class=" text-md text-gray-900 font-bold">{{"€ ". $inschrijving->prijs}}</p>
                 @foreach($inschrijving->inschrijvingsdetail_opties as $detail_optie)
@@ -87,21 +100,14 @@
                     <p class=" text-md text-red-600 ">{{ "! Deze betaling is nog niet ontvangen !"}}</p>
                 @endif
             </div>
-
-            {{--    Opgemaakt  --}}
-            <div>
-                <p class="mt-4 text-md text-gray-900 font-bold">Opgemaakt op</p>
-                <p class=" text-md text-gray-900">{{ Carbon\Carbon::parse(today())->format('d-m-Y') }}</p>
-                <p class=" text-md text-gray-900">{{ "Te: ".$inschrijving->activiteit->locatie->gemeente }}</p>
-                <p class="mt-4 text-md text-gray-900 font-bold"><< stempel organisatie toevoegen >></p>
+            <div class="border-b-2 border-gray-300 pb-8 mb-8 mt-4">
+                <h3 class="text-l font-bold mb-4">Info:</h3>
+                <div class="text-gray-700 mb-2">Dien dit attest in bij je ziekenfonds voor een (gedeeltelijke) teruggave van inschrijvingsgeld voor deelname aan speelpleinwerking.</div>
             </div>
-
         @endif
-
-
-
-
     </div>
+
+</div>
 
 </div>
 </body>
