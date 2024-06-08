@@ -108,7 +108,7 @@
                             <p>ziekenfondsattest nog niet beschikbaar</p>
                         @endif
                     @else
-                        <p>{{ "Attesten zijn niet beschikbaar voor activiteiten waar de deelnemer niet aanwezig was." }}</p>
+                        <p>{{ "Attesten zijn enkel beschikbaar voor deelnemers die aanwezig waren. Uit onze gegevens blijkt dat je kind niet aanwezig was op deze activiteit. Was je kind toch aanwezig? Neem dan contact op met de organisatie." }}</p>
                     @endif
 
                 </div>
