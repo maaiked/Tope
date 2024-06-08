@@ -74,7 +74,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/inschrijvingsdetails/ziekenfonds/{id}', [InschrijvingsdetailController::class, 'ziekenfondsattest'])->name('inschrijvingsdetails.ziekenfondsattest');
 
 
-    //inschrijvingsdetails enkel voor admin - animator
+    //inschrijvingsdetails enkel voor admin - animato
     //TODO:: beveilig zodat enkel admin - animator deze routes kan volgen
     Route::post('/inschrijvingsdetails/activiteit/{id}/inschrijven', [InschrijvingsdetailController::class, 'create'])->name('inschrijvingsdetails.create');
     Route::get('/inschrijvingsdetails/activiteit/{id}', [InschrijvingsdetailController::class, 'indexActiviteit'])->name('inschrijvingsdetails.indexActiviteit');

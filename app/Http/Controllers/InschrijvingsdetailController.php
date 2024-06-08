@@ -9,6 +9,8 @@ use App\Models\Kind;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Spatie\LaravelPdf\Facades\Pdf;
+use function Spatie\LaravelPdf\Support\pdf;
 use function PHPUnit\Framework\isEmpty;
 
 class InschrijvingsdetailController extends Controller
@@ -321,8 +323,15 @@ class InschrijvingsdetailController extends Controller
 // maar dat admin dit van iedereen kan zien
     public function ziekenfondsattest($id)
     {
-        // toon ziekenfondsattest voor inschrijving
         $inschrijving = Inschrijvingsdetail::find($id);
-        return view('attesten.ziekenfonds', compact('inschrijving'));
+
+        return pdf()
+            ->view('pdf.invoice', compact('inschrijving'))
+            ->name('invoice-2023-04-10.pdf')
+            ->setIncludePath('$PATH:/usr/local/bin')
+            ->download();
+        /*// toon ziekenfondsattest voor inschrijving
+        return view('attesten.ziekenfonds', compact('inschrijving'));*/
+
     }
 }
