@@ -6,7 +6,13 @@
         </h2>
     </x-slot>
 
-    <form method="POST" action="{{ route('profiel.updateById', $id)}}">
+    <form method="POST"
+          @if(Auth::user()->isAdmin)
+              action="{{ route('profiel.updateById', $id)}}"
+    @else
+              action="{{ route('profiel.update')}}"
+    @endif
+          >
         @csrf
         @method('PUT')
 
