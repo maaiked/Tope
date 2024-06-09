@@ -32,55 +32,57 @@
                     <tbody>
                     @foreach($activiteiten as $activiteit)
                     <tr>
-                        <form method="POST" action="{{ route('inschrijvingsdetail.store') }}">
-                            @csrf
-                            <td class="border px-4 py-2">
-                                <div>
-                                    <p class="mt-4 text-lg text-gray-900">{{ $activiteit->naam }}</p>
-                                    <p class="mt-4 text-sm text-gray-900">{{ $activiteit->locatie->naam }}</p>
-                                    <input type="hidden" name="activiteit" value="{{ $activiteit->id }}" />
-                                </div>
-                            </td>
-                            <td class="border px-4 py-2">
-                                <div>
-                                    <p class="mt-4 text-md text-gray-900">
-                                        {{ Carbon\Carbon::parse($activiteit->starttijd)->format('d-m-Y G\ui') }}
-                                    </p>
-                                    <p class="mt-4 text-md text-gray-900">
-                                        {{ " tot ".Carbon\Carbon::parse($activiteit->eindtijd)->format('d-m-Y G\ui') }}
-                                    </p>
-                                </div>
-                            </td>
-                            <td class="border px-4 py-2">
-                                <div>
-                                    <p class="mt-4 text-md text-gray-900">
-                                        {{ $activiteit->leerjaarVanaf->label()." tot ".$activiteit->leerjaarTot->label() }}
-                                    </p>
-                                </div>
-                            </td>
-                            <td class="border px-4 py-2">
-                                <div>
-                                    <p class="mt-4 text-md text-gray-900 font-bold">{{ "€ ". $activiteit->prijs }}</p>
-                                    <input type="hidden" name="prijs" value="{{ $activiteit->prijs }}" />
-                                    @foreach($activiteit->opties as $optie)
-                                    <p>{{ $optie->omschrijving.": € ".$optie->prijs }}</p>
-                                    @endforeach
-                                </div>
-                            </td>
-                            <td class="border px-4 py-2">
-                                <div class="flex-1 items-center vertical-align: middle;">
-                                    <button class="rounded-md bg-gray-500 text-white focus:ring-gray-600 px-4 py-2 text-sm mt-4" type="submit" name="action" value="info">
-                                        meer info
-                                    </button>
-                                    @if (auth()->user()->isAdmin)
-                                    <button onclick="window.location='{{ route("activiteiten.edit", $activiteit->id) }}'"
-                                    class="col-span-1 inline-flex border-2 items-center gap-2 rounded-lg px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:relative mt-2">
-                                    Aanpassen
-                                    </button>
-                                    @endif
-                                </div>
-                            </td>
-                        </form>
+                        <td class="border px-4 py-2">
+                            <div>
+                                <p class="mt-4 text-lg text-gray-900">{{ $activiteit->naam }}</p>
+                                <p class="mt-4 text-sm text-gray-900">{{ $activiteit->locatie->naam }}</p>
+                                <input type="hidden" name="activiteit" value="{{ $activiteit->id }}" />
+                            </div>
+                        </td>
+                        <td class="border px-4 py-2">
+                            <div>
+                                <p class="mt-4 text-md text-gray-900">
+                                    {{ Carbon\Carbon::parse($activiteit->starttijd)->format('d-m-Y G\ui') }}
+                                </p>
+                                <p class="mt-4 text-md text-gray-900">
+                                    {{ " tot ".Carbon\Carbon::parse($activiteit->eindtijd)->format('d-m-Y G\ui') }}
+                                </p>
+                            </div>
+                        </td>
+                        <td class="border px-4 py-2">
+                            <div>
+                                <p class="mt-4 text-md text-gray-900">
+                                    {{ $activiteit->leerjaarVanaf->label()." tot ".$activiteit->leerjaarTot->label() }}
+                                </p>
+                            </div>
+                        </td>
+                        <td class="border px-4 py-2">
+                            <div>
+                                <p class="mt-4 text-md text-gray-900 font-bold">{{ "€ ". $activiteit->prijs }}</p>
+                                <input type="hidden" name="prijs" value="{{ $activiteit->prijs }}" />
+                                @foreach($activiteit->opties as $optie)
+                                <p>{{ $optie->omschrijving.": € ".$optie->prijs }}</p>
+                                @endforeach
+                            </div>
+                        </td>
+                        <td class="border px-4 py-2">
+                            <div class="flex-1 items-center vertical-align: middle;">
+                                <button onclick="window.location='{{ route("activiteiten.show", $activiteit->id) }}'"
+                                class="rounded-md bg-gray-500 text-white focus:ring-gray-600 px-4 py-2 text-sm mt-4">
+                                meer info
+                                </button>
+
+                                <button onclick="window.location='{{ route("inschrijvingsdetails.indexActiviteit", $activiteit->id) }}'"
+                                class="rounded-md bg-blue-500 text-white focus:ring-gray-600 px-4 py-2 text-sm mt-4">
+                                inschrijvingen
+                                </button>
+
+                                <button onclick="window.location='{{ route("activiteiten.edit", $activiteit->id) }}'"
+                                class="col-span-1 inline-flex border-2 items-center gap-2 rounded-lg px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:relative mt-2">
+                                Aanpassen
+                                </button>
+                            </div>
+                        </td>
                     </tr>
                     @endforeach
                     </tbody>

@@ -23,7 +23,9 @@ class ActiviteitController extends Controller
     {
         // if admin, toon alle activiteiten
         if (auth()->user()->isAdmin) {
-            return view('activiteiten.indexAdmin', ['activiteiten' => Activiteit::get()]);
+            return view('activiteiten.indexAdmin', [
+                'activiteiten' => Activiteit::orderBy('starttijd', 'desc')->get()
+            ]);
         }
         // if animator, toon activiteiten die vandaag doorgaan
         elseif (auth()->user()->isAnimator) {
