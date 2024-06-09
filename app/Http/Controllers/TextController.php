@@ -29,13 +29,17 @@ class TextController extends Controller
      */
     public function store(Request $request)
     {
+        //updateOrCreate werkt hier niet, omdat de velden van trix niet mee gezocht kunnen worden in het model
+
         if (Text::find(1))
         {
             $text = Text::find(1);
             $text->update(request()->all());
         }
         else
-        Text::create(request()->all());
+        {
+            $text = Text::create(request()->all());
+        }
 
         return view('dashboard')->with('text', $text);
     }
