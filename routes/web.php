@@ -3,6 +3,7 @@
 use App\Http\Controllers\BetalingsdetailController;
 use App\Http\Controllers\ProfielController;
 use App\Http\Controllers\UitpasController;
+use App\Http\Controllers\TextController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ActiviteitController;
@@ -25,11 +26,16 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
+/*Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');*/
 
 Route::middleware('auth')->group(function () {
+
+    //Dashboard routes
+    Route::get('/dashboard', [TextController::class, 'index'])->name('dashboard');
+    Route::post('/dashboard', [TextController::class, 'store'])->name('text.store');
+
     //profile routes
     Route::get('/profiles', [ProfileController::class, 'index'])->name('profile.index');
     Route::get('/profile/nieuw', [ProfileController::class, 'create'])->name('profile.create');
@@ -93,9 +99,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/uitpas/edit', [UitpasController::class, 'edit'])->name('uitpas.edit');
     Route::post('/uitpas/edit', [UitpasController::class, 'update'])->name('uitpas.update');
 
-
     //locatie routes
     Route::resource('locatie', LocatieController::class);
+
+
+
 
     /*
     Route::get('locatie', [LocatieController::class, 'index'])->name('locatie.index');
