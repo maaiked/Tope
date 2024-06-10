@@ -7,25 +7,16 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg px-6 py-6">
-                <div>
-                    @if (auth()->user()->isAdmin)
-                    <button onclick="window.location='{{ route("locatie.create") }}'"
-                    class="col-span-1  inline-flex border-2 items-center gap-2 rounded-lg px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:relative">
-                    Locatie toevoegen</button>
-                    @endif
-                </div>
-                @if (session('status') === 'locatie-created')
-                <p class="text-lg py-4 px-4 text-green-950">
-                    <i>{{ __('Locatie is succesvol aangemaakt.') }}</i>
-                </p>
-                @elseif (session('status') === 'locatie-updated')
-                <p class="text-lg py-4 px-4 text-green-950">
-                    <i>{{ __('Locatie is succesvol bijgewerkt.') }}</i>
-                </p>
+            <div>
+                @if (auth()->user()->isAdmin)
+                <button onclick="window.location='{{ route("locatie.create") }}'"
+                class="col-span-1  inline-flex border-2 items-center gap-2 rounded-lg px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:relative">
+                Locatie toevoegen</button>
                 @endif
+            </div>
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg px-6 py-6">
 
-                <table id="locaties" class="table-auto w-full">
+                <table id="locaties" class="bootstrap-table" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
                     <thead>
                     <tr>
                         <th class="px-4 py-2">Naam</th>
@@ -41,14 +32,27 @@
                         <td class="border px-4 py-2">{{ $locatie->straat }}</td>
                         <td class="border px-4 py-2">{{ $locatie->gemeente }}</td>
                         <td class="border px-4 py-2">
-                            <button onclick="window.location="{{ route('locatie.edit', $locatie) }}"
-                            class="col-span-1  inline-flex border-2 items-center gap-2 rounded-lg px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:relative">
-                            Bewerken</button>
+                            <button onclick="window.location='{{ route('locatie.edit', $locatie) }}'"
+                                    class="col-span-1  inline-flex border-2 items-center gap-2 rounded-lg px-4 py-2 text-sm text-gray-500 hover:text-gray-900 focus:relative">
+                                Bewerken</button>
                         </td>
                     </tr>
                     @endforeach
                     </tbody>
                 </table>
+
+                {{-- Scripts voor tabel met search, sorting en paginatie --}}
+                <link rel="stylesheet" href="https://cdn.datatables.net/2.0.3/css/dataTables.dataTables.css">
+                <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+                <script src="https://cdn.datatables.net/2.0.3/js/dataTables.js"></script>
+
+                <script>
+                    $(document).ready(function() {
+                        $('#locaties').DataTable({
+                            scrollX: true,
+                        });
+                    });
+                </script>
             </div>
         </div>
     </div>
