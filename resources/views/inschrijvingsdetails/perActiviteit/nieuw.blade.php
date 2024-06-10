@@ -17,8 +17,11 @@
                <form method="POST" action="{{ route('inschrijvingsdetail.store') }}" >
                     @csrf
                     <h1 class="font-bold text-xl">Nieuwe inschrijving</h1>
+                   @if (auth()->user()->isAdmin)
+                   <h2>Let op: ALLE kinderen worden getoond, ook deze die niet voldoen aan de leeftijdsvoorwaarden.</h2>
+                   @else
                    <h2>Let op: enkel kinderen die voldoen aan de leeftijdsvoorwaarde worden getoond.</h2>
-
+                   @endif
                    <input type="hidden" name="activiteit" value="{{ $activiteit->id }}" />
                    <div class="mt-4">
                        <label for="kind">Selecteer kind</label>

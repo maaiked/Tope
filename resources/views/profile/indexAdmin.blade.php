@@ -19,6 +19,16 @@
             </div>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg px-6 py-6">
 
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li class="text-red-600">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+
                 <table id="example" class="bootstrap-table" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
                     <thead>
                     <tr>
@@ -28,7 +38,6 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <x-input-error :messages="$errors->get('error')" class="mt-2"/>
                     @foreach($users as $user)
                     <tr>
                         <form method="POST" action="{{ route('profile.updateAdmin', $user->id) }}">
