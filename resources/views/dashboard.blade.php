@@ -20,6 +20,8 @@
                     </div>
                 </div>
 
+            @elseif(!Auth::user()->isAdmin)
+
             @if($text !== null)
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4">
                         <div class="p-6 text-gray-900 trix-content">
@@ -27,7 +29,6 @@
                         </div>
                     </div>
             @endif
-
 
             @elseif(Auth::user()->isAdmin)
 
