@@ -47,6 +47,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/profiel', [ProfielController::class, 'update'])->name('profiel.update');
     Route::get('/profiel/{id}', [ProfielController::class, 'editById'])->name('profiel.editById');
     Route::put('/profiel/{id}', [ProfielController::class, 'updateById'])->name('profiel.updateById');
+    Route::get('/profiel/{id}/addkind', [ProfielController::class, 'editAddKind'])->name('profiel.editAddKind');
+    Route::put('/profiel/{id}/addkind', [ProfielController::class, 'updateAddKind'])->name('profiel.updateAddKind');
 
     //activiteit routes
     Route::get('/activiteiten{id?}', [ActiviteitController::class, 'index'])->name('activiteiten.index');
@@ -55,13 +57,14 @@ Route::middleware('auth')->group(function () {
     Route::get('/activiteiten/{id}/edit', [ActiviteitController::class, 'edit'])->name('activiteiten.edit');
     Route::put('/activiteiten/{id}', [ActiviteitController::class, 'update'])->name('activiteiten.update');
     Route::get('/activiteiten/{id}', [ActiviteitController::class, 'show'])->name('activiteiten.show');
-    Route::put('/activiteiten/{id}/addKind', [ActiviteitController::class, 'updateAddKind'])->name('activiteiten.updateAddKind');
-    Route::get('/activiteiten/{id}/addKind', [ActiviteitController::class, 'showAddKind'])->name('activiteiten.showAddKind');
+    Route::put('/activiteiten/{id}/addkind', [ActiviteitController::class, 'updateAddKind'])->name('activiteiten.updateAddKind');
+    Route::get('/activiteiten/{id}/addkind', [ActiviteitController::class, 'showAddKind'])->name('activiteiten.showAddKind');
     Route::get('/activiteiten/{id}/kinderen', [ActiviteitController::class, 'showKinderen'])->name('activiteiten.showKinderen');
     Route::post('/activiteiten', [InschrijvingsdetailController::class, 'store'])->name('inschrijvingsdetail.store');
 
     //kind routes
     Route::get('/kinderen', [KindController::class, 'index'])->name('kinderen.index');
+    Route::get('/kinderen/ouder/{id}', [KindController::class, 'indexAdminOuder'])->name('kinderen.indexAdminOuder');
     Route::get('/kinderennieuw', [KindController::class, 'create'])->name('kind.create');
     Route::post('/kinderennieuw', [KindController::class, 'store'])->name('kind.store');
     Route::get('/kind/{id}/edit', [KindController::class, 'edit'])->name('kind.edit');

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\LeerjaarEnum;
 use App\Models\Kind;
 use App\Models\Profiel;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use function PHPUnit\Framework\isNull;
 
 class ProfielController extends Controller
@@ -92,6 +94,37 @@ class ProfielController extends Controller
         return redirect(route('profiel.edit'))->with('status', 'profiel-updated');
     }
 
+    public function editAddKind(Request $request)
+    {
+        $user= $request->user()->first();
+        return view('profiel.addKind', compact('user'));
+    }
+
+    public function updateAddKind(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'voornaam' => 'required|string|max:255',
+            'familienaam' => 'required|string|max:255',
+            'rijksregisternummer' => 'required|string|max:40|regex:/^[0-9]{2}[.][0-9]{2}[.][0-9]{2}[-][0-9]{3}[.][0-9]{2}$/',
+            'contactpersoon' => 'required|string|max:255',
+            'beperking' => 'nullable|string|max:255',
+            'allergie' => 'nullable|string|max:255',
+            'medicatie' => 'nullable|string|max:255',
+            'afhalenKind' => 'nullable|string|max:255',
+            'infoAdmin' => 'string|max:510',
+            'infoAdminAnimator' => 'string|max:510',
+            'alleenNaarHuis' => 'boolean',
+            'fotoToestemming' => 'boolean',
+            'leerjaar' => [Rule::enum(LeerjaarEnum::class)],
+        ]);
+
+        $user= $request->user()->first();
+        $kind = $user->kinds()->create($validated);
+        (new KindController)->uitpasInfo($kind->id);
+
+        return redirect(route('profiel.indexAdminOuder', $user->id));
+    }
+
     public function editById(Request $request, int $id)
     {
         $userprofiel = Profiel::where('user_id', $id)->first();
@@ -125,4 +158,5 @@ class ProfielController extends Controller
     {
         //
     }
+
 }
