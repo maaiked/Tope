@@ -49,7 +49,7 @@
                                     onclick="window.location='{{ route("inschrijvingsdetails.show", $inschrijvingsdetail->inschrijvingsdetails_id) }}'">
                             {{ "details" }}
                             </button>
-                            @if($inschrijvingsdetail->activiteit->annulerenTot > today())
+                            @if($inschrijvingsdetail->activiteit->annulerenTot > today() || auth()->user()->isAdmin)
                             <button class="rounded-md bg-red-900 text-white focus:ring-gray-600 px-4 py-2 text-sm"
                                     onclick="show({{$inschrijvingsdetail->inschrijvingsdetails_id}})">
                                 {{ "uitschrijven" }}
