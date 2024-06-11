@@ -94,6 +94,29 @@
                             </div>
                         </div>
 
+                        @if (auth()->user()->isAdmin)
+                        <p class="font-medium text-lg mt-4">Extra informatie voor ons</p>
+                        <p>Vul de velden in die van toepassing zijn</p>
+
+                        <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-1 px-3 py-3">
+                            <div class="md:col-span-1">
+                                <label for="allergie">Voor de organisatoren</label>
+                                <input type="text" name="infoAdmin" id="infoAdmin"
+                                       class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                                       value="{{ old('infoAdmin', $kind->infoAdmin) }}"
+                                       placeholder="vb. moeite met drukte, niet zindelijk,..."/>
+                            </div>
+                            <div class="md:col-span-1">
+                                <label for="beperking">Voor de animatoren</label>
+                                <input type="text" name="infoAdminAnimator" id="infoAdminAnimator"
+                                       class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                                       value="{{ old('infoAdminAnimator', $kind->infoAdminAnimator) }}"
+                                       placeholder="vb. ouders anderstalig, op voorhand betalen,..."/>
+                            </div>
+
+                        </div>
+                        @endif
+
                         <p class="font-medium text-lg mt-4">Contact en afhalen</p>
                         <p>De velden met een sterretje (*) zijn verplicht.</p>
                         <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-2 px-3 py-3">
