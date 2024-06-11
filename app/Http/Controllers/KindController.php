@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Enums\LeerjaarEnum;
 use App\Models\Activiteit;
 use App\Models\Kind;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+
 
 class KindController extends Controller
 {
@@ -33,6 +35,13 @@ class KindController extends Controller
             }
             return view('kinderen.indexOuder')->with($kinderen);
         }
+    }
+
+    public function indexAdminOuder($id)
+    {
+        $kinderen = Kind::where('user_id', $id)->get();
+        $ouder = User::where('id', $id)->first();
+        return view('kinderen.indexAdminOuder', ['kinderen' => $kinderen, 'ouder' => $ouder]);
     }
 
     /**
