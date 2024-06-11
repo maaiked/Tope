@@ -122,7 +122,7 @@ class ProfielController extends Controller
         $kind = $user->kinds()->create($validated);
         (new KindController)->uitpasInfo($kind->id);
 
-        return redirect(route('profiel.indexAdminOuder', $user->id));
+        return redirect(route('kinderen.indexAdminOuder', $user->id));
     }
 
     public function editById(Request $request, int $id)
