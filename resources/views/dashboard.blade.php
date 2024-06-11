@@ -22,6 +22,7 @@
 
             @endif
 
+            {{--      Toon aan ouders en animator : --}}
             @if(!Auth::user()->isAdmin)
 
             @if($text !== null)
@@ -32,6 +33,7 @@
                     </div>
             @endif
 
+                {{--            Toon enkel aan admin: --}}
             @elseif(Auth::user()->isAdmin)
 
                 @if($text === null)
@@ -41,6 +43,7 @@
                     @trix(\App\Text::class, 'content')
                     <input type="submit">
                 </form>
+
                 @else
                     <p>Pas hieronder de tekst aan die getoond wordt op het dashboard van elke ingelogde user</p>
                     <form method="POST" action="{{ route('text.store') }}">
