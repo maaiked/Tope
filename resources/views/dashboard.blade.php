@@ -20,7 +20,9 @@
                     </div>
                 </div>
 
-            @elseif(!Auth::user()->isAdmin)
+            @endif
+
+            @if(!Auth::user()->isAdmin)
 
             @if($text !== null)
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4">
