@@ -423,10 +423,6 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg py-2 px-6 mt-4 text-sm">
                 <button
                     class="rounded-md  bg-gray-500 text-white focus:ring-gray-600 px-2 py-2 text-sm "
-                    onclick="window.location='{{ route("betaling.indexById", $i->id) }}'">
-                    {{ "Betalingen" }}
-                </button>
-                    class="rounded-md  bg-gray-500 text-white focus:ring-gray-600 px-2 py-2 text-sm "
                     onclick="show('zoekForm')">
                     {{ "Kind toevoegen" }}
                 </button>
