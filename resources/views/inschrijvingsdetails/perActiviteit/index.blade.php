@@ -359,7 +359,7 @@
                                 {{ "X" }}
                             </button>
                             <!-- Modal -->
-                            <div id="Betaling.{{$i->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
+                            <div id="DeleteBetaling.{{$i->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
                                 <div class="flex items-center justify-center min-h-screen">
                                     <div class="bg-blue-500 w-1/2 p-6 rounded shadow-lg">
                                         <div class="flex justify-end">

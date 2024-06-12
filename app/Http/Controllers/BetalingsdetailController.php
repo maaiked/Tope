@@ -82,8 +82,7 @@ class BetalingsdetailController extends Controller
             'inschrijvingsdetail_id' => 'required|integer',
         ]);
 
-        $betaling = Betaling::where('activiteit_id', $id)
-            ->where('inschrijvingsdetail_id', $request->inschrijvingsdetail_id)
+        $betaling = Betalingsdetail::where('inschrijvingsdetail_id', $request->inschrijvingsdetail_id)
             ->first();
 
         if ($betaling) {
