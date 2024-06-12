@@ -166,20 +166,20 @@
 
                                 <!-- Knop interne info voor admins -->
                                 <td class="border px-2 py-2">
-                                    @if($ia->kind->infoAdmin)
+                                    @if($i->kind->infoAdmin)
                                     <!-- Trigger Button -->
-                                    <button name="infoAdmin" onclick="showInfo({{$ia->id}})"
+                                    <button name="infoAdmin" onclick="showInfo({{$i->id}})"
                                             class="bg-orange-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">
                                         Ja
                                     </button>
                                     @endif
                                     <!-- Modal -->
-                                    <div id="info.{{$ia->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
+                                    <div id="info.{{$i->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
                                         <div class="flex items-center justify-center min-h-screen">
                                             <div class="bg-blue-500 w-1/2 p-6 rounded shadow-md">
                                                 <div class="flex justify-end">
                                                     <!-- Close Button -->
-                                                    <button id="close" onclick="hideInfo({{$ia->id}})"
+                                                    <button id="close" onclick="hideInfo({{$i->id}})"
                                                             class="text-gray-700 hover:text-red-500">
                                                         <svg class="w-6 h-6" fill="none" stroke="currentColor"
                                                              viewBox="0 0 24 24"
@@ -190,15 +190,15 @@
                                                         </svg>
                                                     </button>
                                                 </div>
-                                                <h2 class="text-2xl font-bold mb-4">{{"Interne info ".$ia->kind->voornaam}}</h2>
+                                                <h2 class="text-2xl font-bold mb-4">{{"Interne info ".$i->kind->voornaam}}</h2>
                                                 <div class="mb-4 font-bold">
-                                                    {{$ia->kind->infoAdmin}}
+                                                    {{$i->kind->infoAdmin}}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     {{--    Knop bewerk interne info --}}
-                                    <button name="editAdmin" onclick="showEditInfo({{$ia->id}})"
+                                    <button name="editAdmin" onclick="showEditInfo({{$i->id}})"
                                             class="inline-flex border-2 items-center rounded-lg  text-sm text-gray-500 hover:text-gray-900 focus:relative">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -216,12 +216,12 @@
                                         </svg>
                                     </button>
                                     <!-- Modal -->
-                                    <div id="EditInfo.{{$ia->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
+                                    <div id="EditInfo.{{$i->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
                                         <div class="flex items-center justify-center min-h-screen">
                                             <div class="bg-blue-500 w-1/2 p-6 rounded shadow-md">
                                                 <div class="flex justify-end">
                                                     <!-- Close Button -->
-                                                    <button id="close" onclick="hideEditInfo({{$ia->id}})"
+                                                    <button id="close" onclick="hideEditInfo({{$i->id}})"
                                                             class="text-gray-700 hover:text-red-500">
                                                         <svg class="w-6 h-6" fill="none" stroke="currentColor"
                                                              viewBox="0 0 24 24"
@@ -234,16 +234,16 @@
                                                 </div>
                                                 <form method="POST" action="{{ route('kind.editAdminInfo', $activiteit->id) }}">
                                                     @csrf
-                                                    <h2 class="text-2xl font-bold mb-4">{{"Bewerk interne info ".$ia->kind->voornaam}}</h2>
+                                                    <h2 class="text-2xl font-bold mb-4">{{"Bewerk interne info ".$i->kind->voornaam}}</h2>
                                                     <div class="mb-4 font-bold">
-                                                        {{$ia->kind->infoAdmin}}
+                                                        {{$i->kind->infoAdmin}}
                                                     </div>
-                                                    <input type="hidden" name="kind" value="{{ $ia->kind->id }}"/>
+                                                    <input type="hidden" name="kind" value="{{ $i->kind->id }}"/>
                                                     <div>
                                                         <label for="infoAdmin">Interne info bewerken</label>
                                                         <input type="text" name="infoAdmin" id="infoAdmin"
                                                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                                               value="{{ old('infoAdmin', $ia->kind->infoAdmin) }}"
+                                                               value="{{ old('infoAdmin', $i->kind->infoAdmin) }}"
                                                                placeholder="nieuwe interne info voor admin"/>
                                                         <x-input-error :messages="$errors->get('infoAdmin')" class="mt-2"/>
                                                     </div>
