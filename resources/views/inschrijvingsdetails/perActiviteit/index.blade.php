@@ -191,7 +191,7 @@
                                                 </svg>
                                             </button>
                                         </div>
-                                        <h2 class="text-2xl font-bold mb-4">{{"Interne info ".$i->kind->voornaam}}</h2>
+                                        <h2 class="text-2xl font-bold mb-4">{{"Interne info admin over ".$i->kind->voornaam}}</h2>
                                         <div class="mb-4 font-bold">
                                             {{$i->kind->infoAdmin}}
                                         </div>
@@ -235,13 +235,13 @@
                                         </div>
                                         <form method="POST" action="{{ route('kind.editAdminInfo', $activiteit->id) }}">
                                             @csrf
-                                            <h2 class="text-2xl font-bold mb-4">{{"Bewerk interne info ".$i->kind->voornaam}}</h2>
+                                            <h2 class="text-2xl font-bold mb-4">{{"Bewerk interne info admin over ".$i->kind->voornaam}}</h2>
                                             <div class="mb-4 font-bold">
                                                 {{$i->kind->infoAdmin}}
                                             </div>
                                             <input type="hidden" name="kind" value="{{ $i->kind->id }}"/>
                                             <div>
-                                                <label for="infoAdmin">Interne info bewerken</label>
+                                                <label for="infoAdmin">Interne info admin bewerken</label>
                                                 <input type="text" name="infoAdmin" id="infoAdmin"
                                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                                                        value="{{ old('infoAdmin', $i->kind->infoAdmin) }}"
@@ -282,7 +282,7 @@
                                                 </svg>
                                             </button>
                                         </div>
-                                        <h2 class="text-2xl font-bold mb-4">{{"Interne info ".$i->kind->voornaam}}</h2>
+                                        <h2 class="text-2xl font-bold mb-4">{{"Interne info animatoren over ".$i->kind->voornaam}}</h2>
                                         <div class="mb-4 font-bold">
                                             {{$i->kind->infoAdminAnimator}}
                                         </div>
@@ -326,13 +326,13 @@
                                         </div>
                                         <form method="POST" action="{{ route('kind.editAdminAnimatorInfo', $activiteit->id) }}">
                                             @csrf
-                                            <h2 class="text-2xl font-bold mb-4">{{"Bewerk interne info ".$i->kind->voornaam}}</h2>
+                                            <h2 class="text-2xl font-bold mb-4">{{"Bewerk interne info animator over ".$i->kind->voornaam}}</h2>
                                             <div class="mb-4 font-bold">
                                                 {{$i->kind->infoAdminAnimator}}
                                             </div>
                                             <input type="hidden" name="kind" value="{{ $i->kind->id }}"/>
                                             <div>
-                                                <label for="infoAdminAnimator">Interne info bewerken</label>
+                                                <label for="infoAdminAnimator">Interne info animatoren bewerken</label>
                                                 <input type="text" name="infoAdminAnimator" id="infoAdminAnimator"
                                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                                                        value="{{ old('infoAdminAnimator', $i->kind->infoAdminAnimator) }}"
