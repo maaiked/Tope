@@ -354,7 +354,11 @@
                 @if(Auth::user()->isAdmin)
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg px-6 py-2 mt-4  text-sm">
                         @if($i->ziekenfondsAttest)
-                            <p>{{ 'Ziekenfonds attesten aangemaakt op '.$i->ziekenfondsAttest }}</p>
+                            <p>{{ 'Ziekenfonds attesten aangemaakt op '.$i->ziekenfondsAttest }}</p>  <button
+                                onclick="window.location='{{ route('inschrijvingsdetails.createAttestZiekenfonds', $activiteit->id) }}'"
+                                class="rounded-md bg-blue-500 text-white focus:ring-gray-600 px-2 py-2 text-sm">
+                                {{ "Opnieuw opmaken" }}
+                            </button>
                         @else
                             <button
                                 onclick="window.location='{{ route('inschrijvingsdetails.createAttestZiekenfonds', $activiteit->id) }}'"
