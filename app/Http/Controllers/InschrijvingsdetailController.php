@@ -340,7 +340,7 @@ class InschrijvingsdetailController extends Controller
         {
             $i->update(['ziekenfondsAttest' => today()]);
         }
-        return redirect(route('inschrijvingsdetails.indexActiviteit',$id))->with('success', 'De ziekenfondsattesten werden aangemaakt.');;
+        return redirect(route('inschrijvingsdetails.indexActiviteit',$id))->with('success', 'De ziekenfondsattesten werden aangemaakt.');
     }
 
     /**

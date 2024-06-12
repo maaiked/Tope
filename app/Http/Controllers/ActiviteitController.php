@@ -129,7 +129,7 @@ class ActiviteitController extends Controller
                 'uitdatabank_kansentarief' => $uitpasPrijs
             ]);
 
-        return redirect()->route('activiteiten.index')->with('success', 'Activiteit werd aangemaakt.');
+        return redirect()->route('activiteiten.index')->with('success', 'Activiteit '.$activiteit->naam.' werd aangemaakt.');
     }
 
 
@@ -241,7 +241,7 @@ class ActiviteitController extends Controller
         }
 
 
-        return redirect()->route('activiteiten.index')->with('success', 'Activiteit werd geupdate.');
+        return redirect()->route('activiteiten.index')->with('success', 'Activiteit '.$activiteit->naam.' werd geupdate.');
     }
 
     /**
