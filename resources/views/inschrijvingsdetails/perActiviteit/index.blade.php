@@ -174,7 +174,7 @@
                                     </button>
                                     @endif
                                     <!-- Modal -->
-                                    <div id="info.{{$i->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
+                                    <div id="infoad.{{$i->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
                                         <div class="flex items-center justify-center min-h-screen">
                                             <div class="bg-blue-500 w-1/2 p-6 rounded shadow-md">
                                                 <div class="flex justify-end">
@@ -216,7 +216,7 @@
                                         </svg>
                                     </button>
                                     <!-- Modal -->
-                                    <div id="EditInfo.{{$i->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
+                                    <div id="EditInfoad.{{$i->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
                                         <div class="flex items-center justify-center min-h-screen">
                                             <div class="bg-blue-500 w-1/2 p-6 rounded shadow-md">
                                                 <div class="flex justify-end">
@@ -266,7 +266,7 @@
                                     </button>
                                     @endif
                                     <!-- Modal -->
-                                    <div id="info.{{$i->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
+                                    <div id="infoan.{{$i->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
                                         <div class="flex items-center justify-center min-h-screen">
                                             <div class="bg-blue-500 w-1/2 p-6 rounded shadow-md">
                                                 <div class="flex justify-end">
@@ -308,7 +308,7 @@
                                         </svg>
                                     </button>
                                     <!-- Modal -->
-                                    <div id="EditInfo.{{$i->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
+                                    <div id="EditInfoan.{{$i->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
                                         <div class="flex items-center justify-center min-h-screen">
                                             <div class="bg-blue-500 w-1/2 p-6 rounded shadow-md">
                                                 <div class="flex justify-end">
