@@ -64,6 +64,10 @@
                                     <p class="mt-4 text-md text-gray-900 font-bold">Prijs:</p>
                                 </div><div class="col-span-1">
                                     <p class="mt-4 text-md text-gray-900 font-bold">{{"€ ". $activiteit->prijs}}</p>
+                                    @if(Auth::user()->isAdmin)
+                                        <p class=" text-md text-gray-900 font-bold">{{"Kansentarief € ". $activiteit->uitdatabank_kansentarief}}</p>
+
+                                    @endif
                                     @foreach($activiteit->opties as $optie)
                                         <div>
                                             <p class="text-md text-gray-900 ">{{ $optie->omschrijving.": € ".$optie->prijs}}</p>
