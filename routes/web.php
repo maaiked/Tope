@@ -97,6 +97,8 @@ Route::middleware('auth')->group(function () {
 
     //betalingsdetail routes
     Route::post('/inschrijvingsdetails/activiteit/betaling/{id}', [BetalingsdetailController::class, 'store'])->name('betaling.store');
+    Route::delete('/inschrijvingsdetails/activiteit/betaling/{id}/delete', [BetalingsdetailController::class, 'destroy'])->name('betaling.delete');
+
 
     //uitpas routes
     Route::get('/uitpas', [UitpasController::class, 'index'])->name('uitpas.index');

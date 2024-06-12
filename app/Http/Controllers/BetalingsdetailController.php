@@ -76,8 +76,24 @@ class BetalingsdetailController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, $id)
     {
-        //
+        $request->validate([
+            'inschrijvingsdetail_id' => 'required|integer',
+        ]);
+
+        $betaling = Betaling::where('activiteit_id', $id)
+            ->where('inschrijvingsdetail_id', $request->inschrijvingsdetail_id)
+            ->first();
+
+        if ($betaling) {
+            $betaling->delete();
+
+            return redirect()->route("inschrijvingsdetails.indexActiviteit", $id)
+                ->with('success', 'Betaling succesvol verwijderd.');
+        } else {
+            return redirect()->route("inschrijvingsdetails.indexActiviteit", $id)
+                ->with('error', 'Betaling niet gevonden.');
+        }
     }
 }
