@@ -9,6 +9,10 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            @if (session('success') !== null)
+                <p class="text-lg py-4 px-4 text-md font-bold underline text-green-500"
+                ><i>{{ session()->pull('success', null) }}</i></p>
+            @endif
             <div>
                 @if (auth()->user()->isAdmin)
                 <button onclick="window.location='{{ route("profiel.editAddKind", $ouder->id) }}'"

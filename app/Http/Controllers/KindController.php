@@ -139,7 +139,7 @@ class KindController extends Controller
             $this->uitpasInfo($kind->id);
         }
 
-        return redirect(route('kinderen.index'));
+        return redirect(route('kinderen.index'))->with('success', $kind->voornaam.' '.$kind->familienaam.' werd succusvol gewijzigd.');
     }
 
     public function uitpasInfo($kindid)

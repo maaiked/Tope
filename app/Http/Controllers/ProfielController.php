@@ -51,9 +51,9 @@ class ProfielController extends Controller
             'telefoonnummer'=> 'required|string|max:255',
             'rijksregisternummer'=> 'required|string|max:255',
         ]);
-
+        $user = $request->user();
         $request->user()->profiel()->create($validated);
-        return redirect(route('profiel.edit'))->with('success', 'Profiel werd geupdate.');
+        return redirect(route('profiel.edit'))->with('success', 'Profiel van '.$user->voornaam.' '.$user->familienaam.' werd aangemaakt.');
     }
 
     /**
@@ -89,9 +89,9 @@ class ProfielController extends Controller
             'telefoonnummer'=> 'required|string|max:255',
             'rijksregisternummer'=> 'required|string|max:255',
         ]);
-
+        $user = $request->user();
         $request->user()->profiel()->update($validated);
-        return redirect(route('profiel.edit'))->with('success', 'Profiel werd geupdate');
+        return redirect(route('profiel.edit'))->with('success', $user->voornaam. ' '.$user->familienaam.' werd geupdate');
     }
 
     public function editAddKind(Request $request)
@@ -122,7 +122,7 @@ class ProfielController extends Controller
         $kind = $user->kinds()->create($validated);
         (new KindController)->uitpasInfo($kind->id);
 
-        return redirect(route('kinderen.indexAdminOuder', $user->id));
+        return redirect(route('kinderen.indexAdminOuder', $user->id))->with('success', 'Kind '.$kind->voornaam.' werd successvol toegevoegd.');
     }
 
     public function editById(Request $request, int $id)
@@ -148,7 +148,7 @@ class ProfielController extends Controller
         $user = User::findOrFail($id);
         $user->profiel()->update($validated);
 
-        return redirect(route('profiel.editById', $id))->with('success', 'Profiel werd geupdate');
+        return redirect(route('profiel.editById', $id))->with('success', $user->voornaam.' '.$user->familienaam.' werd geupdate');
     }
 
     /**

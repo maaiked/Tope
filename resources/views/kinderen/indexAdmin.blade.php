@@ -10,6 +10,10 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg px-6 py-6">
+                @if (session('success') !== null)
+                    <p class="text-lg py-4 px-4 text-md font-bold underline text-green-500"
+                    ><i>{{ session()->pull('success', null) }}</i></p>
+                @endif
 
                 <table id="example" class="bootstrap-table" style="width:100%; padding-top: 1em;  padding-bottom: 1em;">
                     <thead>

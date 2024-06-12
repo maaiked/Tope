@@ -8,6 +8,10 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg px-6 py-6">
+                @if (session('success') !== null)
+                    <p class="text-lg py-4 px-4 text-md font-bold underline text-green-500"
+                    ><i>{{ session()->pull('success', null) }}</i></p>
+                @endif
                 @foreach ($kinderen as $kind)
                     <div class="bg-gray-200 hover:bg-blue-300 font-bold py-2 px-2 mt-2 mb-2 rounded
                     grid gap-4 gap-y-2 text-sm  sm:grid-cols-2 md:grid-cols-5 ">
