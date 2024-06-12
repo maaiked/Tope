@@ -148,7 +148,7 @@ class InschrijvingsdetailController extends Controller
                         {
                             $totaalprijs = $activiteit->uitdatabank_kansentarief;
                             $uitid = $verkoopbody[0]->id;
-                            $message = "Inschrijving met kansentarief succesvol";
+                            $message = $kind->voornaam.' '.$kind->familienaam.' werd succesvol ingeschreven met kansentarief.';
                         }
                         else {
                             $totaalprijs = $activiteit->prijs;
@@ -158,7 +158,7 @@ class InschrijvingsdetailController extends Controller
                     else
                     {
                         $totaalprijs = $request->prijs;
-                        $message = "Inschrijving succesvol";
+                        $message = $kind->voornaam.' '.$kind->familienaam.' werd succesvol ingeschreven.';
                     }
                     // bereken totaalprijs (activiteit + opties)
                     foreach ($activiteit->opties as $optie)
