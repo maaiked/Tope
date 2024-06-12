@@ -325,9 +325,9 @@
                 </table>
             </div>
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg px-6 py-6 gap-4 gap-y-2 text-sm">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg py-2 px-6 mt-4 text-sm">
                 <button
-                    class="rounded-md mt-4 bg-gray-500 text-white focus:ring-gray-600 px-2 py-2 text-sm"
+                    class="rounded-md  bg-gray-500 text-white focus:ring-gray-600 px-2 py-2 text-sm "
                     onclick="show('zoekForm')">
                     {{ "Kind toevoegen" }}
                 </button>
@@ -349,14 +349,21 @@
                 </form>
             </div>
 
-            @if(Auth::user()->isAdmin)
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg px-6 py-6 gap-4 gap-y-2 text-sm">
-                    <button
-                        onclick="window.location='{{ route('inschrijvingsdetails.createAttestZiekenfonds', $activiteit->id) }}'"
-                        class="rounded-md bg-gray-500 text-white focus:ring-gray-600 px-4 py-2 text-sm mt-4">
-                        {{ "Ziekenfondsattesten aanmaken" }}
-                    </button>
-                </div>
+            @if(!empty($activiteit->inschrijvingsdetails->first()))
+
+                @if(Auth::user()->isAdmin)
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg px-6 py-2 mt-4  text-sm">
+                        @if($i->ziekenfondsAttest)
+                            <p>{{ 'Ziekenfonds attesten aangemaakt op '.$i->ziekenfondsAttest }}</p>
+                        @else
+                            <button
+                                onclick="window.location='{{ route('inschrijvingsdetails.createAttestZiekenfonds', $activiteit->id) }}'"
+                                class="rounded-md bg-blue-500 text-white focus:ring-gray-600 px-2 py-2 text-sm">
+                                {{ "Ziekenfondsattesten aanmaken" }}
+                            </button>
+                        @endif
+                    </div>
+                @endif
             @endif
 
             {{--                TODO:: fix small screen colums--}}

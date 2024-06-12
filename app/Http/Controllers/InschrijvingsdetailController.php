@@ -340,7 +340,7 @@ class InschrijvingsdetailController extends Controller
         {
             $i->update(['ziekenfondsAttest' => today()]);
         }
-        return redirect(route($this->indexActiviteit($id)));
+        return redirect(route('inschrijvingsdetails.indexActiviteit',$id));
     }
 
     /**
