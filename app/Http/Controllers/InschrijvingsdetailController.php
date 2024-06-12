@@ -323,7 +323,7 @@ class InschrijvingsdetailController extends Controller
         // verwijder inschrijving
         $inschrijvingsdetail->delete();
 
-        return redirect(route('inschrijvingsdetails.index'))->with('success', 'De inschrijving werd verwijderd.');
+        return redirect(route('inschrijvingsdetails.index'))->with('success', 'De inschrijving werd verwijderd voor '.$inschrijvingsdetail->kind->voornaam.' '.$inschrijvingsdetail->kind->familienaam.' in activiteit '.$activiteit->naam);
     }
 
     /**
