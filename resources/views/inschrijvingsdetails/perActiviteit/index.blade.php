@@ -168,18 +168,18 @@
                                 <td class="border px-2 py-2">
                                     @if($i->kind->infoAdmin)
                                     <!-- Trigger Button -->
-                                    <button name="infoAdmin" onclick="showInfo({{$i->id}})"
+                                    <button name="infoAdmin" onclick="showInfoAdmin({{$i->id}})"
                                             class="bg-orange-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded">
                                         Ja
                                     </button>
                                     @endif
                                     <!-- Modal -->
-                                    <div id="infoad.{{$i->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
+                                    <div id="infoAd.{{$i->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
                                         <div class="flex items-center justify-center min-h-screen">
                                             <div class="bg-blue-500 w-1/2 p-6 rounded shadow-md">
                                                 <div class="flex justify-end">
                                                     <!-- Close Button -->
-                                                    <button id="close" onclick="hideInfo({{$i->id}})"
+                                                    <button id="close" onclick="hideInfoAdmin({{$i->id}})"
                                                             class="text-gray-700 hover:text-red-500">
                                                         <svg class="w-6 h-6" fill="none" stroke="currentColor"
                                                              viewBox="0 0 24 24"
@@ -198,7 +198,7 @@
                                         </div>
                                     </div>
                                     {{--    Knop bewerk interne info --}}
-                                    <button name="editAdmin" onclick="showEditInfo({{$i->id}})"
+                                    <button name="editAdmin" onclick="showEditInfoAdmin({{$i->id}})"
                                             class="inline-flex border-2 items-center rounded-lg  text-sm text-gray-500 hover:text-gray-900 focus:relative">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"
@@ -216,12 +216,12 @@
                                         </svg>
                                     </button>
                                     <!-- Modal -->
-                                    <div id="EditInfoad.{{$i->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
+                                    <div id="EditInfoAd.{{$i->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
                                         <div class="flex items-center justify-center min-h-screen">
                                             <div class="bg-blue-500 w-1/2 p-6 rounded shadow-md">
                                                 <div class="flex justify-end">
                                                     <!-- Close Button -->
-                                                    <button id="close" onclick="hideEditInfo({{$i->id}})"
+                                                    <button id="close" onclick="hideEditInfoAdmin({{$i->id}})"
                                                             class="text-gray-700 hover:text-red-500">
                                                         <svg class="w-6 h-6" fill="none" stroke="currentColor"
                                                              viewBox="0 0 24 24"
@@ -266,7 +266,7 @@
                                     </button>
                                     @endif
                                     <!-- Modal -->
-                                    <div id="infoan.{{$i->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
+                                    <div id="info.{{$i->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
                                         <div class="flex items-center justify-center min-h-screen">
                                             <div class="bg-blue-500 w-1/2 p-6 rounded shadow-md">
                                                 <div class="flex justify-end">
@@ -308,7 +308,7 @@
                                         </svg>
                                     </button>
                                     <!-- Modal -->
-                                    <div id="EditInfoan.{{$i->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
+                                    <div id="EditInfo.{{$i->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
                                         <div class="flex items-center justify-center min-h-screen">
                                             <div class="bg-blue-500 w-1/2 p-6 rounded shadow-md">
                                                 <div class="flex justify-end">
@@ -666,6 +666,30 @@
 
         function hideEditInfo(id) {
             var name = "EditInfo.".concat(id);
+            var modal = document.getElementById(name);
+            modal.classList.add('hidden');
+        }
+
+        function showInfoAdmin(id) {
+            var name = "infoAd.".concat(id);
+            var modal = document.getElementById(name);
+            modal.classList.remove('hidden');
+        }
+
+        function hideInfoAdmin(id) {
+            var name = "infoAd.".concat(id);
+            var modal = document.getElementById(name);
+            modal.classList.add('hidden');
+        }
+
+        function showEditInfoAdmin(id) {
+            var name = "EditInfoAd.".concat(id);
+            var modal = document.getElementById(name);
+            modal.classList.remove('hidden');
+        }
+
+        function hideEditInfoAdmin(id) {
+            var name = "EditInfoAd.".concat(id);
             var modal = document.getElementById(name);
             modal.classList.add('hidden');
         }
