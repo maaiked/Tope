@@ -96,23 +96,25 @@
                     <p class="mt-4 text-md text-gray-900 font-bold">Attesten:</p>
 
                     @if( $inschrijving->ingechecked)
-                        @if( !empty($inschrijving->deelnemersattestVerzonden))
+                        @if( !empty($inschrijving->fiscaalAttest))
                             <p class=" text-md text-gray-900"> {{ "fiscaal attest beschikbaar sinds: ". Carbon\Carbon::parse($inschrijving->deelnemersattestVerzonden)->format('d-m-Y') }}</p>
                         @else
-                            <p>fiscaal attest nog niet beschikbaar</p>
+                            <p>Fiscaal attest nog niet beschikbaar</p>
                         @endif
-                        @if( !empty($inschrijving->ziekenfondsattestVerzonden))
+                        @if( !empty($inschrijving->ziekenfondsAttest))
                             <a href="{{ route("inschrijvingsdetails.ziekenfondsattest", $inschrijving->id) }} "
                                target="_blank" class="underline">Ziekenfondsattest</a>
                         @else
-                            <p>ziekenfondsattest nog niet beschikbaar</p>
+                            <p>Ziekenfondsattest nog niet beschikbaar</p>
                         @endif
                     @else
-                        <p>{{ "Attesten zijn enkel beschikbaar voor deelnemers die aanwezig waren. Uit onze gegevens blijkt dat je kind niet aanwezig was op deze activiteit. Was je kind toch aanwezig? Neem dan contact op met de organisatie." }}</p>
+                        <p>{{ "Attesten zijn beschikbaar voor deelnemers die aanwezig waren op de activiteit. Je kind was (nog) niet aanwezig." }}</p>
                     @endif
 
                 </div>
 
+            @else
+            <p>{{ 'Na afloop van de activiteit vind je hier je attest terug' }}</p>
             @endif
         </div>
     </div>

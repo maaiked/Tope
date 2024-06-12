@@ -15,10 +15,12 @@
 
             @if (session('status') === 'geenKind')
                 <p class="text-lg py-4 px-4 text-red-600"
-                ><i>{{ __('Er werd geen kind gevonden met de gevraagde details. Controleer of het kind binnen de leeftijdslimiet valt en nog niet ingeschreven werd.') }}</i></p>
+                >
+                    <i>{{ __('Er werd geen kind gevonden met de gevraagde details. Controleer of het kind binnen de leeftijdslimiet valt en nog niet ingeschreven werd.') }}</i>
+                </p>
             @elseif (session('inschrijving') !== null)
-                    <p class="text-lg py-4 px-4 text-md font-bold underline text-green-500"
-                    ><i>{{ session()->pull('inschrijving', null) }}</i></p>
+                <p class="text-lg py-4 px-4 text-md font-bold underline text-green-500"
+                ><i>{{ session()->pull('inschrijving', null) }}</i></p>
             @endif
 
             <button class=" rounded-md bg-blue-500 text-white focus:ring-gray-600 px-2 py-2 text-sm"
@@ -74,7 +76,7 @@
                                         @if($i->ingechecked) class="rounded-md bg-green-500  text-black focus:ring-gray-600 px-2 py-2 text-sm"
                                         @else class="rounded-md bg-gray-200  text-black focus:ring-gray-600 px-2 py-2 text-sm"
                                         @endif
-                                            @if($i->uitgechecked) disabled @endif
+                                        @if($i->uitgechecked) disabled @endif
                                         onclick="window.location='{{ route("inschrijvingsdetails.edit", [$activiteit->id, $i->id, "inchecken"]) }}'">
                                         {{ "IN" }}
                                     </button>
@@ -82,7 +84,7 @@
                                         @if($i->uitgechecked) class="rounded-md bg-green-500  text-black focus:ring-gray-600 px-2 py-2 text-sm"
                                         @else class="rounded-md bg-gray-200  text-black focus:ring-gray-600 px-2 py-2 text-sm "
                                         @endif
-                                            @if(!$i->ingechecked) disabled @endif
+                                        @if(!$i->ingechecked) disabled @endif
                                         onclick="window.location='{{ route("inschrijvingsdetails.edit", [$activiteit->id, $i->id, "uitchecken"]) }}'">
                                         {{ "UIT" }}
                                     </button>
@@ -187,7 +189,7 @@
                                             </div>
                                         </div>
                                     </div>
-                              {{--    Knop bewerk interne info --}}
+                                    {{--    Knop bewerk interne info --}}
                                     <button name="editAdminAnimator" onclick="showEditInfo({{$i->id}})"
                                             class="inline-flex border-2 items-center rounded-lg  text-sm text-gray-500 hover:text-gray-900 focus:relative">
                                         <svg
@@ -222,7 +224,8 @@
                                                         </svg>
                                                     </button>
                                                 </div>
-                                                <form method="POST" action="{{ route('kind.editAdminAnimatorInfo', $activiteit->id) }}">
+                                                <form method="POST"
+                                                      action="{{ route('kind.editAdminAnimatorInfo', $activiteit->id) }}">
                                                     @csrf
                                                     <h2 class="text-2xl font-bold mb-4">{{"Bewerk interne info ".$i->kind->voornaam}}</h2>
                                                     <div class="mb-4 font-bold">
@@ -231,11 +234,13 @@
                                                     <input type="hidden" name="kind" value="{{ $i->kind->id }}"/>
                                                     <div>
                                                         <label for="infoAdminAnimator">Interne info bewerken</label>
-                                                        <input type="text" name="infoAdminAnimator" id="infoAdminAnimator"
+                                                        <input type="text" name="infoAdminAnimator"
+                                                               id="infoAdminAnimator"
                                                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                                                                value="{{ old('infoAdminAnimator', $i->kind->infoAdminAnimator) }}"
                                                                placeholder="nieuwe interne info voor admin en animator"/>
-                                                        <x-input-error :messages="$errors->get('infoAdminAnimator')" class="mt-2"/>
+                                                        <x-input-error :messages="$errors->get('infoAdminAnimator')"
+                                                                       class="mt-2"/>
                                                     </div>
                                                     <button onclick="submit"
                                                     >{{ "Updaten" }}</button>
@@ -250,12 +255,13 @@
                                 <td class="border px-2 py-2">
                                     <!-- als er reeds betaald werd, wordt de betalingsmethode getoond -->
                                     @if($i->betalingsdetail()->exists())
-                                    <button class="rounded-md bg-green-500 text-white px-2 py-2 text-sm" disabled>
-                                        {{$i->betalingsdetail->methode}}
-                                    </button>
-                                    <!-- als er nog niet betaald werd, wordt er een knop getoond waarmee de betaling kan geregistreerd worden -->
+                                        <button class="rounded-md bg-green-500 text-white px-2 py-2 text-sm" disabled>
+                                            {{$i->betalingsdetail->methode}}
+                                        </button>
+                                        <!-- als er nog niet betaald werd, wordt er een knop getoond waarmee de betaling kan geregistreerd worden -->
                                     @else
-                                        <button onclick="showBetaling({{$i->id}})" class="rounded-md bg-gray-500 text-white focus:ring-gray-600 px-2 py-2 text-sm" >
+                                        <button onclick="showBetaling({{$i->id}})"
+                                                class="rounded-md bg-gray-500 text-white focus:ring-gray-600 px-2 py-2 text-sm">
                                             {{"€ ".$i->prijs}}
                                         </button>
                                         <!-- Modal -->
@@ -275,27 +281,34 @@
                                                             </svg>
                                                         </button>
                                                     </div>
-                                                    <form method="POST" action="{{ route('betaling.store', $activiteit->id) }}">
+                                                    <form method="POST"
+                                                          action="{{ route('betaling.store', $activiteit->id) }}">
                                                         @csrf
                                                         <h2 class="text-2xl font-bold mb-4">{{"Registreer de betaling voor ".$i->kind->voornaam}}</h2>
-                                                        <input type="hidden" name="inschrijvingsdetail_id" value="{{ $i->id }}"/>
+                                                        <input type="hidden" name="inschrijvingsdetail_id"
+                                                               value="{{ $i->id }}"/>
                                                         <div>
                                                             <p class="m-4 font-bold text-lg"> {{"Te betalen: € ".$i->prijs}}</p>
                                                             <div>
-                                                                <input type="radio" id="factuur" name="methode" value="factuur">
+                                                                <input type="radio" id="factuur" name="methode"
+                                                                       value="factuur">
                                                                 <label for="factuur">Factuur </label>
                                                             </div>
                                                             <div>
-                                                                <input type="radio" id="bancontact" name="methode" value="bancontact">
+                                                                <input type="radio" id="bancontact" name="methode"
+                                                                       value="bancontact">
                                                                 <label for="bancontact">Bancontact</label>
                                                             </div>
                                                             <div>
-                                                                <input type="radio" id="cash" name="methode" value="cash">
+                                                                <input type="radio" id="cash" name="methode"
+                                                                       value="cash">
                                                                 <label for="cash">Cash</label>
                                                             </div>
-                                                            <button class="rounded-md mt-4 bg-green-500 text-white focus:ring-gray-600 px-2 py-2 text-sm" onclick="submit"
+                                                            <button
+                                                                class="rounded-md mt-4 bg-green-500 text-white focus:ring-gray-600 px-2 py-2 text-sm"
+                                                                onclick="submit"
                                                             >{{ "Registreer" }}</button>
-                                                            </div>
+                                                        </div>
                                                     </form>
                                                 </div>
                                             </div>
@@ -303,7 +316,7 @@
                                     @endif
                                 </td>
                                 <!-- Uitpasnummer -->
-                                <td class="text-xs px-0" >{{$i->kind->uitpasnummer}}</td>
+                                <td class="text-xs px-0">{{$i->kind->uitpasnummer}}</td>
                             </tr>
                         @endif
                     @endforeach
@@ -312,28 +325,46 @@
                 </table>
             </div>
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg px-6 py-6 gap-4 gap-y-2 text-sm">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg py-2 px-6 mt-4 text-sm">
                 <button
-                    class="rounded-md mt-4 bg-gray-500 text-white focus:ring-gray-600 px-2 py-2 text-sm"
+                    class="rounded-md  bg-gray-500 text-white focus:ring-gray-600 px-2 py-2 text-sm "
                     onclick="show('zoekForm')">
                     {{ "Kind toevoegen" }}
                 </button>
 
-                <form method="POST" action="{{ route('inschrijvingsdetails.create', $activiteit->id) }}" id="zoekForm" class="hidden">
+                <form method="POST" action="{{ route('inschrijvingsdetails.create', $activiteit->id) }}" id="zoekForm"
+                      class="hidden">
                     @csrf
                     <p class="font-bold">Kind opzoeken:</p>
                     <div>
-                        <label for="zoek">Zoek op (deel van) voornaam, familienaam, rijksregisternummer of uitpasnummer</label>
+                        <label for="zoek">Zoek op (deel van) voornaam, familienaam, rijksregisternummer of
+                            uitpasnummer</label>
                         <input type="text" name="zoek" id="zoek"
                                class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                         />
                         <x-input-error :messages="$errors->get('zoek')" class="mt-2"/>
                     </div>
-                    <input type="hidden" name="activiteit" value="{{ $activiteit->id }}" />
+                    <input type="hidden" name="activiteit" value="{{ $activiteit->id }}"/>
                     <x-primary-button class="mt-4">{{ __('Zoeken') }}</x-primary-button>
                 </form>
             </div>
 
+            @if(!empty($activiteit->inschrijvingsdetails->first()))
+
+                @if(Auth::user()->isAdmin)
+                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg px-6 py-2 mt-4  text-sm">
+                        @if($i->ziekenfondsAttest)
+                            <p>{{ 'Ziekenfonds attesten aangemaakt op '.$i->ziekenfondsAttest }}</p>
+                        @else
+                            <button
+                                onclick="window.location='{{ route('inschrijvingsdetails.createAttestZiekenfonds', $activiteit->id) }}'"
+                                class="rounded-md bg-blue-500 text-white focus:ring-gray-600 px-2 py-2 text-sm">
+                                {{ "Ziekenfondsattesten aanmaken" }}
+                            </button>
+                        @endif
+                    </div>
+                @endif
+            @endif
 
             {{--                TODO:: fix small screen colums--}}
             <div
@@ -398,7 +429,7 @@
 
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $('#example').DataTable({
                 // Add any customization options here
             });

@@ -9,8 +9,6 @@ use App\Models\Kind;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use Spatie\LaravelPdf\Facades\Pdf;
-use function PHPUnit\Framework\isEmpty;
 
 class InschrijvingsdetailController extends Controller
 {
@@ -213,7 +211,7 @@ class InschrijvingsdetailController extends Controller
      * Display the specified resource.
      */
 
-    //todo :: beveilig zodat user enkel ziekenfondsattest van eigen kinderen kan raadplegen.
+    //todo :: beveilig zodat user enkel attest van eigen kinderen kan raadplegen.
     // maar dat admin dit van iedereen kan zien
     public function show($id)
     {
@@ -221,6 +219,8 @@ class InschrijvingsdetailController extends Controller
         $inschrijving = Inschrijvingsdetail::find($id);
         return view('inschrijvingsdetails.detail', compact('inschrijving'));
     }
+
+
 
     /**
      * Display the specified resource.
@@ -324,6 +324,23 @@ class InschrijvingsdetailController extends Controller
         $inschrijvingsdetail->delete();
 
         return redirect(route('inschrijvingsdetails.index'))->with('status', 'inschrijving-verwijderd');
+    }
+
+    /**
+     * Create deelname attest.
+     */
+
+    public function createAttestZiekenfonds($id)
+    {
+        // Maak ziekenfonds attest beschikbaar voor elke inschrijving in deze activiteit door ziekenfondsattest datum in te stellen
+        $inschrijvingsdetails= Inschrijvingsdetail::select('*', 'inschrijvingsdetails.id AS inschrijvingsdetails_id')
+            ->where('activiteit_id', '=', $id)
+            ->get();
+        foreach ($inschrijvingsdetails as $i)
+        {
+            $i->update(['ziekenfondsAttest' => today()]);
+        }
+        return redirect(route('inschrijvingsdetails.indexActiviteit',$id));
     }
 
     /**
