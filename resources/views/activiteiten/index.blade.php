@@ -26,9 +26,9 @@
                         }
                     </style>
 
-                    @if (session('inschrijving') !== null)
+                    @if (session('success') !== null)
                         <p class="text-lg py-4 px-4 text-md font-bold underline text-green-500"
-                        ><i>{{ session()->pull('inschrijving', null) }}</i></p>
+                        ><i>{{ session()->pull('success', null) }}</i></p>
                     @endif
 
                     <div class="grid md:grid-cols-4 gap-2 w-full max-w-screen-sm vertical-align:middle">

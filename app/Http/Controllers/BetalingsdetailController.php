@@ -37,7 +37,7 @@ class BetalingsdetailController extends Controller
             'methode' => [Rule::enum(MethodeEnum::class)],
             'inschrijvingsdetail_id' => 'required|int|max:250'
         ]);
-        // zoek het inschrijvingsdetail waarvoor de betaling erd uitgevoerd
+        // zoek het inschrijvingsdetail waarvoor de betaling werd uitgevoerd
         $i_id = Inschrijvingsdetail::find($validated['inschrijvingsdetail_id']);
         $betaling = ['methode' => $validated['methode'],
             'inschrijvingsdetail_id' => $i_id,
@@ -45,7 +45,7 @@ class BetalingsdetailController extends Controller
         $i_id->betalingsdetail()->create($betaling);
         // zoek de bijhorende activiteit zodat we kunnen terugkeren naar de juiste activiteitsindex
         $activiteit = Activiteit::find($id);
-        return redirect(route('inschrijvingsdetails.indexActiviteit', $activiteit));
+        return redirect(route('inschrijvingsdetails.indexActiviteit', $activiteit)) ->with('success', 'Betaling succesvol geregistreerd voor '.$i_id->kind->voornaam);
 
     }
 
@@ -87,12 +87,9 @@ class BetalingsdetailController extends Controller
 
         if ($betaling) {
             $betaling->delete();
-
-            return redirect()->route("inschrijvingsdetails.indexActiviteit", $id)
-                ->with('success', 'Betaling succesvol verwijderd.');
+            return redirect(route("inschrijvingsdetails.indexActiviteit", $id))->with('success', 'Betaling succesvol verwijderd.');
         } else {
-            return redirect()->route("inschrijvingsdetails.indexActiviteit", $id)
-                ->with('error', 'Betaling niet gevonden.');
+            return redirect(route("inschrijvingsdetails.indexActiviteit", $id))->with('error', 'Betaling niet gevonden.');
         }
     }
 }

@@ -53,7 +53,7 @@ class ProfielController extends Controller
         ]);
 
         $request->user()->profiel()->create($validated);
-        return redirect(route('profiel.edit'))->with('status', 'profiel-updated');
+        return redirect(route('profiel.edit'))->with('success', 'Profiel werd geupdate.');
     }
 
     /**
@@ -91,7 +91,7 @@ class ProfielController extends Controller
         ]);
 
         $request->user()->profiel()->update($validated);
-        return redirect(route('profiel.edit'))->with('status', 'profiel-updated');
+        return redirect(route('profiel.edit'))->with('success', 'Profiel werd geupdate');
     }
 
     public function editAddKind(Request $request)
@@ -148,7 +148,7 @@ class ProfielController extends Controller
         $user = User::findOrFail($id);
         $user->profiel()->update($validated);
 
-        return redirect(route('profiel.editById', $id))->with('status', 'profiel-updated');
+        return redirect(route('profiel.editById', $id))->with('success', 'Profiel werd geupdate');
     }
 
     /**

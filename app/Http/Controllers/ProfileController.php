@@ -70,7 +70,7 @@ class ProfileController extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile.edit')->with('success', 'Profiel werd geupdate');
     }
 
     /**
@@ -92,7 +92,7 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return Redirect::route('profile.index')->with('status', 'profile-updated')->withErrors(['error' => "Permissions updated successfully for {$user->email}"]);
+        return Redirect::route('profile.index')->with('success', 'Profiel werd geupdate.')->withErrors(['error' => "Permissions updated successfully for {$user->email}"]);
     }
 
     /**

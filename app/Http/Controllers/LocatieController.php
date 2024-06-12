@@ -37,7 +37,7 @@ class LocatieController extends Controller
 
         Locatie::create($validated);
 
-        return redirect()->route('locatie.index')->with('status', 'locatie-created');
+        return redirect()->route('locatie.index')->with('success', 'Locatie werd aangemaakt.');
     }
 
     /**
@@ -69,7 +69,7 @@ class LocatieController extends Controller
 
         $locatie->update($validated);
 
-        return redirect()->route('locatie.index')->with('status', 'locatie-updated');
+        return redirect()->route('locatie.index')->with('success', 'Locatie werd aangemaakt.');
     }
 
     /**

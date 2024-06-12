@@ -13,14 +13,15 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            @if (session('status') === 'geenKind')
+            @if (session('error') !== null)
             <p class="text-lg py-4 px-4 text-red-600"
             >
-                <i>{{ __('Er werd geen kind gevonden met de gevraagde details. Controleer of het kind binnen de leeftijdslimiet valt en nog niet ingeschreven werd.') }}</i>
+                <i>{{ session()->pull('error', null) }}</i>
             </p>
-            @elseif (session('inschrijving') !== null)
+            @endif
+            @if (session('success') !== null)
             <p class="text-lg py-4 px-4 text-md font-bold underline text-green-500"
-            ><i>{{ session()->pull('inschrijving', null) }}</i></p>
+            ><i>{{ session()->pull('success', null) }}</i></p>
             @endif
 
             <button class=" rounded-md bg-blue-500 text-white focus:ring-gray-600 px-2 py-2 text-sm"

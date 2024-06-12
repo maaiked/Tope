@@ -101,7 +101,7 @@ class InschrijvingsdetailController extends Controller
             $arraynr = $arraynr+1;
         }
         if (count($kinderen) == 0)
-            return \Redirect::Route('inschrijvingsdetails.indexActiviteit', $activiteit)->with('status', 'geenKind');
+            return \Redirect::Route('inschrijvingsdetails.indexActiviteit', $activiteit)->with('error', 'Er werd geen kind gevonden met de gevraagde parameters');
         else
             return view('inschrijvingsdetails.perActiviteit.nieuw')->with(['kinderen' =>$kinderen, 'activiteit'=>$activiteit]);
     }
@@ -192,7 +192,7 @@ class InschrijvingsdetailController extends Controller
 
                 // als activiteit volzet is:
                 else $message = "Helaas, de activiteit is reeds volzet";
-                $request->session()->put('inschrijving', $message);
+                $request->session()->put('success', $message);
                 if (auth()->user()->isAnimator || auth()->user()->isAdmin)
                 {
                     return \Redirect::Route('inschrijvingsdetails.indexActiviteit', $activiteit);
@@ -323,7 +323,7 @@ class InschrijvingsdetailController extends Controller
         // verwijder inschrijving
         $inschrijvingsdetail->delete();
 
-        return redirect(route('inschrijvingsdetails.index'))->with('status', 'inschrijving-verwijderd');
+        return redirect(route('inschrijvingsdetails.index'))->with('success', 'De inschrijving werd verwijderd.');
     }
 
     /**
@@ -340,7 +340,7 @@ class InschrijvingsdetailController extends Controller
         {
             $i->update(['ziekenfondsAttest' => today()]);
         }
-        return redirect(route('inschrijvingsdetails.indexActiviteit',$id));
+        return redirect(route('inschrijvingsdetails.indexActiviteit',$id))->with('success', 'De ziekenfondsattesten werden aangemaakt.');;
     }
 
     /**
