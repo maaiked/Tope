@@ -185,6 +185,18 @@ class KindController extends Controller
         return redirect(route('inschrijvingsdetails.indexActiviteit', $activiteit));
     }
 
+    public function editAdminInfo(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'infoAdmin' => 'nullable|string|max:510',
+            'kind' => 'string|max:20'
+        ]);
+        $kind = Kind::find($validated['kind']);
+        $activiteit = Activiteit::find($id);
+        $kind->update(['infoAdmin' => $validated['infoAdmin']]);
+        return redirect(route('inschrijvingsdetails.indexActiviteit', $activiteit));
+    }
+
     /**
      * Remove the specified resource from storage.
      */
