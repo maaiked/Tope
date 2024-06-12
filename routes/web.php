@@ -91,6 +91,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/inschrijvingsdetails/lijsten/{id}/{modus}', [InschrijvingsdetailController::class, 'showLijst'])->name('inschrijvingsdetails.showLijst');
     Route::get('/inschrijvingsdetails/activiteit/{activiteit}/{inschrijving}/{detail}', [InschrijvingsdetailController::class, 'edit'])->name('inschrijvingsdetails.edit');
     Route::post('/inschrijvingsdetails/activiteit/{id}', [KindController::class, 'editAdminAnimatorInfo'])->name('kind.editAdminAnimatorInfo');
+    Route::post('/inschrijvingsdetails/activiteit/{id}/admin', [KindController::class, 'editAdminInfo'])->name('kind.editAdminInfo');
     Route::get('/inschrijvingsdetails/activiteit/ziekenfonds/{id}', [InschrijvingsdetailController::class, 'createAttestZiekenfonds'])->name('inschrijvingsdetails.createAttestZiekenfonds');
 
 

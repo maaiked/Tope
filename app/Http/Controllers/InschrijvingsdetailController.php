@@ -193,7 +193,7 @@ class InschrijvingsdetailController extends Controller
                 // als activiteit volzet is:
                 else $message = "Helaas, de activiteit is reeds volzet";
                 $request->session()->put('inschrijving', $message);
-                if (auth()->user()->isAnimator)
+                if (auth()->user()->isAnimator || auth()->user()->isAdmin)
                 {
                     return \Redirect::Route('inschrijvingsdetails.indexActiviteit', $activiteit);
                 }
