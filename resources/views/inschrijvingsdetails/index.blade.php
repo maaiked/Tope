@@ -118,8 +118,6 @@
                 </script>
             </div>
 
-            {{-- Paginatie --}}
-            {{ $inschrijvingsdetails->links() }}
         </div>
     </div>
 </x-app-layout>
