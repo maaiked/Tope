@@ -61,7 +61,7 @@ class UitpasController extends Controller
         ]);
 
         Uitpas::create($validated);
-        return redirect(route('uitpas.index'));
+        return redirect(route('uitpas.index'))->with('success', 'UiTPAS gegevens opgeslaan.');
     }
 
     /**
@@ -124,7 +124,7 @@ class UitpasController extends Controller
         $uitpas = Uitpas::find(1);
         $uitpas->update($validated);
 
-        return redirect(route('uitpas.index'));
+        return redirect(route('uitpas.index'))->with('success', 'UiTPAS gegevens gewijzigd.');
     }
 
 

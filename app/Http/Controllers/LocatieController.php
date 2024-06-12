@@ -69,7 +69,7 @@ class LocatieController extends Controller
 
         $locatie->update($validated);
 
-        return redirect()->route('locatie.index')->with('success', 'Locatie werd aangemaakt.');
+        return redirect()->route('locatie.index')->with('success', 'Locatie werd gewijzigd.');
     }
 
     /**

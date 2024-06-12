@@ -41,7 +41,7 @@ class TextController extends Controller
             $text = Text::create(request()->all());
         }
 
-        return view('dashboard')->with('text', $text);
+        return view('dashboard')->with('text', $text)->with('success', 'Aanpassingen werd opgeslaan.');
     }
 
     /**

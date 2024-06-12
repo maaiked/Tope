@@ -35,6 +35,10 @@
 
                 {{--            Toon enkel aan admin: --}}
             @elseif(Auth::user()->isAdmin)
+                @if (session('success') !== null)
+                    <p class="text-lg py-4 px-4 text-md font-bold underline text-green-500"
+                    ><i>{{ session()->pull('success', null) }}</i></p>
+                @endif
 
                 @if($text === null)
                     <p>Geef hieronder de tekst in die je op het dashboard wilt laten verschijnen bij elke ingelogde user</p>

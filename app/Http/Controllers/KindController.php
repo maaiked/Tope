@@ -76,7 +76,7 @@ class KindController extends Controller
         $kind = $request->user()->kinds()->create($validated);
         $this->uitpasInfo($kind->id);
 
-        return redirect(route('kinderen.index'));
+        return redirect(route('kinderen.index'))->with('success', 'Kind '.$kind->voornaam.' '.$kind->familienaam.' aangemaakt.');
     }
 
     /**
