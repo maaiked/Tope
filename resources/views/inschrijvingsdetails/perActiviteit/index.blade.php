@@ -349,14 +349,14 @@
                         </td>
 
                         <!-- Knop betaling -->
-                        <td class="border px-4 py-4">
+                        <td class="border px-2 py-2">
                             <!-- als er reeds betaald werd, wordt de betalingsmethode getoond -->
                             @if($i->betalingsdetail()->exists())
-                            <button class="rounded-md bg-green-500 text-white px-2 py-2 text-sm" disabled>
+                            <button class="rounded-md bg-green-500 text-white px-1 py-1 text-sm" disabled>
                                 {{$i->betalingsdetail->methode}}
                             </button>
                             <button onclick="showDeleteBetaling({{$i->id}})"
-                                class="rounded-md bg-red-500 text-white px-2 py-2 text-sm" >
+                                class="rounded-md bg-red-500 text-white px-1 py-1 text-sm" >
                                 {{ " X " }}
                             </button>
                             <!-- Modal -->
