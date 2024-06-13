@@ -19,7 +19,7 @@ class InschrijvingsdetailController extends Controller
     {
         // if admin: toon alle inschrijvingen
         if (auth()->user()->isAdmin){
-            $inschrijvingsdetails['inschrijvingsdetails'] = Inschrijvingsdetail::select('*', 'inschrijvingsdetails.id AS inschrijvingsdetails_id')->get;
+            $inschrijvingsdetails['inschrijvingsdetails'] = Inschrijvingsdetail::select('*', 'inschrijvingsdetails.id AS inschrijvingsdetails_id')->get();
             return view ('inschrijvingsdetails.index')->with($inschrijvingsdetails);
         }
         // if user: toon inschrijvingen van eigen kinderen
