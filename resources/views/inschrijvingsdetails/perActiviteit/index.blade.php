@@ -568,7 +568,13 @@
     <script>
         $(document).ready(function () {
             $('#example').DataTable({
-                // Add any customization options here
+                scrollX: true,
+                language: {
+                    search: 'Zoek in inschrijvingen:',
+                    lengthMenu: '_MENU_ inschrijvingen per pagina',
+                    info: ' _START_ tot _END_ van _TOTAL_ inschrijvingen worden getoond',
+                    infoFiltered: '(gefilterd van _MAX_ inschrijvingen in totaal)',
+                }
             });
         });
 

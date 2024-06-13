@@ -55,7 +55,12 @@
                 <script>
                     $(document).ready(function() {
                         $('#locaties').DataTable({
-                            scrollX: true,
+                            language: {
+                                search: 'Zoek in locaties:',
+                                lengthMenu: '_MENU_ locaties per pagina',
+                                info: ' _START_ tot _END_ van _TOTAL_ locaties worden getoond',
+                                infoFiltered: '(gefilterd van _MAX_ locaties in totaal)',
+                            }
                         });
                     });
                 </script>

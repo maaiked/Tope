@@ -63,6 +63,12 @@
                 $(document).ready(function() {
                     $('#example').DataTable({
                         scrollX: true,
+                        language: {
+                            search: 'Zoek in kinderen:',
+                        lengthMenu: '_MENU_ kinderen per pagina',
+                        info: ' _START_ tot _END_ van _TOTAL_ kinderen worden getoond',
+                        infoFiltered: '(gefilterd van _MAX_ kinderen in totaal)',
+                    }
                     });
                 });
             </script>

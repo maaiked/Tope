@@ -90,6 +90,12 @@
                     $(document).ready(function() {
                         $('#example').DataTable({
                             scrollX: true,
+                            language: {
+                                search: 'Zoek in gebruikers:',
+                                lengthMenu: '_MENU_ gebruikers per pagina',
+                                info: ' _START_ tot _END_ van _TOTAL_ gebruikers worden getoond',
+                                infoFiltered: '(gefilterd van _MAX_ gebruikers in totaal)',
+                            }
                         });
                     });
                 </script>

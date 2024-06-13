@@ -135,7 +135,7 @@
                                                 <p class="text-sm font-bold">VOLZET</p>
                                             @else
                                                 <input type="hidden" name="kindid" value="{{ $geselecteerdkind->id }}">
-                                                <p class="rounded-md bg-blue-600 text-white focus:ring-blue-400 px-4 py-2 text-sm"
+                                                <p class="rounded-md bg-blue-600 text-white focus:ring-blue-400 px-4 py-2 text-sm link"
                                                    onclick="show({{$activiteit->id}})">Inschrijven</p>
                                                 <!-- Modal -->
                                                 <div id="confirm.{{$activiteit->id}}"

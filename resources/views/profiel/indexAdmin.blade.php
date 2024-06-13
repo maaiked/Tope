@@ -77,6 +77,12 @@
                     $(document).ready(function() {
                         $('#example').DataTable({
                             scrollX: true,
+                            language: {
+                                search: 'Zoek in ouders:',
+                            lengthMenu: '_MENU_ ouders per pagina',
+                            info: ' _START_ tot _END_ van _TOTAL_ ouders worden getoond',
+                            infoFiltered: '(gefilterd van _MAX_ ouders in totaal)',
+                        }
                         });
                     });
                 </script>
