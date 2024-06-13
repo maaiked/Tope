@@ -357,7 +357,7 @@
                             </button>
                             <button onclick="showDeleteBetaling({{$i->id}})"
                                 class="rounded-md bg-red-500 text-white px-1 py-1 text-sm" >
-                                {{ " X " }}
+                                {{ "Verwijderen" }}
                             </button>
                             <!-- Modal -->
                             <div id="DeleteBetaling.{{$i->id}}" class="fixed z-10 inset-0 overflow-y-auto hidden">
