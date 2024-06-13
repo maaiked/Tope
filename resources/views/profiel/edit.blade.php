@@ -59,7 +59,7 @@
                                 <x-input-error :messages="$errors->get('familienaam')" class="mt-2"/>
                             </div>
                             <div class="md:col-span-2">
-                                <label for="rijksregisternummer">Rijksregisternummer</label>
+                                <label for="rijksregisternummer">Rijksregisternummer  (formaat 12.12.12-123.12)</label>
                                 <input type="text" name="rijksregisternummer" id="rijksregisternummer"
                                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                                        value="{{ old('rijksregisternummer', optional($userprofiel)->rijksregisternummer) }}"

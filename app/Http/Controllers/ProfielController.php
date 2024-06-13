@@ -49,7 +49,7 @@ class ProfielController extends Controller
             'postcode'=> 'required|string|max:255',
             'gemeente'=> 'required|string|max:255',
             'telefoonnummer'=> 'required|string|max:255',
-            'rijksregisternummer'=> 'required|string|max:255',
+            'rijksregisternummer'=> 'required|string|max:255|regex:/^[0-9]{2}[.][0-9]{2}[.][0-9]{2}[-][0-9]{3}[.][0-9]{2}$/',
         ]);
         $user = $request->user();
         $request->user()->profiel()->create($validated);
