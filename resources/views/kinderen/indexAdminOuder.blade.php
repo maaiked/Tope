@@ -3,7 +3,7 @@
     {{--    made with https://tailwindflex.com/@rp-ketan/datatable --}}
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            @if ($ouder->profiel->familienaam && $ouder->profiel->voornaam)
+            @if ($ouder->profiel)
             {{ __('Kinderen van ').$ouder->profiel->familienaam." ".$ouder->profiel->voornaam }}
             @else
             {{ __('Kinderen van ').$ouder->email }}
