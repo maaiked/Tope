@@ -148,7 +148,7 @@ class ProfielController extends Controller
         $user = User::findOrFail($id);
         $user->profiel()->update($validated);
 
-        return redirect(route('profiel.editById', $id))->with('success', $user->voornaam.' '.$user->familienaam.' werd geupdate');
+        return redirect(route('profiel.indexAdmin', $id))->with('success', $user->voornaam.' '.$user->familienaam.' werd geupdate');
     }
 
     /**
