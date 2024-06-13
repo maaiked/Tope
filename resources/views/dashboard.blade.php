@@ -35,28 +35,34 @@
 
                 {{--            Toon enkel aan admin: --}}
             @elseif(Auth::user()->isAdmin)
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-5">
                 @if (session('success') !== null)
                     <p class="text-lg py-4 px-4 text-md font-bold underline text-green-500"
                     ><i>{{ session()->pull('success', null) }}</i></p>
                 @endif
 
                 @if($text === null)
-                    <p>Geef hieronder de tekst in die je op het dashboard wilt laten verschijnen bij elke ingelogde user</p>
+                    <p class="text-lg h-2 py-2 px-2 m-3">Geef hieronder de tekst in die je op het dashboard wilt laten verschijnen bij elke ingelogde user. Vergeet niet te verzenden.</p>
                 <form method="POST" action="{{ route('text.store') }}">
                     @csrf
+                    <div class="p-6 text-gray-900 trix-content">
                     @trix(\App\Text::class, 'content')
+                    </div>
                     <input type="submit">
                 </form>
 
                 @else
-                    <p>Pas hieronder de tekst aan die getoond wordt op het dashboard van elke ingelogde user</p>
+                    <p class="text-lg h-2 py-2 px-2 m-3">Pas hieronder de tekst aan die getoond wordt op het dashboard van elke ingelogde user. Vergeet niet te verzenden.</p>
                     <form method="POST" action="{{ route('text.store') }}">
                         @csrf
+                        <div class="p-6 text-gray-900 trix-content">
                         @trix($text, 'content')
+                        </div>
                         <input type="submit">
                     </form>
 
                 @endif
+                </div>
             @endif
         </div>
     </div>
