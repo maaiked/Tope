@@ -118,7 +118,7 @@ class ProfielController extends Controller
             'leerjaar' => [Rule::enum(LeerjaarEnum::class)],
         ]);
 
-        $user= $request->user()->first();
+        $user= $request->user()::where('id', $id)->first();
         $kind = $user->kinds()->create($validated);
         (new KindController)->uitpasInfo($kind->id);
 
