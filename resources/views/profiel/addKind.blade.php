@@ -2,7 +2,11 @@
 
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            @if ($user->profiel)
             {{ __('Nieuw kind toevoegen aan ').$user->profiel->familienaam." ".$user->profiel->voornaam }}
+            @else
+            {{ __('Nieuw kind toevoegen aan ').$user->email }}
+            @endif
         </h2>
     </x-slot>
 

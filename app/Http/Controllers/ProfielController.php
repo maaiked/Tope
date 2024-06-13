@@ -94,9 +94,9 @@ class ProfielController extends Controller
         return redirect(route('profiel.edit'))->with('success', $user->voornaam. ' '.$user->familienaam.' werd geupdate');
     }
 
-    public function editAddKind(Request $request)
+    public function editAddKind(Request $request, $id)
     {
-        $user= $request->user()->first();
+        $user= $request->user()::where('id', $id)->first();
         return view('profiel.addKind', compact('user'));
     }
 
