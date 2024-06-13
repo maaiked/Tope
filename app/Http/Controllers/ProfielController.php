@@ -18,7 +18,7 @@ class ProfielController extends Controller
     public function index()
     {
         $users['users'] = User::where('isAdmin', false)->where('isAnimator', false)->get();
-        return view ('profiel.indexAdmin')->with($users);
+        return view('profiel.indexAdmin')->with($users);
     }
 
     /**
@@ -27,10 +27,9 @@ class ProfielController extends Controller
     public function create()
     {
         $userprofiel = Profiel::where('user_id', auth()->id())->first();
-        if($userprofiel === null) {
+        if ($userprofiel === null) {
             return view('profiel.nieuw');
-        }
-        else {
+        } else {
             return redirect(route('profiel.edit'));
         }
     }
@@ -41,19 +40,19 @@ class ProfielController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'voornaam'=> 'required|string|max:255',
-            'familienaam'=> 'required|string|max:255',
-            'straat'=> 'required|string|max:255',
-            'huisnummer'=> 'required|string|max:255',
-            'bus'=> 'nullable|string|max:30',
-            'postcode'=> 'required|string|max:255',
-            'gemeente'=> 'required|string|max:255',
-            'telefoonnummer'=> 'required|string|max:255',
-            'rijksregisternummer'=> 'required|string|max:255|regex:/^[0-9]{2}[.][0-9]{2}[.][0-9]{2}[-][0-9]{3}[.][0-9]{2}$/',
+            'voornaam' => 'required|string|max:255',
+            'familienaam' => 'required|string|max:255',
+            'straat' => 'required|string|max:255',
+            'huisnummer' => 'required|string|max:255',
+            'bus' => 'nullable|string|max:30',
+            'postcode' => 'required|string|max:255',
+            'gemeente' => 'required|string|max:255',
+            'telefoonnummer' => 'required|string|max:255',
+            'rijksregisternummer' => 'required|string|max:255|regex:/^[0-9]{2}[.][0-9]{2}[.][0-9]{2}[-][0-9]{3}[.][0-9]{2}$/',
         ]);
         $user = $request->user();
         $request->user()->profiel()->create($validated);
-        return redirect(route('profiel.edit'))->with('success', 'Profiel van '.$user->voornaam.' '.$user->familienaam.' werd aangemaakt.');
+        return redirect(route('profiel.edit'))->with('success', 'Profiel van ' . $user->voornaam . ' ' . $user->familienaam . ' werd aangemaakt.');
     }
 
     /**
@@ -69,7 +68,7 @@ class ProfielController extends Controller
      */
     public function edit(Request $request)
     {
-        $userprofiel= $request->user()->profiel()->first();
+        $userprofiel = $request->user()->profiel()->first();
         return view('profiel.edit', compact('userprofiel'));
     }
 
@@ -79,24 +78,24 @@ class ProfielController extends Controller
     public function update(Request $request, Profiel $profiel)
     {
         $validated = $request->validate([
-            'voornaam'=> 'required|string|max:255',
-            'familienaam'=> 'required|string|max:255',
-            'straat'=> 'required|string|max:255',
-            'huisnummer'=> 'required|string|max:255',
-            'bus'=> 'nullable|string|max:30',
-            'postcode'=> 'required|string|max:255',
-            'gemeente'=> 'required|string|max:255',
-            'telefoonnummer'=> 'required|string|max:255',
-            'rijksregisternummer'=> 'required|string|max:255',
+            'voornaam' => 'required|string|max:255',
+            'familienaam' => 'required|string|max:255',
+            'straat' => 'required|string|max:255',
+            'huisnummer' => 'required|string|max:255',
+            'bus' => 'nullable|string|max:30',
+            'postcode' => 'required|string|max:255',
+            'gemeente' => 'required|string|max:255',
+            'telefoonnummer' => 'required|string|max:255',
+            'rijksregisternummer' => 'required|string|max:255',
         ]);
         $user = $request->user();
         $request->user()->profiel()->update($validated);
-        return redirect(route('profiel.edit'))->with('success', $user->voornaam. ' '.$user->familienaam.' werd geupdate');
+        return redirect(route('profiel.edit'))->with('success', $user->voornaam . ' ' . $user->familienaam . ' werd geupdate');
     }
 
     public function editAddKind(Request $request, $id)
     {
-        $user= $request->user()::where('id', $id)->first();
+        $user = $request->user()::where('id', $id)->first();
         return view('profiel.addKind', compact('user'));
     }
 
@@ -118,11 +117,11 @@ class ProfielController extends Controller
             'leerjaar' => [Rule::enum(LeerjaarEnum::class)],
         ]);
 
-        $user= $request->user()::where('id', $id)->first();
+        $user = $request->user()::where('id', $id)->first();
         $kind = $user->kinds()->create($validated);
         (new KindController)->uitpasInfo($kind->id);
 
-        return redirect(route('kinderen.indexAdminOuder', $user->id))->with('success', 'Kind '.$kind->voornaam.' werd successvol toegevoegd.');
+        return redirect(route('kinderen.indexAdminOuder', $user->id))->with('success', 'Kind ' . $kind->voornaam . ' werd successvol toegevoegd.');
     }
 
     public function editById(Request $request, int $id)
@@ -134,21 +133,28 @@ class ProfielController extends Controller
     public function updateById(Request $request, Profiel $profiel, int $id)
     {
         $validated = $request->validate([
-            'voornaam'=> 'required|string|max:255',
-            'familienaam'=> 'required|string|max:255',
-            'straat'=> 'required|string|max:255',
-            'huisnummer'=> 'required|string|max:255',
-            'bus'=> 'nullable|string|max:30',
-            'postcode'=> 'required|string|max:255',
-            'gemeente'=> 'required|string|max:255',
-            'telefoonnummer'=> 'required|string|max:255',
-            'rijksregisternummer'=> 'required|string|max:255',
+            'voornaam' => 'required|string|max:255',
+            'familienaam' => 'required|string|max:255',
+            'straat' => 'required|string|max:255',
+            'huisnummer' => 'required|string|max:255',
+            'bus' => 'nullable|string|max:30',
+            'postcode' => 'required|string|max:255',
+            'gemeente' => 'required|string|max:255',
+            'telefoonnummer' => 'required|string|max:255',
+            'rijksregisternummer' => 'required|string|max:255',
         ]);
 
         $user = User::findOrFail($id);
-        $user->profiel()->update($validated);
+        if (is_null($user->profiel)) {
+            $user->profiel()->create($validated);
+            $user = User::find($id);
+            return redirect(route('profiel.index', $id))->with('success', 'Gebruiker: ' . $user->profiel->voornaam . ' ' . $user->profiel->familienaam . ' werd geupdate');
 
-        return redirect(route('profiel.indexAdmin', $id))->with('success', $user->voornaam.' '.$user->familienaam.' werd geupdate');
+        } else {
+            $request->user()->profiel()->update($validated);
+            return redirect(route('profiel.index', $id))->with('success', 'Gebruiker: ' . $user->profiel->voornaam . ' ' . $user->profiel->familienaam . ' werd geupdate');
+
+        }
     }
 
     /**
