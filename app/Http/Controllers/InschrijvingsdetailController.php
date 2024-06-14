@@ -161,12 +161,17 @@ class InschrijvingsdetailController extends Controller
                         $message = $kind->voornaam.' '.$kind->familienaam.' werd succesvol ingeschreven.';
                     }
                     // bereken totaalprijs (activiteit + opties)
-                    foreach ($activiteit->opties as $optie)
+                    $request_opties = $request->input('opties');
+                    foreach ($request_opties as $optie)
                     {
-                        if ($request->has($optie->omschrijving))
+                        foreach($activiteit->opties as $a_optie)
                         {
-                            $totaalprijs += $optie->prijs;
+                            if ((int)$optie === $a_optie->id)
+                            {
+                                $totaalprijs += $a_optie->prijs;;
+                            }
                         }
+
                     }
 
                     // maak inschrijving aan
@@ -180,14 +185,19 @@ class InschrijvingsdetailController extends Controller
                     );
 
                     // als opties werden toegevoegd aan de inschrijving, sla deze op
-                    foreach ($activiteit->opties as $optie)
+                    foreach ($request_opties as $optie)
                     {
-                        if ($request->has($optie->omschrijving))
+                        foreach($activiteit->opties as $a_optie)
                         {
-                            $inschrijvingsdetail_opties = new Inschrijvingsdetail_optie(['inschrijvingsdetail_id' => $inschrijvingsdetail->id, 'optie_id' => $optie->id]);
-                            $inschrijvingsdetail_opties->save();
+                            if ((int)$optie === $a_optie->id)
+                            {
+                                $inschrijvingsdetail_opties = new Inschrijvingsdetail_optie(['inschrijvingsdetail_id' => $inschrijvingsdetail->id, 'optie_id' => (int)$optie]);
+                                $inschrijvingsdetail_opties->save();
+                            }
                         }
+
                     }
+
                 }
 
                 // als activiteit volzet is:

@@ -37,7 +37,7 @@
                    <p class="mt-4">{{ "Prijs activiteit: €".$activiteit->prijs }}</p>
                    @foreach($activiteit->opties as $optie)
                    <div class="mt-4">
-                       <input type="checkbox" name={{$optie->omschrijving}} id={{$optie->omschrijving}} class="checkbox" value="{{$optie->prijs}}" />
+                       <input type="checkbox" name="opties[]" id={{$optie->id}} class="checkbox" value="{{$optie->id}}" />
                        <label for="{{$optie->omschrijving}}" class=" text-md text-gray-900">
                            {{ $optie->omschrijving.": € ".$optie->prijs}}</label>
                    </div>
