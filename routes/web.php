@@ -62,11 +62,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/activiteiten/nieuw', [ActiviteitController::class, 'store'])->name('activiteiten.store');
     Route::get('/activiteiten/{id}/edit', [ActiviteitController::class, 'edit'])->name('activiteiten.edit');
     Route::put('/activiteiten/{id}', [ActiviteitController::class, 'update'])->name('activiteiten.update');
+    Route::delete('/activiteiten/', [ActiviteitController::class, 'destroy'])->name('activiteiten.delete');
     Route::get('/activiteiten/{id}', [ActiviteitController::class, 'show'])->name('activiteiten.show');
     Route::put('/activiteiten/{id}/addkind', [ActiviteitController::class, 'updateAddKind'])->name('activiteiten.updateAddKind');
     Route::get('/activiteiten/{id}/addkind', [ActiviteitController::class, 'showAddKind'])->name('activiteiten.showAddKind');
     Route::get('/activiteiten/{id}/kinderen', [ActiviteitController::class, 'showKinderen'])->name('activiteiten.showKinderen');
     Route::post('/activiteiten', [InschrijvingsdetailController::class, 'store'])->name('inschrijvingsdetail.store');
+    Route::get('/activiteiten/all/archief', [ActiviteitController::class, 'indexArchief'])->name('activiteiten.indexArchief');
+
 
     //kind routes
     Route::get('/kinderen', [KindController::class, 'index'])->name('kinderen.index');

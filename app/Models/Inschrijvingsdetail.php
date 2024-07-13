@@ -18,11 +18,11 @@ class Inschrijvingsdetail extends Model
     }
     public function activiteit(): BelongsTo
     {
-        return $this->belongsTo(Activiteit::class);
+        return $this->belongsTo(Activiteit::class)->withTrashed();
     }
     public function inschrijvingsdetail_opties(): HasMany
     {
-        return $this->hasMany(Inschrijvingsdetail_optie::class);
+        return $this->hasMany(Inschrijvingsdetail_optie::class)->withTrashed();
     }
 
     public function betalingsdetail(): HasOne

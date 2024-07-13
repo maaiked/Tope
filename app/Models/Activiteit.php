@@ -27,12 +27,12 @@ class Activiteit extends Model
 
     public function inschrijvingsdetails(): HasMany
     {
-        return $this->hasMany(Inschrijvingsdetail::class);
+        return $this->hasMany(Inschrijvingsdetail::class)->withTrashed();;
     }
 
     public function opties(): HasMany
     {
-        return $this->hasMany(Optie::class);
+        return $this->hasMany(Optie::class)->withTrashed();;
     }
 
     public function locatie(): BelongsTo

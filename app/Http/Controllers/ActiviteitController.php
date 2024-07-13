@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Enums\LeerjaarEnum;
 use App\Models\Activiteit;
+use App\Models\Betalingsdetail;
+use App\Models\Inschrijvingsdetail;
+use App\Models\Inschrijvingsdetail_optie;
 use App\Models\Kind;
 use App\Models\Locatie;
 use App\Models\Optie;
@@ -62,6 +65,12 @@ class ActiviteitController extends Controller
 
             return view('activiteiten.index')->with($activiteiten)->with(compact('geselecteerdkind'));
         }
+    }
+
+    public function indexArchief(): view
+    {
+        $activiteiten['activiteiten'] = Activiteit::withTrashed()->orderBy('starttijd', 'desc')->get();
+            return view('activiteiten.indexSoftDeletedAdmin')->with($activiteiten);
     }
 
     /**
@@ -247,8 +256,82 @@ class ActiviteitController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Activiteit $activiteit)
+    public function destroy(Request $request)
     {
-        //
+        $request->validate([
+            'activiteit_id' => 'required|integer',
+        ]);
+
+        $activiteit = Activiteit::where('id', $request->activiteit_id)
+            ->first();
+
+        if ($activiteit) {
+            $activiteit->delete();
+
+            // verwijder softdeleted opties
+            $opties = Optie::where('activiteit_id',  $request->activiteit_id)
+                ->onlyTrashed()
+                ->get();
+            foreach ($opties as $o) {
+                $o->forceDelete();
+            }
+
+            // archiveer huidige opties
+            $opties = Optie::where('activiteit_id',  $request->activiteit_id)
+                ->get();
+            foreach ($opties as $o) {
+                $o->delete();
+            }
+
+            // verwijder softdeleted inschrijvingen + opties + betalingen
+            $inschrijvingen = Inschrijvingsdetail::where('activiteit_id',  $request->activiteit_id)
+                ->onlyTrashed()
+                ->get();
+            foreach ($inschrijvingen as $i) {
+                $id = $i->id;
+
+                // verwijder bijhorende inschrijvingsdetail_opties
+                $i_opties = Inschrijvingsdetail_optie::where('inschrijvingsdetail_id', $id)
+                    ->onlyTrashed()
+                ->get();
+                foreach($i_opties as $io) {
+                    $io->forceDelete();
+                }
+
+                // verwijder bijhorende betalingsdetails
+                $i_betaling = Betalingsdetail::where('inschrijvingsdetail_id', $id)
+                ->onlyTrashed()
+                ->get();
+                foreach($i_betaling as $ib) {
+                    $ib->forceDelete();
+                }
+
+                // verwijder inschrijving zelf
+                $i->forceDelete();
+            }
+
+            //archiveer inschrijvingen + opties + betalingen
+            $inschrijvingen = Inschrijvingsdetail::where('activiteit_id',  $request->activiteit_id)
+                ->get();
+            foreach ($inschrijvingen as $i) {
+                $id = $i->id;
+                $i_opties = Inschrijvingsdetail_optie::where('inschrijvingsdetail_id', $id)
+                ->get();
+                foreach($i_opties as $io) {
+                    $io->delete();
+                }
+                $i_betaling = Betalingsdetail::where('inschrijvingsdetail_id', $id)
+                ->get();
+                foreach($i_betaling as $ib) {
+                    $ib->delete();
+                }
+                $i->delete();
+            }
+
+
+            return redirect(route("activiteiten.index"))->with('success', 'Activiteit succesvol gearchiveerd.');
+        } else {
+            return redirect(route("activiteiten.index"))->with('error', 'Activiteit niet gevonden. Archiveren mislukt.');
+        }
     }
 }
